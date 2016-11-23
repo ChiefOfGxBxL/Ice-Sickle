@@ -1,0 +1,9 @@
+[
+    { "type": "LTlt", "variation": 1, "position": [100.0, 200.0, 300.0], "angle": 3.1, "scale": [1.00, 2.50, 1.00], "flags": "normal", "life": 100, "id": 0 },
+    { "type": "LTlt", "variation": 2, "position": [200.0, 200.0, 300.0], "angle": 3.2, "scale": [1.00, 2.50, 1.20], "flags": "normal", "life": 99, "id": 1 },
+    { "type": "LTlt", "variation": 3, "position": [300.0, 200.0, 300.0], "angle": 3.3, "scale": [1.00, 2.50, 1.40], "flags": "normal", "life": 88, "id": 2 },
+    { "type": "LTlt", "variation": 4, "position": [400.0, 200.0, 300.0], "angle": 3.4, "scale": [1.00, 2.50, 1.60], "flags": "normal", "life": 77, "id": 3 },
+    { "type": "LTlt", "variation": 5, "position": [500.0, 300.0, 300.0], "angle": 3.5, "scale": [1.00, 2.50, 1.80], "flags": "normal", "life": 66, "id": 4 },
+    { "type": "LTlt", "variation": 6, "position": [500.0, 400.0, 300.0], "angle": 3.6, "scale": [1.00, 2.50, 2.00], "flags": "normal", "life": 55, "id": 5 },
+    { "type": "LTlt", "variation": 7, "position": [500.0, 500.0, 300.0], "angle": 3.7, "scale": [1.00, 2.50, 2.20], "flags": "normal", "life": 44, "id": 6 }
+]
