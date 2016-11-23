@@ -1,0 +1,375 @@
+<html>
+<head>
+    <link rel='stylesheet' href='style.css'>
+</head>
+<body>
+    <div class='box'>
+        <h1>Map Files</h1>
+        <i>Unless otherwise specified, numerals are represented in <b>little-endian</b></i>
+        
+        <table>
+            <thead><tr><th style='width:200px;'>Type</th><th>Format</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td><span class='pill int'>int</span> Integer</td>
+                    <td>Integers are 4 bytes in Little Endian Order</td>
+                </tr>
+                <tr>
+                    <td><span class='pill short'>short</span> Short</td>
+                    <td>Shorts, or "small integers", are from -16384 to 16383. They take 2 bytes and are in Little Endian Order.</td>
+                </tr>
+                <tr>
+                    <td><span class='pill float'>float</span> Float (real)</td>
+                    <td>Reals are Floats. They take 4 bytes and are in Little Endian Order.</td>
+                </tr>
+                <tr>
+                    <td><span class='pill array'>array</span> Array</td>
+                    <td>An array takes 1 byte (pointer?)</td>
+                </tr>
+                <tr>
+                    <td><span class='pill unitid'>unitid</span> UnitId</td>
+                    <td>UnitId Integers takes 32 bytes. (46656 possibilities, they are like normal Integers)</td>
+                </tr>
+                <tr>
+                    <td><span class='pill flag'>flag</span> Flag</td>
+                    <td>Boolean, or "Flags", take 4 bytes. In those 4 bytes, there are 32 bit, which can contains 32 flags.</td>
+                </tr>
+                <tr>
+                    <td><span class='pill water'>water</span> Water</td>
+                    <td>Water Level (In the terrain) takes 4 bytes every cell, it handles 2 bytes for a total of 16 flags, and the 2 lasts for the closest number to the Water Level.</td>
+                </tr>
+                <tr>
+                    <td><span class='pill handle-c'>handle-c</span> Custom Handle</td>
+                    <td>An integer or a flag may share themselves some bytes. A byte may handle two or more differant data.</td>
+                </tr>
+                <tr>
+                    <td><span class='pill handle-s'>handle-s</span> Structured Handle</td>
+                    <td>Unknown. They have various size.</td>
+                </tr>
+                <tr>
+                    <td><span class='pill string'>string</span> String</td>
+                    <td>Strings are just like arrays of chars finished with a null char (From C++ : "\0"). Strings take string-length + 1 (because of the terminating character). Trigger strings take 12 bytes.</td>
+                </tr>
+                <tr>
+                    <td><span class='pill char'>char</span> Character</td>
+                    <td>Each character takes a single byte. A character array composes a string.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        
+    <div class='box'>
+        <h2>Doodads</h2>
+        <h3>war3map.doo</h3>
+        <table>
+            <thead>
+                <tr><th>Type</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr class='section'>
+                    <td>Header</td>
+                </tr>
+                <tr>
+                    <td><span class='pill char'>char[4]</span> File ID</td>
+                    <td>Fixed at "W3do"</td>
+                </tr>
+                <tr>
+                    <td><span class='pill int'>int</span> File Version</td>
+                    <td>Fixed at 8</td>
+                </tr>
+                <tr>
+                    <td><span class='pill int'>int</span> Subversion?</td>
+                    <td>Fixed at [0B 00 00 00]h</td>
+                </tr>
+                <tr>
+                    <td><span class='pill int'>int</span> Number of trees</td>
+                    <td></td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr class='section'>
+                    <td>Trees<br/><i>Repeat for each tree</i></td>
+                </tr>
+                <tr>
+                    <td><span class='pill char'>char[4]</span> Tree Type</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill int'>int</span> Variation</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill float'>float</span> Tree X</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill float'>float</span> Tree Y</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill float'>float</span> Tree Z</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill float'>float</span> Tree angle</td>
+                    <td>Measured in radians</td>
+                </tr>
+                <tr>
+                    <td><span class='pill float'>float</span> Tree X scale</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill float'>float</span> Tree Y scale</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill float'>float</span> Tree X scale</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill byte'>byte</span> Flags</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill byte'>byte</span> Life (%)</td>
+                    <td>Default HP for the tree, in one hex byte. 0x64 is 100%.</td>
+                </tr>
+                <tr>
+                    <td><span class='pill int'>int</span> Random item table pointer</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill int'>int</span> Number items dropped</td>
+                    <td>The number of items dropped on death</td>
+                </tr>
+                <tr>
+                    <td><span class='pill int'>int</span> ID Number</td>
+                    <td></td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr class='section'>
+                    <td>Special doodads<br/><i>Header for special doodad section</i></td>
+                </tr>
+                <tr>
+                    <td><span class='pill int'>int</span> Special doodad format number</td>
+                    <td>Fixed at [00 00 00 00]h</td>
+                </tr>
+                <tr>
+                    <td><span class='pill int'>int</span> Number of special doodads</td>
+                    <td></td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr class='section'>
+                    <td>Special doodads<br/><i>Repeat for each special doodad</i></td>
+                </tr>
+                <tr>
+                    <td><span class='pill char'>char[4]</span> Doodad ID</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill int'>int</span> Position Z?</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill int'>int</span> Position X?</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill int'>int</span> Position Y?</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class='box'>
+        <h2>Scripts</h2>
+        <h3>war3map.j</h3>
+        <p>This is the main map script file.</p>
+    </div>
+    
+    <div class='box'>
+        <h2>Environment</h2>
+        <h3>war3map.w3e</h3>
+        <p>Tileset file.</p>
+        
+        <table>
+            <thead>
+                <tr><th>Type</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr class='section'>
+                    <td>Header</td>
+                </tr>
+                <tr>
+                    <td><span class='pill char'>char[4]</span> File ID</td>
+                    <td>Fixed at "W3E!" [57 33 45 21]h</td>
+                </tr>
+                <tr>
+                    <td><span class='pill int'>int</span> File Version</td>
+                    <td>Fixed at 11 [0b 00 00 00]h</td>
+                </tr>
+                <tr>
+                    <td><span class='pill char'>char</span> Tileset</td>
+                    <td>Refer to table for tileset character enumeration</td>
+                </tr>
+                <tr>
+                    <td><span class='pill int'>int</span> Custom tilesets flag</td>
+                    <td>1 = using custom tileset; 0 = not using custom tileset</td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr class='section'>
+                    <td>Tiles<br/><i>Header for tileset</i></td>
+                </tr>
+                <tr>
+                    <td><span class='pill int'>int</span> Number of tiles in tileset</td>
+                    <td></td>
+                </tr>
+                
+                <tr class='section'>
+                    <td><i>Repeat for each tile in tileset</i></td>
+                </tr>
+                <tr>
+                    <td><span class='pill char'>char[4]</span> Tile</td>
+                    <td>E.g. 'LDrt' for Lordaeron Summer Dirt</td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr class='section'>
+                    <td>Cliffs<br/>Header for cliffs</td>
+                </tr>
+                <tr>
+                    <td><span class='pill int'>int</span> Number of cliff tile used</td>
+                    <td></td>
+                </tr>
+                
+                <tr class='section'>
+                    <td><i>Repeat for each cliff tiles used</i></td>
+                </tr>
+                <tr>
+                    <td><span class='pill char'>char[4]</span> Cliff Tile</td>
+                    <td></td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr class='section'>
+                    <td>Map size data</td>
+                </tr>
+                <tr>
+                    <td><span class='pill int'>int</span> Width of map + 1</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill int'>int</span> Height of map + 1</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill float'>float</span> Center offset of map X</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill float'>float</span> Center offset of map Y</td>
+                    <td></td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr class='section'>
+                    <td>Tile points<br/><i>Repeat for each tile in the map</i></td>
+                </tr>
+                <tr>
+                    <td><span class='pill short'>short</span> Ground height</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill short'>short</span> Water level</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill flag'>flag [4 bits]</span> Flags</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill flag'>flag [4 bits]</span> Ground texture</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill byte'>byte</span> Texture details</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill flag'>flag [4 bits]</span> Cliff texture type</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class='pill flag'>flag [4 bits]</span> Layer height</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class='box'>
+        <h2>Shadow Map</h2>
+        <h3>war3map.shd</h3>
+        <p>The shadow map file. Contains 16*width*height bytes. Each tile is divided into 16 parts.</p>
+    </div>
+    
+    <div class='box'>
+        <h2>Pathing</h2>
+        <h3>war3map.wpm</h3>
+        <p>Pathing map. Note that war3mapPath.tga was used in older versions of WC3 but is now deprecated.</p>
+    </div>
+    
+    <div class='box'>
+        <h2>Units</h2>
+        <h3>war3mapUnits.doo</h3>
+        <p></p>
+    </div>
+    
+    <div class='box'>
+        <h2>Info File</h2>
+        <h3>war3map.w3i</h3>
+        <p></p>
+    </div>
+    
+    <div class='box'>
+        <h2>Trigger String Data</h2>
+        <h3>war3map.wts</h3>
+        <p>Essentially a lookup table for strings, specifically for trigger strings and other string constants.</p>
+        <pre>
+STRING 1
+{
+Player 1
+}
+
+STRING 2
+{
+Force 1
+}
+
+(etc.)
+        </pre>
+    </div>
+    
+    <div class='box'>
+        <h2>Minimap Image</h2>
+        <h3>war3mapMap.blp</h3>
+        <p></p>
+    </div>
+    
+    <div class='box'>
+        <h2>Menu Minimap</h2>
+        <h3>war3map.mmp</h3>
+        <p></p>
+    </div>
+    
+    <div class='box'>
+        <h2>Custom Unit File</h2>
+        <h3>war3map.w3u</h3>
+        <p>Same format as .w3u, .w3t, .w3b, .w3d, .w3a, .w3h, .w3q</p>
+    </div>
+</body>
+</html>
