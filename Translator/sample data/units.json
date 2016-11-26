@@ -30,13 +30,13 @@
         "id": 0
     },
     {
-        "type": "Hpal",
+        "type": "hrif",
         "variation": 0,
-        "position": [150.0, 250.0, 0.0],
-        "rotation": 0.0,
+        "position": [175.0, 200.0, 0.0],
+        "rotation": 1.2,
         "scale": [1.0, 1.0, 1.0],
         "flags": 2,
-        "player": 0,
+        "player": 1,
         "hitpoints": -1,
         "mana": -1,
         "droppedItemSets": [],
@@ -49,8 +49,7 @@
             "int": 0
         },
         "inventory": [
-            {"slot": 1, "type": "modt"},
-            {"slot": 3, "type": "rde3"}
+            {"slot": 1, "type": "modt"}
         ],
         "abilities": [
             {"ability": "AHds", "active": true, "level": 1}
