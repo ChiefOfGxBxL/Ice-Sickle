@@ -6,7 +6,7 @@ var Map = {
             projectPath = Path.resolve('./' + name); // TODO: let user choose path with file chooser
         
         fs.mkdirSync(projectPath);
-        fs.copySync('empty-map-manifest.json', projectPath + '/' + 'project.json');
+        fs.copySync('./assets/wc/empty-map-manifest.json', projectPath + '/' + 'project.json');
         
         fs.writeFileSync(projectPath + '/units.json', "[]");
         fs.writeFileSync(projectPath + '/doodads.json', "[]");
