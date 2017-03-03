@@ -1,0 +1,25 @@
+{
+  "name": "icesickle",
+  "version": "1.0.0",
+  "description": "Next-generation WC3 map editor built in Electron.",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChiefOfGxBxL/Ice-Sickle.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChiefOfGxBxL/Ice-Sickle/issues"
+  },
+  "homepage": "https://github.com/ChiefOfGxBxL/Ice-Sickle#readme",
+  "dependencies": {
+    "electron": "^1.4.15",
+    "fs-extra": "^2.0.0",
+    "ieee754": "1.1.8"
+  }
+}

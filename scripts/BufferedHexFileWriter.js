@@ -1,7 +1,6 @@
 // TODO: this file needs significant unit testing
 var fs = require('fs'),
-    ieee754 = require('ieee754'),
-    decToHex = require('binaryToFloat'); // TODO: this file needs renaming and refactoring
+    ieee754 = require('ieee754');
 
 function intToHex(int) {
     // TODO: this function needs to support all negative numbers

@@ -1,0 +1,7 @@
+Command line for map extraction/bundling
+
+I've been using Ladik's MPQ editor as a UI to extract files from a .w3x map file, such as the war3map.doo, .j file, etc. And it's also possible to use this tool to overwrite those files with modifications one has made.
+
+But is there any command line tool to "bundle" or "zip" up a .w3x map file from a bunch of its components? For instance, I have several of the war3map.* files that I want to zip up to make a map. What I'm interested is doing this programatically instead of having to drag and drop the modified files in by hand.
+
+http://www.hiveworkshop.com/forums/warcraft-editing-tools.277/create-thread

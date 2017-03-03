@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.1/css/bulma.min.css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <script>
+        var map,
+            Map = require('../scripts/Map.js'),
+            currentProjectDir;
+    </script>
+    <script>
+        // Listen for events sent from window process
+        const {ipcRenderer} = require('electron');
+        
+        ipcRenderer.on('create-new-project', (event, data) => {
+            var newProjectPath = Map.createNewMap(data.name);
+            console.log("created project");
+            
+            Map.loadMap(newProjectPath);
+            console.log("loaded project");
+        });
+        
+        ipcRenderer.on('open-project', (event, message) => {
+            Map.loadMap(message);
+            currentProjectDir = message;
+        });
+        
+        ipcRenderer.on('save-project', () => {
+            if(map && currentProjectDir) {
+                Map.saveMap(currentProjectDir);
+            }
+        });
+    </script>
+  </head>
+  <body>
+    
+    <div class="pure-g">
+        <div class="pure-u-1-2">
+        
+        </div>
+        <div class="pure-u-1-5">
+            <h1>Hello World!</h1>
+            We are using node <script>document.write(process.versions.node)</script>,
+            Chrome <script>document.write(process.versions.chrome)</script>,
+            and Electron <script>document.write(process.versions.electron)</script>.
+            
+            <hr/>
+            
+            <b>Create new project</b>
+            <input type='text' id='projectName'/>
+            <button onclick='Map.createNewMap(document.getElementById("projectName").value)'>Create new map</button>
+            
+            <hr/>
+            
+            <b>Load project</b>
+            <input type='text' id='loadProjectName'/>
+            <button onclick='Map.loadMap(document.getElementById("loadProjectName").value)'>Load map</button>
+            
+            <hr/>
+            
+            <b>Save project</b>
+            <input type='text' id='saveProjectName'/>
+            <button onclick='Map.saveMap(document.getElementById("saveProjectName").value)'>Save map</button>
+            
+            <hr/>
+            
+            <b>Translate project</b>
+            <button onclick='Map.translateMap(map)'>Translate current project</button>
+        </div>
+    </div>
+    
+  </body>
+</html>

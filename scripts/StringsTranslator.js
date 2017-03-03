@@ -1,4 +1,4 @@
-var BufferedHexFileWriter = require('BufferedHexFileWriter'),
+var BufferedHexFileWriter = require('./BufferedHexFileWriter'),
     outBuffer;
 
 var StringsTranslator = function(outputPath, stringsJson) {

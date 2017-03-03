@@ -1,4 +1,4 @@
-var BufferedHexFileWriter = require('BufferedHexFileWriter'),
+var BufferedHexFileWriter = require('./BufferedHexFileWriter'),
     outBuffer;
 
 var DoodadsTranslator = function(outputPath, doodadsJson) {

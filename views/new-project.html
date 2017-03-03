@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>New Project</title>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.1/css/bulma.min.css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <script>
+        const {ipcRenderer} = require('electron');
+        
+        function submit() {
+            ipcRenderer.send('create-new-project', {
+                name: document.getElementById('name').value,
+                author: document.getElementById('author').value,
+                description: document.getElementById('description').value
+            });
+        }
+    </script>
+  </head>
+  <body style='padding:15px;'>
+    
+    <div id='content'>
+        <label class="label">
+            Name
+            <p class="control has-icon has-icon-right">
+              <input class="input" id='name' type="text" placeholder="Bunny Slide 2">
+              <!-- <span class="icon is-small">
+                <i class="fa fa-check"></i>
+              </span> -->
+            </p>
+            <!-- <span class="help is-success">This name is available</span> -->
+        </label>
+        
+        
+        <label class="label">
+            Author
+            <p class="control">
+              <input class="input" id='author' type="text" placeholder="chief_of_gxbxl">
+            </p>
+        </label>
+        
+        <label class="label">
+            Description
+            <p class="control">
+              <textarea class="textarea" id='description' placeholder="Slide to freedom as you and your bunny friends escape the farm!"></textarea>
+            </p>
+        </label>
+        
+        <label class="label">
+            Tileset
+            <p class="control">
+              <span class="select">
+                <select>
+                  <option>Lordaeron Summer</option>
+                  <option>Lordaeron Winter</option>
+                  <option>Felwood</option>
+                  <option>Ashenvale</option>
+                </select>
+              </span>
+            </p>
+        </label>
+        
+        <p class="control">
+          <label class="checkbox">
+            <input type="checkbox">
+            Initialize this project with a Git repo
+          </label>
+        </p>
+        
+        <div class="control is-grouped is-pulled-right">
+          <p class="control">
+            <button class="button is-link" onclick='window.close()'>Cancel</button>
+          </p>
+          <p class="control">
+            <button class="button is-primary" onclick='submit()'>Submit</button>
+          </p>
+        </div>
+    </div>
+    
+  </body>
+</html>

@@ -1,0 +1,69 @@
+/*
+ * This is a JavaScript Scratchpad.
+ *
+ * Enter some JavaScript, then Right Click or choose from the Execute Menu:
+ * 1. Run to evaluate the selected text (Ctrl+R),
+ * 2. Inspect to bring up an Object Inspector on the result (Ctrl+I), or,
+ * 3. Display to insert the result in a comment after the selection. (Ctrl+L)
+ */
+
+var Integer = {
+  toHex: function(_val) {
+    var hexRepresentation = _val.toString(16),
+        littleEndian = '';
+
+    while(hexRepresentation.length < 8) {
+      hexRepresentation = "0" + hexRepresentation;
+    }
+
+    return hexRepresentation.substr(6,2) + hexRepresentation.substr(4,2) + hexRepresentation.substr(2,2) + hexRepresentation.substr(0,2);
+  }
+}
+
+var Real = {
+  toHex: function(val) {
+    return (val).toString(16);
+  }
+}
+
+console.log(Integer.toHex(1234));
+console.log(Real.toHex(28.5));
+
+/**
+ * Converts a binary number to a float. E.g. 0b01000101011101000000000000000000 -> 3904
+ * @source http://stackoverflow.com/a/16001019
+ * @reference http://stackoverflow.com/a/21384978
+ * @reference https://www.h-schmidt.net/FloatConverter/IEEE754.html
+ */
+function Bytes2Float32(bytes) {
+    var sign = (bytes & 0x80000000) ? -1 : 1;
+    var exponent = ((bytes >> 23) & 0xFF) - 127;
+    var significand = (bytes & ~(-1 << 23));
+
+    if (exponent == 128) 
+        return sign * ((significand) ? Number.NaN : Number.POSITIVE_INFINITY);
+
+    if (exponent == -127) {
+        if (significand == 0) return sign * 0.0;
+        exponent = -126;
+        significand /= (1 << 22);
+    } else significand = (significand | (1 << 23)) / (1 << 23);
+
+    return sign * significand * Math.pow(2, exponent);
+}
+
+/**
+ * Takes a little-endian byte string and converts it from hex to a binary string.
+ */
+function littleEndianHexToBinary(hex) {
+  var hexParts = hex.split(' '),
+      binaryString = '',
+      part;
+
+  while(part = hexParts.shift()) {
+    binaryString = ('00000000' + ((parseInt('0x'+part)).toString(2))).substr(-8) + binaryString;
+  }
+
+  return binaryString;
+}
+console.log(littleEndianHexToBinary('00 00 74 45'));
