@@ -1,6 +1,6 @@
 {
   "name": "icesickle",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Next-generation WC3 map editor built in Electron.",
   "main": "index.js",
   "scripts": {
@@ -20,6 +20,7 @@
   "dependencies": {
     "electron": "^1.4.15",
     "fs-extra": "^2.0.0",
-    "ieee754": "1.1.8"
+    "ieee754": "1.1.8",
+    "mini.css": "^2.1.3"
   }
 }
