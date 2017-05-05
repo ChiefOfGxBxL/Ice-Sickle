@@ -66,6 +66,11 @@ var Map = {
         Map.__Dir = Path.resolve(projectDir);
         console.log('Load dir', Map.__Dir);
 
+        if(!fs.existsSync(Map.__Dir)) {
+            window.alert('This map does not exist!');
+            return false;
+        }
+
         var loadJson = function(file, def) {
             var path = Path.resolve(projectDir, file);
 
