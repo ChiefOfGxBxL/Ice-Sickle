@@ -101,6 +101,9 @@ var Map = {
     },
 
     Save: function() {
+        // No map is open to save
+        if(!Map.__Dir) return false;
+
         // Takes the global map object and dumps it into its separate project files
         var writeJson = function(file, data) {
             console.log('Writing file to', Path.resolve(Map.__Dir, file));
