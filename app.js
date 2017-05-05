@@ -1,14 +1,75 @@
-const {app, BrowserWindow, Menu, dialog, ipcMain} = require('electron')
+const {app, BrowserWindow, Menu, dialog, ipcMain, protocol} = require('electron')
 const path = require('path')
 const url = require('url')
+const fs = require('fs')
+const Handlebars = require('handlebars');
+
+// Automatically reloads view if source is changed
+// require('electron-reload')(__dirname);
 
 // Initialize global settings
 var Settings = require('./classes/Settings');
 Settings.Load(app.getAppPath());
 
+// Stores references to all open windows; key = file name (e.g. index.html)
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win
+let windows = {
+    //root:
+};
+
+function OpenNewWindow(view, options) {
+    // If the window is already open and multiple are not allowed,
+    // do not open another window
+    if(!options.allowMultiple && windows[view]) {
+        windows[view].focus(); // Bring the opened window to front-view
+        return false;
+    }
+
+    const isHandlebars =
+        view.endsWith('.hbs') ||
+        view.endsWith('.handlebars') ||
+        options.template; // if we provide a template to an HTML file
+
+    var newWindow = new BrowserWindow(options); // Create a new window
+    windows[view] = newWindow; // Register the new window
+
+    // Load the window with the specified view
+    var addlData = {};
+    if(isHandlebars) {
+        addlData = {
+            // Encode handlebars template in post data
+            postData: [{
+                type: 'rawData',
+                bytes: Buffer.from(JSON.stringify(options.template))
+            }],
+            extraHeaders: 'Content-Type: application/x-www-form-urlencoded'
+        };
+    }
+
+    newWindow.loadURL(
+        url.format({
+            pathname: path.join(__dirname, '/views/' + view),
+            protocol: (isHandlebars) ? 'hbs:' : 'file:',
+            slashes: true
+        }),
+        addlData
+    );
+
+    // Iterate over events and add a new one to the window for each
+    if(options.events) {
+        Object.keys(options.events).forEach((event) => {
+            newWindow.on(event, () => {
+                options.events[event]();
+            });
+        });
+    }
+
+    // We always handle the closed event
+    newWindow.on('closed', () => {
+        windows[view] = null;
+    });
+}
 
 var template = [
   {
@@ -19,23 +80,11 @@ var template = [
         sublabel: 'Create a new project',
         role: 'new',
         click () {
-            var newProjectWin = new BrowserWindow({
-                width: 360,
-                height: 435,
-                parent: win,
-                modal: true,
+            OpenNewWindow('new-project.html', {
+                width: 320, height: 540,
+                parent: windows.root, modal: true,
                 frame: false
             });
-
-            newProjectWin.loadURL(url.format({
-              pathname: path.join(__dirname, '/views/new-project.html'),
-              protocol: 'file:',
-              slashes: true
-            }));
-
-            newProjectWin.on('closed', () => {
-              newProjectWin = null
-            })
         }
       },
       {
@@ -51,7 +100,7 @@ var template = [
                 // should only be one project selected
                 if(projects) {
                     // Tell any renderer processes that a map load request has been initiated
-                    win.webContents.send('open-project', projects[0]);
+                    windows.root.webContents.send('open-project', projects[0]);
 
                     // Store the project in recently-loaded settings
                     if(Settings.recentMaps.indexOf(projects[0]) === -1) {
@@ -67,12 +116,13 @@ var template = [
         sublabel: 'Saves the current project',
         role: 'save',
         click () {
-            win.webContents.send('save-project');
+            windows.root.webContents.send('save-project');
         }
       },
       {
         type: 'separator'
-      }
+      },
+      /* Recent maps are generated here */
     ]
   },
   {
@@ -83,7 +133,19 @@ var template = [
               sublabel: 'Generates the .w3x file',
               role: 'new',
               click () {
-                  win.webContents.send('compile-project');
+                  windows.root.webContents.send('compile-project');
+              }
+          },
+          {
+              type: 'separator'
+          },
+          {
+              label: 'Object Editor',
+              sublabel: '',
+              click() {
+                  OpenNewWindow('object-editor.html', {
+                      width: 1000, height: 600
+                  });
               }
           }
       ]
@@ -101,7 +163,7 @@ var template = [
             var aboutWin = new BrowserWindow({
                 width: 300,
                 height: 200,
-                parent: win,
+                parent: windows.root,
                 modal: true,
                 frame: false
             });
@@ -128,48 +190,68 @@ Settings.recentMaps.forEach((recentMap) => {
         label: mapName,
         sublabel: recentMap,
         click(entry) {
-            win.webContents.send('open-project', entry.sublabel);
+            windows.root.webContents.send('open-project', entry.sublabel);
         }
     });
 })
 
 function createWindow () {
     // Create the browser window.
-    win = new BrowserWindow({width: 1000, height: 750});
+    windows.root = new BrowserWindow({width: 1000, height: 900});
 
     // Create the main menu from the template
     const menu = Menu.buildFromTemplate(template);
     Menu.setApplicationMenu(menu);
 
     // and load the index.html of the app.
-    win.loadURL(url.format({
+    windows.root.loadURL(url.format({
         pathname: path.join(__dirname, '/views/index.html'),
         protocol: 'file:',
         slashes: true
     }))
 
     // Open the DevTools.
-    win.webContents.openDevTools
+    windows.root.webContents.openDevTools();
 
     // Received message from new-project menu
     ipcMain.on('create-new-project', (event, data) => {
         console.log(data);
-        win.webContents.send('create-new-project', data);
+        windows.root.webContents.send('create-new-project', data);
     });
 
     // Emitted when the window is closed.
-    win.on('closed', () => {
+    windows.root.on('closed', () => {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
-        win = null
+        windows.root = null
     })
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', () => {
+    createWindow();
+
+    // The hbs:// protocol is used to render handlebars files
+    // See http://stackoverflow.com/a/41368514 for more details
+    protocol.registerBufferProtocol('hbs', function (req, callback) {
+        // The JSON context is passed through as uploaded POST data
+        var context = (req.uploadData && req.uploadData[0]) ? JSON.parse(req.uploadData[0].bytes) : {},
+            pathToFile = req.url.substr(7);
+
+        fs.readFile(pathToFile, 'utf8', function(err, data) {
+            var template = Handlebars.compile(data),
+                page = template(context);
+
+            callback({
+                mimeType: 'text/html',
+                data: new Buffer(page)
+            });
+        });
+    });
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -186,10 +268,7 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (win === null) {
+    if (windows.root === null) {
         createWindow()
     }
 })
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
