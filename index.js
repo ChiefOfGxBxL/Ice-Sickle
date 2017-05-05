@@ -2,11 +2,15 @@ const {app, BrowserWindow, Menu, dialog, ipcMain} = require('electron')
 const path = require('path')
 const url = require('url')
 
+// Initialize global settings
+var Settings = require('./classes/Settings');
+Settings.Load(app.getAppPath());
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
 
-const template = [
+var template = [
   {
     label: 'File',
     submenu: [
@@ -41,15 +45,19 @@ const template = [
         click () {
             dialog.showOpenDialog({
                 title: 'Open project',
-                defaultPath: '',
-                buttonLabel: '',
-                filters: [],
+                defaultPath: app.getAppPath(),
                 properties: ['openDirectory']
             }, function(projects) {
                 // should only be one project selected
                 if(projects) {
                     // Tell any renderer processes that a map load request has been initiated
                     win.webContents.send('open-project', projects[0]);
+
+                    // Store the project in recently-loaded settings
+                    if(Settings.recentMaps.indexOf(projects[0]) === -1) {
+                        Settings.recentMaps.push(projects[0]);
+                        Settings.Save();
+                    }
                 }
             });
         },
@@ -113,6 +121,18 @@ const template = [
   }
 ];
 
+Settings.recentMaps.forEach((recentMap) => {
+    var mapName = recentMap.split('\\').reverse()[0];
+
+    template[0].submenu.push({
+        label: mapName,
+        sublabel: recentMap,
+        click(entry) {
+            win.webContents.send('open-project', entry.sublabel);
+        }
+    });
+})
+
 function createWindow () {
     // Create the browser window.
     win = new BrowserWindow({width: 1000, height: 750});
@@ -129,7 +149,7 @@ function createWindow () {
     }))
 
     // Open the DevTools.
-    //win.webContents.openDevTools()
+    win.webContents.openDevTools
 
     // Received message from new-project menu
     ipcMain.on('create-new-project', (event, data) => {
@@ -153,6 +173,9 @@ app.on('ready', createWindow)
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
+    // Save any unsaved changes to settings
+    Settings.Save();
+
     // On macOS it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {
