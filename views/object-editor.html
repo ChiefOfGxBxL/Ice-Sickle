@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://gitcdn.link/repo/Chalarangelo/mini.css/master/dist/mini-default.min.css">
+
+    <style>
+        .object-edit-view > select {
+            padding: 0px;
+            height: 100%;
+            float: left;
+        }
+        .object-edit-view > select:first-child {width:15%;}
+        .object-edit-view > select:last-child {width:83%;}
+    </style>
+
+    <script>
+        var Map = require('../classes/Map.js');
+    </script>
+    <script>
+        window.addEventListener('load', function() {
+            var options = document.querySelectorAll('option');
+
+            for(var i = 0; i < options.length; i++) {
+                options[i].addEventListener('dblclick', function(e) {
+                    console.log(this.innerText);
+                });
+            }
+        });
+    </script>
+  </head>
+  <body>
+    <div class="tabs">
+      <input type="radio" name="tab-group" id="tab1" checked aria-hidden="true">
+      <label for="tab1" aria-hidden="true">Units</label>
+      <div class='object-edit-view'>
+          <select id='unit-list' multiple>
+            <option>Value 1</option>
+            <option>Value 2</option>
+            <option>Value 3</option>
+          </select>
+          <select id='unit-edit-list' multiple>
+            <option>Value 1</option>
+            <option>Value 2</option>
+            <option>Value 3</option>
+            <option>Value 4</option>
+            <option>Value 5</option>
+            <option>Value 6</option>
+            <option>Value 7</option>
+            <option>Value 8</option>
+            <option>Value Infinity</option>
+          </select>
+      </div>
+
+      <input type="radio" name="tab-group" id="tab2" aria-hidden="true">
+      <label for="tab2" aria-hidden="true">Items</label>
+      <div></div>
+
+      <input type="radio" name="tab-group" id="tab3" aria-hidden="true">
+      <label for="tab3" aria-hidden="true">Destructables</label>
+      <div></div>
+
+      <input type="radio" name="tab-group" id="tab4" aria-hidden="true">
+      <label for="tab4" aria-hidden="true">Doodads</label>
+      <div></div>
+
+      <input type="radio" name="tab-group" id="tab5" aria-hidden="true">
+      <label for="tab5" aria-hidden="true">Abilities</label>
+      <div></div>
+
+      <input type="radio" name="tab-group" id="tab6" aria-hidden="true">
+      <label for="tab6" aria-hidden="true">Buffs/Effects</label>
+      <div></div>
+
+      <input type="radio" name="tab-group" id="tab7" aria-hidden="true">
+      <label for="tab7" aria-hidden="true">Upgrades</label>
+      <div></div>
+
+    </div>
+  </body>
+</html>

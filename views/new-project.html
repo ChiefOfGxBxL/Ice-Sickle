@@ -3,11 +3,16 @@
   <head>
     <meta charset="UTF-8">
     <title>New Project</title>
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.1/css/bulma.min.css'>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://gitcdn.link/repo/Chalarangelo/mini.css/master/dist/mini-default.min.css">
+    <style>
+        input {width: 100%;}
+    </style>
+
     <script>
         const {ipcRenderer} = require('electron');
-        
+
         function submit() {
             ipcRenderer.send('create-new-project', {
                 name: document.getElementById('name').value,
@@ -17,65 +22,131 @@
         }
     </script>
   </head>
-  <body style='padding:15px;'>
-    
-    <div id='content'>
-        <label class="label">
-            Name
-            <p class="control has-icon has-icon-right">
-              <input class="input" id='name' type="text" placeholder="Bunny Slide 2">
-              <!-- <span class="icon is-small">
-                <i class="fa fa-check"></i>
-              </span> -->
-            </p>
-            <!-- <span class="help is-success">This name is available</span> -->
-        </label>
-        
-        
-        <label class="label">
-            Author
-            <p class="control">
-              <input class="input" id='author' type="text" placeholder="chief_of_gxbxl">
-            </p>
-        </label>
-        
-        <label class="label">
-            Description
-            <p class="control">
-              <textarea class="textarea" id='description' placeholder="Slide to freedom as you and your bunny friends escape the farm!"></textarea>
-            </p>
-        </label>
-        
-        <label class="label">
-            Tileset
-            <p class="control">
-              <span class="select">
-                <select>
+  <body>
+    <form>
+        <div class="input-group fluid">
+          <label>
+              Name
+              <input type="text" value="" id="name" placeholder="Lordaerons Demise">
+          </label>
+        </div>
+
+        <div class="input-group">
+          <label>
+              Width
+              <select>
+                  <option>64</option>
+                  <option>64</option>
+                  <option>64</option>
+                  <option>64</option>
+              </select>
+          </label>
+          <label>
+              Height
+              <select>
+                  <option>64</option>
+                  <option>64</option>
+                  <option>64</option>
+                  <option>64</option>
+              </select>
+          </label>
+        </div>
+
+        <div class="input-group fluid">
+
+        </div>
+
+        <div class="input-group fluid">
+          <label>
+              Tileset
+              <select>
+                  <option>Ashenvale</option>
+                  <option>Barrens</option>
+                  <option>Black Citadel</option>
+                  <option>Cityscape</option>
+                  <option>Dalaran</option>
+                  <option>Dalaran Ruins</option>
+                  <option>Dungeon</option>
+                  <option>Felwood</option>
+                  <option>Icecrown Glacier</option>
+                  <option>Lordaeron Fall</option>
                   <option>Lordaeron Summer</option>
                   <option>Lordaeron Winter</option>
-                  <option>Felwood</option>
-                  <option>Ashenvale</option>
-                </select>
-              </span>
-            </p>
-        </label>
-        
-        <p class="control">
-          <label class="checkbox">
-            <input type="checkbox">
-            Initialize this project with a Git repo
+                  <option>Northrend</option>
+                  <option>Outland</option>
+                  <option>Sunken Ruins</option>
+                  <option>Underground</option>
+                  <option>Village</option>
+                  <option>Village Fall</option>
+              </select>
           </label>
-        </p>
-        
-        <div class="control is-grouped is-pulled-right">
-          <p class="control">
-            <button class="button is-link" onclick='window.close()'>Cancel</button>
-          </p>
-          <p class="control">
-            <button class="button is-primary" onclick='submit()'>Submit</button>
-          </p>
         </div>
-    </div>
-    
+
+        <fieldset>
+            <legend>Starting tile</legend>
+            <div class="input-group">
+              <input type="radio" id="rad1" name="tile">
+              <label for="rad1">Radio</label>
+            </div>
+
+            <div class="input-group">
+              <input type="radio" id="rad2" name="tile">
+              <label for="rad2">Radio</label>
+            </div>
+
+            <div class="input-group">
+              <input type="radio" id="rad3" name="tile">
+              <label for="rad3">Radio</label>
+            </div>
+
+            <div class="input-group">
+              <input type="radio" id="rad4" name="tile">
+              <label for="rad4">Radio</label>
+            </div>
+
+            <div class="input-group">
+              <input type="radio" id="rad5" name="tile">
+              <label for="rad5">Radio</label>
+            </div>
+
+            <div class="input-group">
+              <input type="radio" id="rad6" name="tile">
+              <label for="rad6">Radio</label>
+            </div>
+        </fieldset>
+
+        <div class="input-group fluid">
+          <label>
+              Initial cliff height
+              <input type='number' min='0' max='14' value='2' />
+          </label>
+        </div>
+
+        <fieldset>
+            <legend>Initial water</legend>
+            <div class="input-group">
+              <input type="radio" id="water0" name="tile" selected>
+              <label for="water0">None</label>
+            </div>
+
+            <div class="input-group">
+              <input type="radio" id="water1" name="tile">
+              <label for="water1">Shallow</label>
+            </div>
+
+            <div class="input-group">
+              <input type="radio" id="water2" name="tile">
+              <label for="water2">Deep</label>
+            </div>
+        </fieldset>
+
+        <div style='float:right;'>
+            <button onclick='window.close()'>Cancel</button>
+            <button class="primary" onclick='submit()'>Submit</button>
+        </div>
+
+        <div style='clear:both;'></div>
+    </form>
+
   </body>
 </html>
