@@ -19,7 +19,9 @@
   "homepage": "https://github.com/ChiefOfGxBxL/Ice-Sickle#readme",
   "dependencies": {
     "electron": "^1.4.15",
+    "electron-reload": "^1.1.0",
     "fs-extra": "^2.0.0",
+    "handlebars": "^4.0.8",
     "ieee754": "1.1.8",
     "mini.css": "^2.1.3"
   }
