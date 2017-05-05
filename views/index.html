@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title></title>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
-    <script
-      src="https://code.jquery.com/jquery-3.1.1.min.js"
-      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-      crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://gitcdn.link/repo/Chalarangelo/mini.css/master/dist/mini-default.min.css">
 
     <script>
-        var map,
-            Map = require('../scripts/Map.js');
+        var Map = require('../classes/Map.js');
     </script>
     <script>
         // Listen for events sent from window process
@@ -29,12 +25,7 @@
         ipcRenderer.on('open-project', (event, dir) => {
             Map.Load(dir);
 
-            // document.getElementById('map-name').innerText = map.project.name;
-            // document.getElementById('map-version').innerText = map.project.version;
-            // document.getElementById('map-author').innerText = map.project.authors[0].username;
-            // document.getElementById('map-description').innerText = map.project.description;
-            //
-            // document.getElementById('units').value = JSON.stringify(map.units).toString();
+            document.getElementById('map-name').innerText = Map.__Dir;
         });
 
         ipcRenderer.on('save-project', () => {
@@ -46,24 +37,15 @@
         });
     </script>
   </head>
-  <body>
-    <div class="ui two column stackable grid">
-      <div class="three wide column">
-        <div class="ui segment">
-            <img class="ui medium rounded image" src="http://placehold.it/350x350">
-            <br/>
-            <p id="map-name"></p>
-            <p id="map-version"></p>
-            <p id="map-author"></p>
-            <p id="map-description"></p>
+  <body class='container'>
+    <div class="row">
+        <div class="col-sm-2" style='border-right:1px SOLID #000;'>
+          <h1 id='map-name'></h1>
+          <img class="ui medium rounded image" src="http://placehold.it/350x350">
         </div>
-      </div>
-      <div class="thirteen wide column">
-        <div class="ui segment">
-            <textarea id="units"></textarea>
+        <div class="col-sm-10">
+          aaa
         </div>
-      </div>
     </div>
-
   </body>
 </html>
