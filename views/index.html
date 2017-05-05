@@ -23,9 +23,9 @@
         });
 
         ipcRenderer.on('open-project', (event, dir) => {
-            Map.Load(dir);
-
-            document.getElementById('map-name').innerText = Map.__Dir;
+            if(Map.Load(dir)) {
+                document.getElementById('map-name').innerText = Map.__Dir;
+            }
         });
 
         ipcRenderer.on('save-project', () => {
