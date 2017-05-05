@@ -62,9 +62,7 @@ var Map = {
     },
 
     Load: function(projectDir) {
-        console.log('Load map', projectDir);
         Map.__Dir = Path.resolve(projectDir);
-        console.log('Load dir', Map.__Dir);
 
         if(!fs.existsSync(Map.__Dir)) {
             window.alert('This map does not exist!');
