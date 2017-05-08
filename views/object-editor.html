@@ -6,6 +6,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://gitcdn.link/repo/Chalarangelo/mini.css/master/dist/mini-default.min.css">
+    <link rel="stylesheet" href="../assets/css/two-col-sel.css">
 
     <style>
         .object-edit-view > select {
@@ -17,18 +18,43 @@
         .object-edit-view > select:last-child {width:83%;}
     </style>
 
+    <script src='../assets/js/two-col-sel.js'></script>
     <script>
         var Map = require('../classes/Map.js');
-    </script>
-    <script>
-        window.addEventListener('load', function() {
-            var options = document.querySelectorAll('option');
+        var ObjectEditor = require('../classes/ObjectEditor.js');
 
-            for(var i = 0; i < options.length; i++) {
-                options[i].addEventListener('dblclick', function(e) {
-                    console.log(this.innerText);
-                });
+        // window.alert('Loaded ' + Object.keys(ObjectEditor.Data.Units).length + ' units');
+        // window.alert(JSON.stringify(ObjectEditor.Data.Units['hfoo']));
+    </script>
+    <script data-script-name="Units">
+        window.addEventListener('load', function() {
+            var unitList = document.getElementById('unit-list'),
+                unitEditList = document.getElementById('unit-edit-list');
+
+            // Events
+            function onUnitSelected(e) {
+                window.alert(e.target.innerText);
             }
+
+            // Fill the units list
+            Object.keys(ObjectEditor.Data.Units).forEach((unitId) => {
+                var newOption = document.createElement('option');
+                newOption.innerText = '(' + unitId + ') ' + ObjectEditor.Data.Units[unitId].name;
+                newOption.addEventListener('dblclick', onUnitSelected);
+                unitList.appendChild(newOption);
+            });
+
+            // Fill the units editing list with the Fields
+            Object.keys(ObjectEditor.Fields.Units).forEach((fieldKey) => {
+                var newOption = document.createElement('option'),
+                    field = ObjectEditor.Fields.Units[fieldKey];
+                
+                newOption.innerText = field.ID + ' [' + field.type + ']';
+                unitEditList.appendChild(newOption);
+            });
+
+            // Create the unit-edit-list as a two-column select
+            spaceSelect(unitEditList, 60);
         });
     </script>
   </head>
@@ -38,20 +64,25 @@
       <label for="tab1" aria-hidden="true">Units</label>
       <div class='object-edit-view'>
           <select id='unit-list' multiple>
-            <option>Value 1</option>
-            <option>Value 2</option>
-            <option>Value 3</option>
+
           </select>
           <select id='unit-edit-list' multiple>
-            <option>Value 1</option>
-            <option>Value 2</option>
-            <option>Value 3</option>
-            <option>Value 4</option>
-            <option>Value 5</option>
-            <option>Value 6</option>
-            <option>Value 7</option>
-            <option>Value 8</option>
-            <option>Value Infinity</option>
+
+            <!-- <optgroup label="Combat">
+                <option>Value 1|b1</option>
+                <option>Value 2|b2</option>
+                <option>Value 3|b3</option>
+            </optgroup>
+            <optgroup label="Movement">
+                <option data-modified>Value 4|b4</option>
+                <option>Value 5|b5</option>
+                <option>Value 6|b6</option>
+                <option>Value 7|B7</option>
+            </optgroup>
+            <optgroup label="Other">
+                <option>Value 8|b8</option>
+                <option>Value Infinity|b</option>
+            </optgroup> -->
           </select>
       </div>
 
