@@ -1,0 +1,7 @@
+select.two-col-sel option {
+    font-family:"Courier New", Courier, monospace;
+}
+
+select.two-col-sel option[data-modified] {
+  color: #dd00dd;
+}
