@@ -29,32 +29,120 @@
     <script data-script-name="Units">
         window.addEventListener('load', function() {
             var unitList = document.getElementById('unit-list'),
-                unitEditList = document.getElementById('unit-edit-list');
+                unitEditList = document.getElementById('unit-edit-list'),
 
-            // Events
+                unitFields = ObjectEditor.Fields.Units,
+                unitFieldElems = {}; // Stores all HTMLElements for <option> in unit edit list (key = unitID)
+
+            /*
+                Events
+            */
             function onUnitSelected(e) {
-                window.alert(e.target.innerText);
+                // The <option> value stores the unit ID to load
+                console.log('select unit', e.target.value)
+                selectBaseUnitIntoEditor(e.target.value);
+
+                // TODO: applyUnitModificationsToEditor
+                // modifications can be on a base unit or custom unit, caution!
             }
 
-            // Fill the units list
-            Object.keys(ObjectEditor.Data.Units).forEach((unitId) => {
-                var newOption = document.createElement('option');
-                newOption.innerText = '(' + unitId + ') ' + ObjectEditor.Data.Units[unitId].name;
-                newOption.addEventListener('dblclick', onUnitSelected);
-                unitList.appendChild(newOption);
-            });
+            /*
+                Functions
+            */
+            function populateUnitsList() {
+                // Fill the units list
+                Object.keys(ObjectEditor.Data.Units).forEach((unitId) => {
+                    var newOption = document.createElement('option');
+                    newOption.value = unitId;
+                    newOption.innerText = '(' + unitId + ') ' + ObjectEditor.Data.Units[unitId].name;
+                    newOption.addEventListener('dblclick', onUnitSelected);
 
-            // Fill the units editing list with the Fields
-            Object.keys(ObjectEditor.Fields.Units).forEach((fieldKey) => {
-                var newOption = document.createElement('option'),
-                    field = ObjectEditor.Fields.Units[fieldKey];
-                
-                newOption.innerText = field.ID + ' [' + field.type + ']';
-                unitEditList.appendChild(newOption);
-            });
+                    unitList.appendChild(newOption);
+                });
+
+                // TODO: custom units listed, too
+            }
+
+            function populateUnitFieldsList() {
+                // Fill the units editing list with the Fields
+                Object.keys(ObjectEditor.Fields.Units).forEach((fieldKey) => {
+                    var newOption = document.createElement('option'),
+                        field = ObjectEditor.Fields.Units[fieldKey];
+
+                    newOption.value = fieldKey;
+                    newOption.innerText = field.ID + ' | ' + field.minVal;
+
+                    newOption.setAttribute('data-id', field.ID);
+                    newOption.setAttribute('data-min', field.minVal);
+                    newOption.setAttribute('data-max', field.maxVal);
+
+                    unitFieldElems[fieldKey] = newOption; // Keep track in unit field obj
+                    unitEditList.appendChild(newOption);
+                });
+            }
+
+            function selectBaseUnitIntoEditor(unitId) {
+                var objEditorUnit = ObjectEditor.Data.Units[unitId];
+
+                // TODO: do not assume that a base unit is un-modified
+                // -> the user may have modified a base unit!
+
+                // Reset unit-edit list
+                Object.keys(unitFieldElems).forEach((fieldKey) => {
+                    var fieldElem = unitFieldElems[fieldKey];
+
+                    fieldElem.removeAttribute('data-modified');
+                    fieldElem.innerText =
+                        fieldElem.getAttribute('data-id') + ' | ' + '';
+                });
+
+                // Set object attributes
+                Object.keys(objEditorUnit).forEach((unitDataKey) => {
+                    var fieldId = ObjectEditor.Find.UnitFieldIdByLongName(unitDataKey),
+                        fieldElem = unitFieldElems[fieldId];
+
+                    // Set the <option> elem
+                    if(fieldElem) {
+                        fieldElem.innerText =
+                            fieldElem.getAttribute('data-id') + ' | ' + objEditorUnit[unitDataKey];
+                    }
+                });
+
+                refreshUnitEditList();
+            }
+
+            function applyUnitModificationsToEditor(unitId, unitChanges) {
+                // From the Map.units array, we select a unit to load
+                // and the changes are shown in the editor
+                // TODO: isCustomUnit? apply modifications
+
+                unitChanges.forEach((change) => { // See WC3Translator spec
+                    // { "id": "umvs", "value": 500 }
+                    var optionElem = unitFieldElems[change.id],
+                        isValueModified = true; // TODO: Is the value not the default field value?
+
+                    optionElem.innerText =
+                        optionElem.getAttribute('ID') + ' | ' +
+                        objEditorUnit[unitAttr];
+
+                    if(isValueModified) {
+                        optionElem.setAttribute('data-modified', 'true');
+                    }
+                })
+            }
+
+            function refreshUnitEditList() {
+                // Re-style the unit edit list
+                spaceSelect(unitEditList, 60);
+            }
+
+
+            // Init
+            populateUnitsList();
+            populateUnitFieldsList();
 
             // Create the unit-edit-list as a two-column select
-            spaceSelect(unitEditList, 60);
+            refreshUnitEditList();
         });
     </script>
   </head>
