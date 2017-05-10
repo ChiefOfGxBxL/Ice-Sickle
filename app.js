@@ -11,6 +11,11 @@ const Handlebars = require('handlebars');
 var Settings = require('./classes/Settings');
 Settings.Load(app.getAppPath());
 
+// Global variables across windows
+global.globals = {
+    AppName: 'Ice-Sickle'
+};
+
 // Stores references to all open windows; key = file name (e.g. index.html)
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
