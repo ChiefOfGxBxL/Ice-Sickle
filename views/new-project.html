@@ -11,19 +11,17 @@
     </style>
 
     <script>
-        const {ipcRenderer} = require('electron');
-
-        function submit() {
+        function createNewMap() {
             ipcRenderer.send('create-new-project', {
-                name: document.getElementById('name').value,
-                author: document.getElementById('author').value,
-                description: document.getElementById('description').value
+                name: document.getElementById('name').value
+                // author: document.getElementById('author').value,
+                // description: document.getElementById('description').value
             });
         }
     </script>
   </head>
   <body>
-    <form>
+    <form onsubmit='return false;'>
         <div class="input-group fluid">
           <label>
               Name
@@ -142,7 +140,7 @@
 
         <div style='float:right;'>
             <button onclick='window.close()'>Cancel</button>
-            <button class="primary" onclick='submit()'>Submit</button>
+            <button onclick='createNewMap()' class="primary">Submit</button>
         </div>
 
         <div style='clear:both;'></div>
