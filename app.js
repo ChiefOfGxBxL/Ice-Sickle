@@ -67,6 +67,8 @@ function OpenNewWindow(view, options) {
         addlData
     );
 
+    newWindow.webContents.openDevTools();
+
     // Iterate over events and add a new one to the window for each
     if(options.events) {
         Object.keys(options.events).forEach((event) => {
