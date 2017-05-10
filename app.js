@@ -31,6 +31,12 @@ function OpenNewWindow(view, options) {
         view.endsWith('.handlebars') ||
         options.template; // if we provide a template to an HTML file
 
+    // Set preload on all windows to run the global-script
+    // so globals are available to every window via `globals` variable
+    options.webPreferences = {
+        preload: path.join(__dirname, 'preload.js')
+    };
+
     var newWindow = new BrowserWindow(options); // Create a new window
     windows[view] = newWindow; // Register the new window
 
