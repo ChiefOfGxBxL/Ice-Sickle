@@ -112,6 +112,9 @@ var template = [
             }, function(projects) {
                 // should only be one project selected
                 if(projects) {
+                    // Load and store the Map here in the app
+                    Map.Load(projects[0]);
+
                     // Tell any renderer processes that a map load request has been initiated
                     windows.root.webContents.send('open-project', projects[0]);
 
@@ -203,6 +206,7 @@ Settings.recentMaps.forEach((recentMap) => {
         label: mapName,
         sublabel: recentMap,
         click(entry) {
+            Map.Load(entry.sublabel);
             windows.root.webContents.send('open-project', entry.sublabel);
         }
     });
