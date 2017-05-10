@@ -22,6 +22,10 @@ var ObjectEditor = {
 
             // console.error('Unable to lookup unit field by long name:', longName);
             return null; // Unable to find by long name
+        },
+        UnitFieldLongNameById: function(id) {
+            // e.g. ubdi -> bountydice
+            return ObjectEditor.Fields.Units[id].field;
         }
     }
 }
