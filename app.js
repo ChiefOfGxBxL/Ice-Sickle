@@ -7,6 +7,9 @@ const Handlebars = require('handlebars');
 // Automatically reloads view if source is changed
 // require('electron-reload')(__dirname);
 
+// Store Map in app
+var Map = require('./classes/Map');
+
 // Initialize global settings
 var Settings = require('./classes/Settings');
 Settings.Load(app.getAppPath());
@@ -235,6 +238,16 @@ function createWindow () {
         console.log(data);
         windows.root.webContents.send('create-new-project', data);
     });
+
+    ipcMain.on('request-project', (event, data) => {
+        event.sender.webContents.send('response-project', Map);
+    });
+
+    // ipcMain.on('patch-project', (event, data) => {
+    //     Map[data.field] = data.data;
+    //     console.log('updated map field ' + data.field);
+    //     console.log(Map);
+    // });
 
     // Emitted when the window is closed.
     windows.root.on('closed', () => {
