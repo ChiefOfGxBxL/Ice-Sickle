@@ -6,30 +6,47 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://gitcdn.link/repo/Chalarangelo/mini.css/master/dist/mini-default.min.css">
-    <link rel="stylesheet" href="../assets/css/two-col-sel.css">
 
     <style>
-        .object-edit-view > select {
+        select {
             padding: 0px;
             height: 100%;
             float: left;
         }
-        .object-edit-view > select:first-child {width:15%;}
-        .object-edit-view > select:last-child {width:83%;}
+        select:first-child {width:15%;}
+        select:last-child {width:83%;}
+        select option { font-family: monospace; }
+
+        select option[data-modified] {
+            color: #dd00dd;
+        }
     </style>
 
-    <script src='../assets/js/two-col-sel.js'></script>
     <script>
-        var Map = require('../classes/Map.js');
+        var Map;
+
+        const {ipcRenderer} = require('electron');
+        ipcRenderer.send('request-project', {});
+        ipcRenderer.on('response-project', function(a, map) {
+            Map = map;
+            // ipcRenderer.send('patch-project', {field: 'units', data: ['new unit']})
+        })
+
+        //var Map = require('../classes/Map.js');
         var ObjectEditor = require('../classes/ObjectEditor.js');
+        var ListView = require('../classes/Listview.js');
 
         // window.alert('Loaded ' + Object.keys(ObjectEditor.Data.Units).length + ' units');
         // window.alert(JSON.stringify(ObjectEditor.Data.Units['hfoo']));
     </script>
     <script data-script-name="Units">
         window.addEventListener('load', function() {
-            var unitList = document.getElementById('unit-list'),
-                unitEditList = document.getElementById('unit-edit-list'),
+            var unitEditor = document.getElementById('unit-editor'),
+                unitList = document.getElementById('unit-list'),
+                unitFieldList = document.getElementById('unit-field-list'),
+
+                unitListView,
+                unitFieldListView,
 
                 unitFields = ObjectEditor.Fields.Units,
                 unitFieldElems = {}; // Stores all HTMLElements for <option> in unit edit list (key = unitID)
@@ -39,11 +56,8 @@
             */
             function onUnitSelected(e) {
                 // The <option> value stores the unit ID to load
-                console.log('select unit', e.target.value)
-                selectBaseUnitIntoEditor(e.target.value);
-
-                // TODO: applyUnitModificationsToEditor
-                // modifications can be on a base unit or custom unit, caution!
+                console.log('select unit', e.target.getAttribute('data-id'));
+                selectUnitIntoEditor(e.target.getAttribute('data-id'));
             }
 
             /*
@@ -51,127 +65,132 @@
             */
             function populateUnitsList() {
                 // Fill the units list
-                Object.keys(ObjectEditor.Data.Units).forEach((unitId) => {
-                    var newOption = document.createElement('option');
-                    newOption.value = unitId;
-                    newOption.innerText = '(' + unitId + ') ' + ObjectEditor.Data.Units[unitId].name;
-                    newOption.addEventListener('dblclick', onUnitSelected);
+                var unitData = [];
 
-                    unitList.appendChild(newOption);
+                // List original units
+                Object.keys(ObjectEditor.Data.Units).forEach((unitId) => {
+                    var listViewItem = {
+                        label: '(' + unitId + ') ' + ObjectEditor.Data.Units[unitId].name,
+                        value: '',
+                        data: {
+                            id: unitId
+                        }
+                    }
+
+                    if(Map.objects.units.original[unitId]) {
+                        // modifications exist for this base unit
+                        // set data-modified on element (colored pink via CSS)
+                        listViewItem.data.modified = true;
+                    }
+
+                    unitData.push(listViewItem);
                 });
 
-                // TODO: custom units listed, too
-            }
+                // List custom units
+                Object.keys(Map.objects.units.custom).forEach((customUnitId) => {
+                    // customUnitId is of the form <newId>:<baseId> (e.g. h000:hfoo)
+                    var unitIds = customUnitId.split(':'),
+                        listViewItem = {
+                            label: '(' + customUnitId + ') ',
+                            value: '',
+                            data: {
+                                id: customUnitId,
+                                baseId: unitIds[1],
+                                newId: unitIds[0],
+                                modified: true // modifications always exist for a custom unit
+                            }
+                        };
 
+                    unitData.push(listViewItem);
+                });
+
+                // Append element
+                unitListView = new ListView(unitData, {
+                    onDblClick: onUnitSelected
+                });
+
+                unitEditor.appendChild(unitListView.HTMLElement);
+            }
             function populateUnitFieldsList() {
                 // Fill the units editing list with the Fields
+                var unitFieldData = [];
+
                 Object.keys(ObjectEditor.Fields.Units).forEach((fieldKey) => {
-                    var newOption = document.createElement('option'),
-                        field = ObjectEditor.Fields.Units[fieldKey];
+                    var field = ObjectEditor.Fields.Units[fieldKey];
 
-                    newOption.value = fieldKey;
-                    newOption.innerText = field.ID + ' | ' + field.minVal;
-
-                    newOption.setAttribute('data-id', field.ID);
-                    newOption.setAttribute('data-min', field.minVal);
-                    newOption.setAttribute('data-max', field.maxVal);
-
-                    unitFieldElems[fieldKey] = newOption; // Keep track in unit field obj
-                    unitEditList.appendChild(newOption);
+                    unitFieldData.push({
+                        label: field.ID,
+                        value: field.minVal,
+                        data: {
+                            id: field.ID,
+                            min: field.minVal,
+                            max: field.maxVal
+                        }
+                    });
                 });
+
+                // Append element
+                unitFieldListView = new ListView(unitFieldData);
+
+                unitEditor.appendChild(unitFieldListView.HTMLElement);
             }
 
-            function selectBaseUnitIntoEditor(unitId) {
-                var objEditorUnit = ObjectEditor.Data.Units[unitId];
+            function selectUnitIntoEditor(unitId) {
+                var isCustomUnit = unitId.indexOf(':') !== -1,
+                    baseUnitId = (isCustomUnit) ?
+                        unitId.split(':')[1] : unitId,
+                    baseUnit = ObjectEditor.Data.Units[baseUnitId],
+                    baseUnitFields = [];
 
-                // TODO: do not assume that a base unit is un-modified
-                // -> the user may have modified a base unit!
+                // Re-generate the list view items
+                Object.keys(unitFields).forEach((fieldKey) => {
+                    var value = baseUnit[ObjectEditor.Find.UnitFieldLongNameById(fieldKey)],
+                        isAttrModified = false,
+                        listViewItem = {
+                            label: fieldKey,
+                            data: {}
+                        };
 
-                // Reset unit-edit list
-                Object.keys(unitFieldElems).forEach((fieldKey) => {
-                    var fieldElem = unitFieldElems[fieldKey];
+                    var objectTable = (isCustomUnit) ?
+                        Map.objects.units.custom :
+                        Map.objects.units.original;
 
-                    fieldElem.removeAttribute('data-modified');
-                    fieldElem.innerText =
-                        fieldElem.getAttribute('data-id') + ' | ' + '';
-                });
+                    if(objectTable[unitId]) {
+                        // We have changes, so find if a change is made
+                        // to the current attribute
+                        var modifiedField = objectTable[unitId].find((mod) => {
+                            return mod.id === fieldKey;
+                        });
 
-                // Set object attributes
-                Object.keys(objEditorUnit).forEach((unitDataKey) => {
-                    var fieldId = ObjectEditor.Find.UnitFieldIdByLongName(unitDataKey),
-                        fieldElem = unitFieldElems[fieldId];
-
-                    // Set the <option> elem
-                    if(fieldElem) {
-                        fieldElem.innerText =
-                            fieldElem.getAttribute('data-id') + ' | ' + objEditorUnit[unitDataKey];
+                        if(modifiedField) {
+                            isAttrModified = true;
+                            value = modifiedField.value;
+                        }
                     }
+
+                    if(isAttrModified) listViewItem.data.modified = true;
+
+                    listViewItem.value = value;
+                    baseUnitFields.push(listViewItem);
                 });
 
-                refreshUnitEditList();
+                unitFieldListView.Clear();
+                unitFieldListView.Add(baseUnitFields);
             }
-
-            function applyUnitModificationsToEditor(unitId, unitChanges) {
-                // From the Map.units array, we select a unit to load
-                // and the changes are shown in the editor
-                // TODO: isCustomUnit? apply modifications
-
-                unitChanges.forEach((change) => { // See WC3Translator spec
-                    // { "id": "umvs", "value": 500 }
-                    var optionElem = unitFieldElems[change.id],
-                        isValueModified = true; // TODO: Is the value not the default field value?
-
-                    optionElem.innerText =
-                        optionElem.getAttribute('ID') + ' | ' +
-                        objEditorUnit[unitAttr];
-
-                    if(isValueModified) {
-                        optionElem.setAttribute('data-modified', 'true');
-                    }
-                })
-            }
-
-            function refreshUnitEditList() {
-                // Re-style the unit edit list
-                spaceSelect(unitEditList, 60);
-            }
-
 
             // Init
             populateUnitsList();
             populateUnitFieldsList();
-
-            // Create the unit-edit-list as a two-column select
-            refreshUnitEditList();
         });
     </script>
   </head>
   <body>
     <div class="tabs">
+
       <input type="radio" name="tab-group" id="tab1" checked aria-hidden="true">
       <label for="tab1" aria-hidden="true">Units</label>
-      <div class='object-edit-view'>
-          <select id='unit-list' multiple>
+      <div id='unit-editor' class='object-edit-view'>
 
-          </select>
-          <select id='unit-edit-list' multiple>
-
-            <!-- <optgroup label="Combat">
-                <option>Value 1|b1</option>
-                <option>Value 2|b2</option>
-                <option>Value 3|b3</option>
-            </optgroup>
-            <optgroup label="Movement">
-                <option data-modified>Value 4|b4</option>
-                <option>Value 5|b5</option>
-                <option>Value 6|b6</option>
-                <option>Value 7|B7</option>
-            </optgroup>
-            <optgroup label="Other">
-                <option>Value 8|b8</option>
-                <option>Value Infinity|b</option>
-            </optgroup> -->
-          </select>
       </div>
 
       <input type="radio" name="tab-group" id="tab2" aria-hidden="true">
