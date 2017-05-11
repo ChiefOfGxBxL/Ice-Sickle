@@ -81,7 +81,7 @@ function OpenNewWindow(view, options) {
 
     // We always handle the closed event
     newWindow.on('closed', () => {
-        windows[view] = null;
+        delete windows[view];
     });
 }
 
