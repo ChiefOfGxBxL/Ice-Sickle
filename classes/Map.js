@@ -62,6 +62,9 @@ var Map = {
     },
 
     Load: function(projectDir) {
+        // TODO: verify this is a valid Ice-Sickle project by checking for
+        // presence of info.json, .sickle file, etc.
+        
         Map.__Dir = Path.resolve(projectDir);
 
         if(!fs.existsSync(Map.__Dir)) {
