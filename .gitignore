@@ -2,3 +2,6 @@ node_modules
 Notepad++ Session
 .idea
 settings.json
+
+# Test maps which may be in the root directory
+map2
