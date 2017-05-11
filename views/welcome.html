@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Ice Sickle - Welcome</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://gitcdn.link/repo/Chalarangelo/mini.css/master/dist/mini-default.min.css">
+    <style>
+        body { text-align: center; }
+        #main { padding: 0 50px; }
+
+        h2 > small { margin-top:5px; }
+
+        a.btn {
+            display: block;
+            padding: 12px;
+            background-color: #eee;
+            border: 1px SOLID #ccc;
+            border-radius: 2px;
+            margin: 10px 0;
+            text-align: left;
+            color: #444;
+            text-decoration: none;
+        }
+
+        a.btn.block {
+            display: inline-block;
+            width: 35%;
+            margin-right: 10px;
+        }
+
+        a.disabled {
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        span.fa { padding: 0 10px; }
+        i.fa { padding: 0 2px; }
+    </style>
+    <script>
+        const {ipcRenderer} = require('electron');
+
+        ipcRenderer.on('project-loaded', () => {
+            // We've loaded a project so we can close the Getting Started menu
+            window.close();
+        });
+
+        function createNewProject() {
+            ipcRenderer.send('request-new-project', {});
+        }
+
+        function openProject() {
+            ipcRenderer.send('request-open-project', {});
+        }
+
+        function loadProject(path) {
+            ipcRenderer.send('load-project', {path: path});
+        }
+    </script>
+  </head>
+  <body>
+
+    <h2>
+        Ice Sickle
+        <small>The next-generation World Editor</small>
+    </h2>
+
+    <div id='main'>
+        <a href='#' class='btn' onclick='createNewProject()'>
+            <span class='fa fa-circle-o'></span>
+            Create a new project
+        </a>
+        <a href='#' class='btn' onclick='openProject()'>
+            <span class='fa fa-folder-open'></span>
+            Open a project
+        </a>
+        <a href='#' class='btn disabled'>
+            <span class='fa fa-puzzle-piece'></span>
+            Install plugins
+        </a>
+        <a href='#' class='btn disabled'>
+            <span class='fa fa-cogs'></span>
+            Customize app
+        </a>
+        <a href='#' class='btn disabled'>
+            <span class='fa fa-book'></span>
+            Read documentation
+        </a>
+
+        <hr/>
+        <h2>Recent projects</h2>
+
+        <div style='min-height:139px;'>
+        {{#each recent}}
+            <a href='#' class='btn block' onclick='loadProject("{{path}}")'>{{name}}</a>
+        {{/each}}
+        </div>
+    </div>
+
+    <footer>
+         <small>Built with <i class='fa fa-heart'></i> by modders</small><br/>
+         <small>Open source &middot; Hackable &middot; Powerful</small>
+    </footer>
+  </body>
+</html>
