@@ -102,19 +102,22 @@ function OpenProjectWindow() {
         // should only be one project selected
         if(projects) {
             // Load and store the Map here in the app
-            Map.Load(projects[0]);
+            if(Map.Load(projects[0])) { // Map loaded successfully
+                // Tell any renderer processes that a map load request has been initiated
+                windows.root.webContents.send('open-project', projects[0]);
+                BroadcastEvent('project-loaded', Map);
 
-            // Tell any renderer processes that a map load request has been initiated
-            windows.root.webContents.send('open-project', projects[0]);
-            BroadcastEvent('project-loaded', Map);
+                // Store the project in recently-loaded settings
+                if(Settings.recentMaps.indexOf(projects[0]) === -1) {
+                    Settings.recentMaps.push(projects[0]);
+                    Settings.Save();
+                }
 
-            // Store the project in recently-loaded settings
-            if(Settings.recentMaps.indexOf(projects[0]) === -1) {
-                Settings.recentMaps.push(projects[0]);
-                Settings.Save();
+                return true;
             }
-
-            return true;
+            else {
+                return false;
+            }
         }
 
         return false;
@@ -122,8 +125,13 @@ function OpenProjectWindow() {
 }
 
 function LoadProject(projectPath) {
-    Map.Load(projectPath);
-    windows.root.webContents.send('open-project', projectPath);
+    if(Map.Load(projectPath)) {
+        windows.root.webContents.send('open-project', projectPath);
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 var template = [
@@ -243,8 +251,9 @@ const EventHandlers = {
     },
     'load-project': function(event, data) {
         console.log(data);
-        LoadProject(data.path);
-        BroadcastEvent('project-loaded', Map);
+        if(LoadProject(data.path)) {
+            BroadcastEvent('project-loaded', Map);
+        }
     },
     'request-project': function(event, data) {
         // Send the Map back to the requesting window
