@@ -11,6 +11,8 @@
     </style>
 
     <script>
+        var {ipcRenderer} = require('electron');
+
         function createNewMap() {
             ipcRenderer.send('create-new-project', {
                 name: document.getElementById('name').value
