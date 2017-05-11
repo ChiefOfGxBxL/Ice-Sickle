@@ -22,9 +22,7 @@ global.globals = {
 // Stores references to all open windows; key = file name (e.g. index.html)
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let windows = {
-    //root:
-};
+let windows = {}; // Always contains 'root'
 
 function OpenNewWindow(view, options) {
     // If the window is already open and multiple are not allowed,
@@ -87,6 +85,47 @@ function OpenNewWindow(view, options) {
     });
 }
 
+function CreateNewProjectWindow() {
+    OpenNewWindow('new-project.html', {
+        width: 320, height: 540,
+        parent: windows.root, modal: true,
+        frame: false
+    });
+}
+
+function OpenProjectWindow() {
+    dialog.showOpenDialog({
+        title: 'Open project',
+        defaultPath: app.getAppPath(),
+        properties: ['openDirectory']
+    }, function(projects) {
+        // should only be one project selected
+        if(projects) {
+            // Load and store the Map here in the app
+            Map.Load(projects[0]);
+
+            // Tell any renderer processes that a map load request has been initiated
+            windows.root.webContents.send('open-project', projects[0]);
+            BroadcastEvent('project-loaded', Map);
+
+            // Store the project in recently-loaded settings
+            if(Settings.recentMaps.indexOf(projects[0]) === -1) {
+                Settings.recentMaps.push(projects[0]);
+                Settings.Save();
+            }
+
+            return true;
+        }
+
+        return false;
+    });
+}
+
+function LoadProject(projectPath) {
+    Map.Load(projectPath);
+    windows.root.webContents.send('open-project', projectPath);
+}
+
 var template = [
   {
     label: 'File',
@@ -96,11 +135,7 @@ var template = [
         sublabel: 'Create a new project',
         role: 'new',
         click () {
-            OpenNewWindow('new-project.html', {
-                width: 320, height: 540,
-                parent: windows.root, modal: true,
-                frame: false
-            });
+            CreateNewProjectWindow();
         }
       },
       {
@@ -108,26 +143,7 @@ var template = [
         sublabel: 'Open a project',
         role: 'open',
         click () {
-            dialog.showOpenDialog({
-                title: 'Open project',
-                defaultPath: app.getAppPath(),
-                properties: ['openDirectory']
-            }, function(projects) {
-                // should only be one project selected
-                if(projects) {
-                    // Load and store the Map here in the app
-                    Map.Load(projects[0]);
-
-                    // Tell any renderer processes that a map load request has been initiated
-                    windows.root.webContents.send('open-project', projects[0]);
-
-                    // Store the project in recently-loaded settings
-                    if(Settings.recentMaps.indexOf(projects[0]) === -1) {
-                        Settings.recentMaps.push(projects[0]);
-                        Settings.Save();
-                    }
-                }
-            });
+            OpenProjectWindow();
         },
       },
       {
@@ -209,11 +225,45 @@ Settings.recentMaps.forEach((recentMap) => {
         label: mapName,
         sublabel: recentMap,
         click(entry) {
-            Map.Load(entry.sublabel);
-            windows.root.webContents.send('open-project', entry.sublabel);
+            LoadProject(entry.sublabel);
         }
     });
 })
+
+const EventHandlers = {
+    'create-new-project': function(event, data) {
+        console.log(data);
+        windows.root.webContents.send('create-new-project', data);
+    },
+    'request-new-project': function() {
+        CreateNewProjectWindow();
+    },
+    'request-open-project': function() {
+        OpenProjectWindow();
+    },
+    'load-project': function(event, data) {
+        console.log(data);
+        LoadProject(data.path);
+        BroadcastEvent('project-loaded', Map);
+    },
+    'request-project': function(event, data) {
+        // Send the Map back to the requesting window
+        event.sender.webContents.send('response-project', Map);
+    },
+    // 'patch-project': function(event, data) {
+    //     Map[data.field] = data.data;
+    //     console.log('updated map field ' + data.field);
+    //     console.log(Map);
+    // }
+}
+
+function BroadcastEvent(eventName, data) {
+    console.log('[! Event ]', eventName);
+
+    Object.keys(windows).forEach((window) => {
+        windows[window].webContents.send(eventName, data);
+    })
+}
 
 function createWindow () {
     // Create the browser window.
@@ -233,21 +283,10 @@ function createWindow () {
     // Open the DevTools.
     windows.root.webContents.openDevTools();
 
-    // Received message from new-project menu
-    ipcMain.on('create-new-project', (event, data) => {
-        console.log(data);
-        windows.root.webContents.send('create-new-project', data);
+    // Register IPC events
+    Object.keys(EventHandlers).forEach((eventKey) => {
+        ipcMain.on(eventKey, EventHandlers[eventKey]);
     });
-
-    ipcMain.on('request-project', (event, data) => {
-        event.sender.webContents.send('response-project', Map);
-    });
-
-    // ipcMain.on('patch-project', (event, data) => {
-    //     Map[data.field] = data.data;
-    //     console.log('updated map field ' + data.field);
-    //     console.log(Map);
-    // });
 
     // Emitted when the window is closed.
     windows.root.on('closed', () => {
@@ -262,7 +301,25 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
+    // Create main window
     createWindow();
+
+    // Open welcome dialog
+    OpenNewWindow('welcome.html', {
+        parent: windows.root,
+        modal: true,
+        frame: false,
+        width: 660,
+        height: 685,
+        template: {
+            recent: Settings.recentMaps.map((dir) => {
+                return {
+                    name: dir.split('\\').reverse()[0],
+                    path: dir.replace(/\\/g, "\\\\")
+                }
+            })
+        }
+    });
 
     // The hbs:// protocol is used to render handlebars files
     // See http://stackoverflow.com/a/41368514 for more details
@@ -295,6 +352,7 @@ app.on('window-all-closed', () => {
     }
 })
 
+// MacOS dock support
 app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
