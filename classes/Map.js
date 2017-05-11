@@ -65,7 +65,7 @@ var Map = {
         Map.__Dir = Path.resolve(projectDir);
 
         if(!fs.existsSync(Map.__Dir)) {
-            window.alert('This map does not exist!');
+            console.error('This map does not exist!', Map.__Dir);
             return false;
         }
 
