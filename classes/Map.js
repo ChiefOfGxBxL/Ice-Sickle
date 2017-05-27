@@ -64,11 +64,12 @@ var Map = {
     Load: function(projectDir) {
         // TODO: verify this is a valid Ice-Sickle project by checking for
         // presence of info.json, .sickle file, etc.
-        
-        Map.__Dir = Path.resolve(projectDir);
+        var mapObj = {objects: {}};
 
-        if(!fs.existsSync(Map.__Dir)) {
-            console.error('This map does not exist!', Map.__Dir);
+        mapObj.__Dir = Path.resolve(projectDir);
+
+        if(!fs.existsSync(mapObj.__Dir)) {
+            console.error('This map does not exist!', mapObj.__Dir);
             return false;
         }
 
@@ -83,62 +84,62 @@ var Map = {
         }
 
         // Clear the global map when we are loading a new one
-        Map.info =                  loadJson('info.json', {});
-        Map.units =                 loadJson('units.json', []);
-        Map.doodads =               loadJson('doodads.json', []);
-        Map.terrain =               loadJson('terrain.json', {});
-        Map.regions =               loadJson('regions.json', []);
-        Map.cameras =               loadJson('cameras.json', []);
-        Map.sounds =                loadJson('sounds.json', []);
-        Map.objects.units =         loadJson('objects/units.json', {});
-        Map.objects.items =         loadJson('objects/items.json', {});
-        Map.objects.destructables = loadJson('objects/destructables.json', {});
-        Map.objects.doodads =       loadJson('objects/doodads.json', {});
-        Map.objects.abilities =     loadJson('objects/abilities.json', {});
-        Map.objects.buffs =         loadJson('objects/buffs.json', {});
-        Map.objects.upgrades =      loadJson('objects/upgrades.json', {});
-        Map.imports =               loadJson('imports.json', []);
-        Map.strings =               loadJson('strings.json', {});
+        mapObj.info =                  loadJson('info.json', {});
+        mapObj.units =                 loadJson('units.json', []);
+        mapObj.doodads =               loadJson('doodads.json', []);
+        mapObj.terrain =               loadJson('terrain.json', {});
+        mapObj.regions =               loadJson('regions.json', []);
+        mapObj.cameras =               loadJson('cameras.json', []);
+        mapObj.sounds =                loadJson('sounds.json', []);
+        mapObj.objects.units =         loadJson('objects/units.json', {});
+        mapObj.objects.items =         loadJson('objects/items.json', {});
+        mapObj.objects.destructables = loadJson('objects/destructables.json', {});
+        mapObj.objects.doodads =       loadJson('objects/doodads.json', {});
+        mapObj.objects.abilities =     loadJson('objects/abilities.json', {});
+        mapObj.objects.buffs =         loadJson('objects/buffs.json', {});
+        mapObj.objects.upgrades =      loadJson('objects/upgrades.json', {});
+        mapObj.imports =               loadJson('imports.json', []);
+        mapObj.strings =               loadJson('strings.json', {});
 
-        console.log("Loading project: " + Map.info.name);
+        console.log("Loading project: " + mapObj.info.name);
         console.log(" @ " + projectDir);
 
-        return this; // in case the calling function wants the instance right away
+        return mapObj; // in case the calling function wants the instance right away
     },
 
-    Save: function() {
+    Save: function(mapObj) {
         // No map is open to save
-        if(!Map.__Dir) return false;
+        //if(!Map.__Dir) return false;
 
         // Takes the global map object and dumps it into its separate project files
         var writeJson = function(file, data) {
-            console.log('Writing file to', Path.resolve(Map.__Dir, file));
+            console.log('Writing file to', Path.resolve(mapObj.__Dir, file));
 
             fs.outputJsonSync(
-                Path.resolve(Map.__Dir, file),
+                Path.resolve(mapObj.__Dir, file),
                 data
             ); // Overwrites, and ensures file exists
         };
 
-        writeJson('info.json', Map.info);
-        writeJson('units.json', Map.units);
-        writeJson('doodads.json', Map.doodads);
-        writeJson('terrain.json', Map.terrain);
-        writeJson('regions.json', Map.regions);
-        writeJson('cameras.json', Map.cameras);
-        writeJson('sounds.json', Map.sounds);
-        writeJson('/objects/units.json', Map.objects.units);
-        writeJson('/objects/items.json', Map.objects.items);
-        writeJson('/objects/destructables.json', Map.objects.destructables);
-        writeJson('/objects/doodads.json', Map.objects.doodads);
-        writeJson('/objects/abilities.json', Map.objects.abilities);
-        writeJson('/objects/buffs.json', Map.objects.buffs);
-        writeJson('/objects/upgrades.json', Map.objects.upgrades);
-        writeJson('imports.json', Map.imports);
-        writeJson('strings.json', Map.strings);
+        writeJson('info.json',                   mapObj.info);
+        writeJson('units.json',                  mapObj.units);
+        writeJson('doodads.json',                mapObj.doodads);
+        writeJson('terrain.json',                mapObj.terrain);
+        writeJson('regions.json',                mapObj.regions);
+        writeJson('cameras.json',                mapObj.cameras);
+        writeJson('sounds.json',                 mapObj.sounds);
+        writeJson('objects/units.json',          mapObj.objects.units);
+        writeJson('objects/items.json',          mapObj.objects.items);
+        writeJson('objects/destructables.json',  mapObj.objects.destructables);
+        writeJson('objects/doodads.json',        mapObj.objects.doodads);
+        writeJson('objects/abilities.json',      mapObj.objects.abilities);
+        writeJson('objects/buffs.json',          mapObj.objects.buffs);
+        writeJson('objects/upgrades.json',       mapObj.objects.upgrades);
+        writeJson('imports.json',                mapObj.imports);
+        writeJson('strings.json',                mapObj.strings);
 
-        console.log("Saved map " + Map.info.name);
-        console.log(" @ " + Map.__Dir);
+        console.log("Saved map " + mapObj.info.name);
+        console.log(" @ " + mapObj.__Dir);
         return this;
     },
 

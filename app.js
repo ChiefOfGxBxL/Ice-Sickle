@@ -9,6 +9,7 @@ const Handlebars = require('handlebars');
 
 // Store Map in app
 var Map = require('./classes/Map');
+var mapObj;
 
 // Initialize global settings
 var Settings = require('./classes/Settings');
@@ -258,7 +259,6 @@ Settings.recentMaps.forEach((recentMap) => {
 
 const EventHandlers = {
     'create-new-project': function(event, data) {
-        console.log(data);
         windows.root.webContents.send('create-new-project', data);
     },
     'request-new-project': function() {
@@ -267,15 +267,20 @@ const EventHandlers = {
     'request-open-project': function() {
         OpenProjectWindow();
     },
+    'request-save-project': function() {
+        Map.Save(mapObj);
+    },
+    'request-open-project-map': function(event, dir) {
+        mapObj = Map.Load(dir);
+    },
     'load-project': function(event, data) {
-        console.log(data);
         if(LoadProject(data.path)) {
             BroadcastEvent('project-loaded', Map);
         }
     },
     'request-project': function(event, data) {
         // Send the Map back to the requesting window
-        event.sender.webContents.send('response-project', Map);
+        event.sender.webContents.send('response-project', mapObj);
     },
     'request-user-input': function(event, data) {
         var inputViewPath = 'input/' + data.type + '.html';
