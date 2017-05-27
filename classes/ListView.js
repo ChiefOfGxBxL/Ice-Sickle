@@ -26,6 +26,11 @@ function createNewItem(item, events, size) {
         Object.keys(item.data).forEach((dataKey) => {
             option.setAttribute('data-' + dataKey, item.data[dataKey]);
         });
+
+        // Also check if the value is modified from its 'default' value
+        if(item.data.default && item.value !== item.data.default) {
+            option.setAttribute('data-modified', 'true');
+        }
     }
 
     if(events) {
@@ -55,29 +60,7 @@ class ListView {
 
         // Create the elements, and format
         this.Items = startElements || [];
-        this.Items.forEach((item) => {
-            var newItem = createNewItem(item, this.events);
-
-            if(item.group) {
-                // Append element to correct group
-                if(this.groups[item.group]) {
-                    this.groups[item.group].appendChild(newItem);
-                }
-                else {
-                    var newGroup = createNewGroup(item.group);
-                    newGroup.appendChild(newItem);
-                    this.groups[item.group] = newGroup;
-                }
-            }
-            else {
-                this.HTMLElement.appendChild(newItem);
-            }
-        });
-
-        // Add all groups to the HTML Element
-        Object.keys(this.groups).forEach((groupName) => {
-            this.HTMLElement.appendChild(this.groups[groupName]);
-        });
+        this.Draw();
     }
 
     get Size() { return this._size; }
@@ -116,9 +99,51 @@ class ListView {
         }
     }
 
+    Draw() {
+        this.Items.forEach((item) => {
+            var newItem = createNewItem(item, this.events);
+
+            if(item.group) {
+                // Append element to correct group
+                if(this.groups[item.group]) {
+                    this.groups[item.group].appendChild(newItem);
+                }
+                else {
+                    var newGroup = createNewGroup(item.group);
+                    newGroup.appendChild(newItem);
+                    this.groups[item.group] = newGroup;
+                }
+            }
+            else {
+                this.HTMLElement.appendChild(newItem);
+            }
+        });
+
+        // Add all groups to the HTML Element
+        Object.keys(this.groups).forEach((groupName) => {
+            this.HTMLElement.appendChild(this.groups[groupName]);
+        });
+    }
+
     Clear() {
         this.Items = [];
         this.HTMLElement.innerHTML = '';
+    }
+
+    Refresh() {
+        // Delete all HTML elements and re-draw
+        this.HTMLElement.innerHTML = '';
+        this.groups = {};
+        this.Draw();
+    }
+
+    UpdateItem(itemKey, newValue) {
+        for(var i = 0; i < this.Items.length; i++) {
+            if(this.Items[i].label === itemKey) {
+                this.Items[i].value = newValue;
+                return;
+            }
+        }
     }
 }
 
