@@ -231,6 +231,16 @@ var template = [
         }
       }
     ]
+  },
+  {
+    label: 'Debug',
+    role: 'Debug',
+    submenu: [
+        {
+            label: 'Open web console',
+            click (e) { windows.root.webContents.openDevTools(); }
+        }
+    ]
   }
 ];
 
