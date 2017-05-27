@@ -17,19 +17,15 @@
         ipcRenderer.on('create-new-project', (event, data) => {
             Map.Create(data.name);
             console.log(Map);
-
-            //Map.Load(newProjectPath);
-            //console.log("loaded project");
         });
 
         ipcRenderer.on('open-project', (event, dir) => {
-            if(Map.Load(dir)) {
-                document.getElementById('map-name').innerText = Map.__Dir;
-            }
+            ipcRenderer.send('request-open-project-map', dir);
         });
 
         ipcRenderer.on('save-project', () => {
-            Map.Save();
+            // Sends a request to the application to save the project
+            ipcRenderer.send('request-save-project');
         });
 
         ipcRenderer.on('compile-project', () => {
