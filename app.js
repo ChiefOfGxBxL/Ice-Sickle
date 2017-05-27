@@ -294,6 +294,25 @@ const EventHandlers = {
     },
     'response-user-input': function(event, data) {
         BroadcastEvent('user-input-provided', data);
+    },
+    'patch-project-object': function(event, data) {
+        // TODO: clean this mess up
+        mapObj.objects[data.specType] = mapObj.objects[data.specType] || {};
+        mapObj.objects[data.specType][data.table] = mapObj.objects[data.specType][data.table] || {};
+        mapObj.objects[data.specType][data.table][data.entryId] = mapObj.objects[data.specType][data.table][data.entryId] || [];
+
+        // Check if a modification already exists, in which case overwrite its value
+        // TODO: this section is messy because of the poor WC3MapTranslator spec -- update it to use the object format
+        var existingModificationIndex = mapObj.objects[data.specType][data.table][data.entryId].findIndex((mod) => {
+            return mod.id === data.modification.id;
+        });
+
+        if(existingModificationIndex !== -1) {
+            mapObj.objects[data.specType][data.table][data.entryId][existingModificationIndex].value = data.modification.value;
+        }
+        else {
+            mapObj.objects[data.specType][data.table][data.entryId].push(data.modification);
+        }
     }
     // 'patch-project': function(event, data) {
     //     Map[data.field] = data.data;
