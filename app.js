@@ -1,7 +1,7 @@
 const {app, BrowserWindow, Menu, dialog, ipcMain, protocol} = require('electron')
 const path = require('path')
 const url = require('url')
-const fs = require('fs')
+const fs = require('fs-extra')
 const Handlebars = require('handlebars');
 
 // Automatically reloads view if source is changed
@@ -25,6 +25,14 @@ global.globals = {
 let windows = {}; // Always contains 'root'
 
 function OpenNewWindow(view, options) {
+    var viewPath = path.join(__dirname, '/views/' + view);
+
+    // If the requested view does not exist, exit
+    if(!fs.existsSync(viewPath)) {
+        console.log('Error opening new window: could not find view', viewPath);
+        return false;
+    }
+
     // If the window is already open and multiple are not allowed,
     // do not open another window
     if(!options.allowMultiple && windows[view]) {
@@ -61,7 +69,7 @@ function OpenNewWindow(view, options) {
 
     newWindow.loadURL(
         url.format({
-            pathname: path.join(__dirname, '/views/' + view),
+            pathname: viewPath,
             protocol: (isHandlebars) ? 'hbs:' : 'file:',
             slashes: true
         }),
@@ -260,14 +268,18 @@ const EventHandlers = {
         event.sender.webContents.send('response-project', Map);
     },
     'request-user-input': function(event, data) {
-        //console.log(event);
-        OpenNewWindow('user-input.html', {
+        var inputViewPath = 'input/' + data.type + '.html';
+        if(!fs.existsSync(path.resolve('./views/' + inputViewPath))) {
+            inputViewPath = 'input/unknown.html';
+        }
+
+        OpenNewWindow(inputViewPath, {
             parent: windows['object-editor.html'] || windows.root, // TODO: correct window based on event
             modal: true,
-            frame: true,
+            frame: false,
             width: 400,
             height: 300,
-            template: data
+            template: data.context
         });
     },
     'response-user-input': function(event, data) {
@@ -351,15 +363,28 @@ app.on('ready', () => {
         var context = (req.uploadData && req.uploadData[0]) ? JSON.parse(req.uploadData[0].bytes) : {},
             pathToFile = req.url.substr(7);
 
-        fs.readFile(pathToFile, 'utf8', function(err, data) {
-            var template = Handlebars.compile(data),
-                page = template(context);
+        if(fs.existsSync(pathToFile)) {
+            fs.readFile(pathToFile, 'utf8', function(err, data) {
+                var template = Handlebars.compile(data),
+                    page = template(context);
 
-            callback({
-                mimeType: 'text/html',
-                data: new Buffer(page)
+                callback({
+                    mimeType: 'text/html',
+                    data: new Buffer(page)
+                });
             });
-        });
+        }
+        else {
+            // Try the corresponding file under the file:/// protocol
+            pathToFile = path.resolve(__dirname, pathToFile.substr(3));
+            fs.readFile(pathToFile, 'utf8', function(err, data) {
+                //console.log(err, data);
+                callback({
+                    //mimeType: 'text/css',
+                    data: new Buffer(data)
+                });
+            });
+        }
     });
 });
 
