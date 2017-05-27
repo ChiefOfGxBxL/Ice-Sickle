@@ -34,7 +34,11 @@ function createNewItem(item, events, size) {
     }
 
     if(events) {
-        if(events.onDblClick) option.addEventListener('dblclick', events.onDblClick);
+        if(events.onDblClick) {
+            option.addEventListener('dblclick', function(e) {
+                events.onDblClick(e, item);
+            });
+        }
     }
 
     return option;
