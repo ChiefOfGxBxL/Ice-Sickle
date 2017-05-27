@@ -188,7 +188,11 @@
                         isAttrModified = false,
                         listViewItem = {
                             label: fieldKey,
-                            data: {}
+                            data: {
+                                id: fieldKey,
+                                default: value,
+                                type: ObjectEditor.Fields.Units[fieldKey].type
+                            }
                         };
 
                     var objectTable = (isCustomUnit) ?
@@ -209,7 +213,6 @@
                     }
 
                     if(isAttrModified) listViewItem.data.modified = true;
-
                     listViewItem.value = value;
                     baseUnitFields.push(listViewItem);
                 });
