@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Ice Sickle - User input</title>
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/mini-default.min.css">
+
+    <style>
+        input,select { width: 100%; }
+        .comment {
+            border-left: 3px SOLID rgba(0, 34, 200, 0.7);
+            background-color: rgba(0, 34, 200, 0.2);
+            padding: 8px;
+            font-size: 0.8em;
+        }
+    </style>
+    <script>
+        var {ipcRenderer} = require('electron');
+
+        function submitUserDataForm() {
+            var userDataInputElem = document.getElementById('userData'),
+                userInputType = '' || 'string';
+
+            ipcRenderer.send('response-user-input', {
+                type: userInputType,
+                value: userDataInputElem.value // TODO: this needs to be improved to support several data formats
+            });
+
+            window.close();
+        }
+    </script>
+  </head>
+  <body>
+
+    <form>
+        <fieldset>
+            <legend>Edit Unit Value - Ability List</legend>
+            <p>Abilities - Normal:</p>
+            <select id='userData' multiple>
+                <option>Heal</option>
+                <option>Inner Fire</option>
+                <option>Dispel Magic</option>
+                <option>Unit Inventory (Human)</option>
+            </select>
+
+            <br/>
+
+                <button>Add Ability</button>
+                <button>Edit Ability</button>
+                <button>Delete Ability</button>
+
+            <hr/>
+
+            <div class='button-group'>
+                <a class='button' onclick='submitUserDataForm()'>OK</a>
+                <button>Cancel</button>
+            </div>
+
+            <p class='comment'>Abilities - Normal: Sets a list of normal abilities for this unit. Normal abilities include things like backpack.</p>
+        </fieldset>
+    </form>
+
+  </body>
+</html>

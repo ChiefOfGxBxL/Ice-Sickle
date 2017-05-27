@@ -36,6 +36,18 @@
         var ObjectEditor = require('../classes/ObjectEditor.js');
         var ListView = require('../classes/Listview.js');
 
+
+        function requestUserInput(context, type, cb) {
+            ipcRenderer.send('request-user-input', {
+                context: context,
+                type: type
+            })
+
+            ipcRenderer.on('user-input-provided', function(_, data) {
+                cb(data);
+            })
+        }
+
         // window.alert('Loaded ' + Object.keys(ObjectEditor.Data.Units).length + ' units');
         // window.alert(JSON.stringify(ObjectEditor.Data.Units['hfoo']));
     </script>
@@ -129,8 +141,36 @@
                     });
                 });
 
+                var events = {
+                    onDblClick: function(e) {
+                        var fieldType = e.target.getAttribute('data-type'),
+                            fieldId = e.target.getAttribute('data-id')
+
+                        requestUserInput(null, fieldType, function(data) {
+                            console.log('objeditor data', data);
+
+                            // Change the value in the ListView
+                            unitFieldListView.UpdateItem(fieldId, data.value);
+                            unitFieldListView.Refresh();
+
+                            // TODO: add ListView.Refresh() method to handle this automatically
+                            //e.target.innerText = data.value;
+                            // if(data.value != e.target.getAttribute('data-default')) {
+                            //     e.target.setAttribute('data-modified', 'true');
+                            // }
+                            // else {
+                            //     e.target.removeAttribute('data-modified');
+                            // }
+
+                            // Modify the original or custom unit field
+                            // TODO ...
+                            // TODO update units.json (in memory)
+                        });
+                    }
+                };
+
                 // Append element
-                unitFieldListView = new ListView(unitFieldData);
+                unitFieldListView = new ListView(unitFieldData, events);
 
                 unitEditor.appendChild(unitFieldListView.HTMLElement);
             }

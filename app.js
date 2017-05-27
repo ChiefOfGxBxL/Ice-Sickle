@@ -259,6 +259,20 @@ const EventHandlers = {
         // Send the Map back to the requesting window
         event.sender.webContents.send('response-project', Map);
     },
+    'request-user-input': function(event, data) {
+        //console.log(event);
+        OpenNewWindow('user-input.html', {
+            parent: windows['object-editor.html'] || windows.root, // TODO: correct window based on event
+            modal: true,
+            frame: true,
+            width: 400,
+            height: 300,
+            template: data
+        });
+    },
+    'response-user-input': function(event, data) {
+        BroadcastEvent('user-input-provided', data);
+    }
     // 'patch-project': function(event, data) {
     //     Map[data.field] = data.data;
     //     console.log('updated map field ' + data.field);
