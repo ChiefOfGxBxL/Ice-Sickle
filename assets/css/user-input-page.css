@@ -1,0 +1,11 @@
+input,select { width: 100%; }
+.comment {
+    clear: both;
+    border-left: 3px SOLID rgba(0, 34, 200, 0.7);
+    background-color: rgba(0, 34, 200, 0.2);
+    padding: 8px;
+    font-size: 0.8em;
+}
+.buttons-right {
+    float: right;
+}

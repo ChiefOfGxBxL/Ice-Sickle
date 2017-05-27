@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Ice Sickle - {{type}}</title>
+
+    <link rel="stylesheet" href="../../assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../assets/css/mini-default.min.css">
+    <link rel="stylesheet" href="../../assets/css/user-input-page.css">
+
+    <script>
+        function submitUserDataForm() {
+            var {ipcRenderer} = require('electron');
+
+            ipcRenderer.send('response-user-input', {
+                id: '{{id}}',
+                type: 'int',
+                value: document.getElementById('userData').value
+            });
+
+            window.close();
+        }
+    </script>
+  </head>
+  <body>
+    <form>
+        <fieldset>
+            <legend>Edit Value{{#if fieldName}} - {{fieldName}}{{/if}}</legend>
+
+            <label>
+                Value:
+                <input id='userData' type='number' value='{{currentValue}}' min='{{dataMin}}' max='{{dataMax}}' step='{{dataStep}}'/>
+            </label>
+
+            <div class='buttons-right'>
+                <a class='button' onclick='window.close()'>Cancel</a>
+                <a class='button primary' onclick='submitUserDataForm()'>OK</a>
+            </div>
+
+            {{#if tooltip}}
+                <p class='comment'>{{tooltip}}</p>
+            {{/if}}
+        </fieldset>
+    </form>
+  </body>
+</html>

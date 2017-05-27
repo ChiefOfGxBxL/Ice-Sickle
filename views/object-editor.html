@@ -37,15 +37,19 @@
         var ListView = require('../classes/Listview.js');
 
 
-        function requestUserInput(context, type, cb) {
+        var userInputListener = false;
+        function requestUserInput(type, context, cb) {
             ipcRenderer.send('request-user-input', {
-                context: context,
-                type: type
+                type: type,
+                context: context
             })
 
-            ipcRenderer.on('user-input-provided', function(_, data) {
-                cb(data);
-            })
+            if(!userInputListener) {
+                ipcRenderer.on('user-input-provided', function(_, data) {
+                    cb(data);
+                })
+                userInputListener = true;
+            }
         }
 
         // window.alert('Loaded ' + Object.keys(ObjectEditor.Data.Units).length + ' units');
@@ -142,15 +146,20 @@
                 });
 
                 var events = {
-                    onDblClick: function(e) {
+                    onDblClick: function(e, item) {
                         var fieldType = e.target.getAttribute('data-type'),
-                            fieldId = e.target.getAttribute('data-id')
+                            fieldId = e.target.getAttribute('data-id');
 
-                        requestUserInput(null, fieldType, function(data) {
-                            console.log('objeditor data', data);
-
+                        requestUserInput(fieldType,
+                            {
+                                type: fieldType,
+                                id: fieldId,
+                                tooltip: ObjectEditor.Fields.Units[fieldId].editorHelp,
+                                currentValue: item.value
+                            },
+                            function(data) {
                             // Change the value in the ListView
-                            unitFieldListView.UpdateItem(fieldId, data.value);
+                            unitFieldListView.UpdateItem(data.id, data.value);
                             unitFieldListView.Refresh();
 
                             // TODO: add ListView.Refresh() method to handle this automatically
@@ -190,7 +199,7 @@
                             label: fieldKey,
                             data: {
                                 id: fieldKey,
-                                default: value,
+                                default: value || '',
                                 type: ObjectEditor.Fields.Units[fieldKey].type
                             }
                         };
