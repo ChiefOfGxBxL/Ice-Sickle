@@ -38,7 +38,9 @@
 
 
         var userInputListener = false;
-        function requestUserInput(type, context, cb) {
+        function requestUserInput(type, context, entryId, cb) {
+            context.entryId = entryId;
+
             ipcRenderer.send('request-user-input', {
                 type: type,
                 context: context
@@ -148,33 +150,39 @@
                 var events = {
                     onDblClick: function(e, item) {
                         var fieldType = e.target.getAttribute('data-type'),
-                            fieldId = e.target.getAttribute('data-id');
+                            fieldId = e.target.getAttribute('data-fieldId'),
+                            isCustom = (e.target.getAttribute('data-iscustom') === 'true'),
+                            defaultValue = e.target.getAttribute('data-default'),
+                            entryId = e.target.getAttribute('data-id');
 
-                        requestUserInput(fieldType,
+                        requestUserInput(
+                            fieldType,
                             {
                                 type: fieldType,
                                 id: fieldId,
                                 tooltip: ObjectEditor.Fields.Units[fieldId].editorHelp,
                                 currentValue: item.value
                             },
+                            entryId,
                             function(data) {
-                            // Change the value in the ListView
-                            unitFieldListView.UpdateItem(data.id, data.value);
-                            unitFieldListView.Refresh();
+                                // Change the value in the ListView
+                                unitFieldListView.UpdateItem(data.id, data.value);
+                                unitFieldListView.Refresh();
 
-                            // TODO: add ListView.Refresh() method to handle this automatically
-                            //e.target.innerText = data.value;
-                            // if(data.value != e.target.getAttribute('data-default')) {
-                            //     e.target.setAttribute('data-modified', 'true');
-                            // }
-                            // else {
-                            //     e.target.removeAttribute('data-modified');
-                            // }
-
-                            // Modify the original or custom unit field
-                            // TODO ...
-                            // TODO update units.json (in memory)
-                        });
+                                // Modify the original or custom unit field
+                                var isCustomUnit = data.entryId.indexOf(':') >= 0;
+                                ipcRenderer.send('patch-project-object', {
+                                    specType: 'units',
+                                    table: isCustomUnit ? 'custom' : 'original',
+                                    entryId: data.entryId,
+                                    modification: {
+                                        id: data.id,
+                                        type: data.type,
+                                        value: data.value
+                                    }
+                                });
+                            }
+                        );
                     }
                 };
 
@@ -198,7 +206,9 @@
                         listViewItem = {
                             label: fieldKey,
                             data: {
-                                id: fieldKey,
+                                id: unitId,
+                                fieldId: fieldKey,
+                                isCustom: isCustomUnit,
                                 default: value || '',
                                 type: ObjectEditor.Fields.Units[fieldKey].type
                             }
