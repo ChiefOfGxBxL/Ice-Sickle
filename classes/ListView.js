@@ -44,7 +44,7 @@ function createNewItem(item, events, size) {
     return option;
 }
 
-const defaultSize = 65;
+const defaultSize = 75;
 
 class ListView {
     // items: []
