@@ -48,7 +48,7 @@ const defaultSize = 75;
 
 class ListView {
     // items: []
-    // An item may have: `label`, `value`, `default`
+    // An item may have: `id`, `label`, `value`, `default`
 
     constructor(startElements, events, size) {
         this.size = size || defaultSize;
@@ -143,7 +143,7 @@ class ListView {
 
     UpdateItem(itemKey, newValue) {
         for(var i = 0; i < this.Items.length; i++) {
-            if(this.Items[i].label === itemKey) {
+            if(this.Items[i].id === itemKey) {
                 this.Items[i].value = newValue;
                 return;
             }

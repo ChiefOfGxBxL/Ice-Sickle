@@ -137,7 +137,8 @@
                     var field = ObjectEditor.Fields.Units[fieldKey];
 
                     unitFieldData.push({
-                        label: field.ID,
+                        id: field.ID,
+                        label: label, //field.ID,
                         value: field.minVal,
                         data: {
                             id: field.ID,
@@ -204,7 +205,8 @@
                     var value = baseUnit[ObjectEditor.Find.UnitFieldLongNameById(fieldKey)],
                         isAttrModified = false,
                         listViewItem = {
-                            label: fieldKey,
+                            id: fieldKey,
+                            label: label,
                             data: {
                                 id: unitId,
                                 fieldId: fieldKey,
