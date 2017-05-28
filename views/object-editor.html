@@ -134,7 +134,10 @@
                 var unitFieldData = [];
 
                 Object.keys(ObjectEditor.Fields.Units).forEach((fieldKey) => {
-                    var field = ObjectEditor.Fields.Units[fieldKey];
+                    var field = ObjectEditor.Fields.Units[fieldKey],
+                        label = (field.editorName && field.editorName != '.') ?
+                            field.category[0].toUpperCase() + field.category.substr(1) + ' - ' + (field.editorName) :
+                            field.ID;
 
                     unitFieldData.push({
                         id: field.ID,
@@ -202,8 +205,12 @@
 
                 // Re-generate the list view items
                 Object.keys(unitFields).forEach((fieldKey) => {
-                    var value = baseUnit[ObjectEditor.Find.UnitFieldLongNameById(fieldKey)],
+                    var field = ObjectEditor.Fields.Units[fieldKey],
+                        value = baseUnit[ObjectEditor.Find.UnitFieldLongNameById(fieldKey)],
                         isAttrModified = false,
+                        label = (field.editorName && field.editorName != '.') ?
+                            field.category[0].toUpperCase() + field.category.substr(1) + ' - ' + (field.editorName) :
+                            field.ID,
                         listViewItem = {
                             id: fieldKey,
                             label: label,
