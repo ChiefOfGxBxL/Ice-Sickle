@@ -319,11 +319,6 @@ const EventHandlers = {
             mapObj.objects[data.specType][data.table][data.entryId].push(data.modification);
         }
     }
-    // 'patch-project': function(event, data) {
-    //     Map[data.field] = data.data;
-    //     console.log('updated map field ' + data.field);
-    //     console.log(Map);
-    // }
 }
 
 function BroadcastEvent(eventName, data) {
