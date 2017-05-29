@@ -15,7 +15,6 @@
         ipcRenderer.send('request-project', {});
         ipcRenderer.on('response-project', function(a, map) {
             Map = map;
-            // ipcRenderer.send('patch-project', {field: 'units', data: ['new unit']})
         })
 
         ipcRenderer.on('new-custom-unit', function(_, data) {
@@ -63,9 +62,6 @@
                 window: 'newUnit'
             });
         }
-
-        // window.alert('Loaded ' + Object.keys(ObjectEditor.Data.Units).length + ' units');
-        // window.alert(JSON.stringify(ObjectEditor.Data.Units['hfoo']));
     </script>
     <script data-script-name="Units">
         var unitListView,
@@ -153,7 +149,7 @@
 
                     unitFieldData.push({
                         id: field.ID,
-                        label: label, //field.ID,
+                        label: label,
                         value: field.minVal,
                         data: {
                             id: field.ID,
