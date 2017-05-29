@@ -1,0 +1,14 @@
+{
+    "name": "root",
+    "path": "index.html",
+    "description": "",
+
+    "width": 1000,
+    "height": 900,
+
+    "parent": "",
+    "modal": false,
+    "frame": true,
+    "allowMultiple": false,
+    "requiresTemplate": false
+}

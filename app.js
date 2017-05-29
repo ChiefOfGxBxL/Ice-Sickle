@@ -1,114 +1,23 @@
-const {app, BrowserWindow, Menu, dialog, ipcMain, protocol} = require('electron')
-const path = require('path')
-const url = require('url')
-const fs = require('fs-extra')
-const Handlebars = require('handlebars');
+const {app, BrowserWindow, Menu, dialog, ipcMain, protocol} = require('electron'),
+    path = require('path'),
+    url = require('url'),
+    fs = require('fs-extra'),
+    Handlebars = require('handlebars');
 
 // Automatically reloads view if source is changed
 // require('electron-reload')(__dirname);
 
-// Store Map in app
-var Map = require('./classes/Map');
-var mapObj;
+var Map = require('./classes/Map'),
+    Window = require('./classes/Window'),
+    Settings = require('./classes/Settings');
 
-// Initialize global settings
-var Settings = require('./classes/Settings');
-Settings.Load(app.getAppPath());
+var mapObj; // Store Map in this object
 
 // Global variables across windows
 global.globals = {
-    AppName: 'Ice-Sickle'
+    AppName: 'Ice-Sickle',
+    AppPath: app.getAppPath()
 };
-
-// Stores references to all open windows; key = file name (e.g. index.html)
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let windows = {}; // Always contains 'root'
-let availableWindows = {
-    newObject: {
-        path: 'new-object.html',
-        height: 300,
-        width: 470
-    }
-    // TODO: load dynamically from /windows and have a Register method
-};
-
-function OpenNewWindow(view, options) {
-    var viewPath = path.join(__dirname, '/views/' + view);
-
-    // If the requested view does not exist, exit
-    if(!fs.existsSync(viewPath)) {
-        console.log('Error opening new window: could not find view', viewPath);
-        return false;
-    }
-
-    // If the window is already open and multiple are not allowed,
-    // do not open another window
-    if(!options.allowMultiple && windows[view]) {
-        windows[view].focus(); // Bring the opened window to front-view
-        return false;
-    }
-
-    const isHandlebars =
-        view.endsWith('.hbs') ||
-        view.endsWith('.handlebars') ||
-        options.template; // if we provide a template to an HTML file
-
-    // Set preload on all windows to run the global-script
-    // so globals are available to every window via `globals` variable
-    options.webPreferences = {
-        preload: path.join(__dirname, 'preload.js')
-    };
-
-    var newWindow = new BrowserWindow(options); // Create a new window
-    windows[view] = newWindow; // Register the new window
-
-    // Load the window with the specified view
-    var addlData = {};
-    if(isHandlebars) {
-        addlData = {
-            // Encode handlebars template in post data
-            postData: [{
-                type: 'rawData',
-                bytes: Buffer.from(JSON.stringify(options.template))
-            }],
-            extraHeaders: 'Content-Type: application/x-www-form-urlencoded'
-        };
-    }
-
-    newWindow.loadURL(
-        url.format({
-            pathname: viewPath,
-            protocol: (isHandlebars) ? 'hbs:' : 'file:',
-            slashes: true
-        }),
-        addlData
-    );
-
-    newWindow.webContents.openDevTools();
-
-    // Iterate over events and add a new one to the window for each
-    if(options.events) {
-        Object.keys(options.events).forEach((event) => {
-            newWindow.on(event, () => {
-                options.events[event]();
-            });
-        });
-    }
-
-    // We always handle the closed event
-    newWindow.on('closed', () => {
-        delete windows[view];
-    });
-}
-
-function CreateNewProjectWindow() {
-    OpenNewWindow('new-project.html', {
-        width: 320, height: 540,
-        parent: windows.root, modal: true,
-        frame: false
-    });
-}
 
 function OpenProjectWindow() {
     dialog.showOpenDialog({
@@ -121,8 +30,8 @@ function OpenProjectWindow() {
             // Load and store the Map here in the app
             if(Map.Load(projects[0])) { // Map loaded successfully
                 // Tell any renderer processes that a map load request has been initiated
-                windows.root.webContents.send('open-project', projects[0]);
-                BroadcastEvent('project-loaded', Map);
+                Window.SendMessage('root', 'open-project', projects[0]);
+                Window.Broadcast('project-loaded', Map);
 
                 // Store the project in recently-loaded settings
                 if(Settings.recentMaps.indexOf(projects[0]) === -1) {
@@ -143,7 +52,7 @@ function OpenProjectWindow() {
 
 function LoadProject(projectPath) {
     if(Map.Load(projectPath)) {
-        windows.root.webContents.send('open-project', projectPath);
+        Window.SendMessage('root', 'open-project', projectPath);
         return true;
     }
     else {
@@ -160,7 +69,7 @@ var template = [
         sublabel: 'Create a new project',
         role: 'new',
         click () {
-            CreateNewProjectWindow();
+            Window.Open('newProject');
         }
       },
       {
@@ -176,7 +85,7 @@ var template = [
         sublabel: 'Saves the current project',
         role: 'save',
         click () {
-            windows.root.webContents.send('save-project');
+            Window.SendMessage('root', 'save-project');
         }
       },
       {
@@ -193,7 +102,7 @@ var template = [
               sublabel: 'Generates the .w3x file',
               role: 'new',
               click () {
-                  windows.root.webContents.send('compile-project');
+                  Window.SendMessage('root', 'compile-project');
               }
           },
           {
@@ -203,9 +112,7 @@ var template = [
               label: 'Object Editor',
               sublabel: '',
               click() {
-                  OpenNewWindow('object-editor.html', {
-                      width: 1000, height: 600
-                  });
+                  Window.Open('objectEditor');
               }
           }
       ]
@@ -220,23 +127,7 @@ var template = [
       {
         label: 'About',
         click () {
-            var aboutWin = new BrowserWindow({
-                width: 300,
-                height: 200,
-                parent: windows.root,
-                modal: true,
-                frame: false
-            });
-
-            aboutWin.loadURL(url.format({
-              pathname: path.join(__dirname, '/views/about.html'),
-              protocol: 'file:',
-              slashes: true
-            }));
-
-            aboutWin.on('closed', () => {
-              aboutWin = null
-            })
+            Window.Open('about');
         }
       }
     ]
@@ -247,12 +138,13 @@ var template = [
     submenu: [
         {
             label: 'Open web console',
-            click (e) { windows.root.webContents.openDevTools(); }
+            click (e) { Window.openWindows.root.webContents.openDevTools(); }
         }
     ]
   }
 ];
 
+Settings.Load(app.getAppPath());
 Settings.recentMaps.forEach((recentMap) => {
     var mapName = recentMap.split('\\').reverse()[0];
 
@@ -273,10 +165,10 @@ function getNextIdCounter(type) {
 
 const EventHandlers = {
     'create-new-project': function(event, data) {
-        windows.root.webContents.send('create-new-project', data);
+        Window.SendMessage('root', 'create-new-project', data);
     },
     'request-new-project': function() {
-        CreateNewProjectWindow();
+        Window.Open('newProject');
     },
     'request-open-project': function() {
         OpenProjectWindow();
@@ -289,7 +181,7 @@ const EventHandlers = {
     },
     'load-project': function(event, data) {
         if(LoadProject(data.path)) {
-            BroadcastEvent('project-loaded', Map);
+            Window.Broadcast('project-loaded', Map);
         }
     },
     'request-project': function(event, data) {
@@ -297,22 +189,17 @@ const EventHandlers = {
         event.sender.webContents.send('response-project', mapObj);
     },
     'request-user-input': function(event, data) {
-        var inputViewPath = 'input/' + data.type + '.html';
-        if(!fs.existsSync(path.resolve('./views/' + inputViewPath))) {
-            inputViewPath = 'input/unknown.html';
-        }
+        var inputWindowName = 'input' + data.type[0].toUpperCase() + data.type.substr(1); // e.g. inputInt
 
-        OpenNewWindow(inputViewPath, {
-            parent: windows['object-editor.html'] || windows.root, // TODO: correct window based on event
-            modal: true,
-            frame: false,
-            width: 400,
-            height: 300,
-            template: data.context
-        });
+        if(Window.availableWindows[inputWindowName]) {
+            Window.Open(inputWindowName, data.context);
+        }
+        else {
+            Window.Open('inputUnknown', data.context);
+        }
     },
     'response-user-input': function(event, data) {
-        BroadcastEvent('user-input-provided', data);
+        Window.Broadcast('user-input-provided', data);
     },
     'patch-project-object': function(event, data) {
         // TODO: clean this mess up
@@ -334,16 +221,9 @@ const EventHandlers = {
         }
     },
     'request-open-window': function(event, data) {
-        if(!data.window) return false;
+        if(!data || !data.windowName) return false;
 
-        // TODO: this can be remedied by adding a 3rd param, `template`, to OpenNewWindow()
-        var windowOptions = availableWindows[data.window];
-        windowOptions.template = data.template;
-
-        OpenNewWindow(
-            availableWindows[data.window].path,
-            windowOptions
-        );
+        Window.Open(data.windowName, data.template);
     },
     'new-custom-object': function(event, data) {
         // Add new object to mapObj, with custom name specified
@@ -355,51 +235,11 @@ const EventHandlers = {
         }];
 
         // Send event to all windows
-        BroadcastEvent('new-custom-object', data);
+        Window.Broadcast('new-custom-object', data);
     },
     'request-id-counter': function(event, data) {
         event.sender.webContents.send('response-id-counter', getNextIdCounter(data.type));
     }
-}
-
-function BroadcastEvent(eventName, data) {
-    console.log('[! Event ]', eventName);
-
-    Object.keys(windows).forEach((window) => {
-        windows[window].webContents.send(eventName, data);
-    })
-}
-
-function createWindow () {
-    // Create the browser window.
-    windows.root = new BrowserWindow({width: 1000, height: 900});
-
-    // Create the main menu from the template
-    const menu = Menu.buildFromTemplate(template);
-    Menu.setApplicationMenu(menu);
-
-    // and load the index.html of the app.
-    windows.root.loadURL(url.format({
-        pathname: path.join(__dirname, '/views/index.html'),
-        protocol: 'file:',
-        slashes: true
-    }))
-
-    // Open the DevTools.
-    windows.root.webContents.openDevTools();
-
-    // Register IPC events
-    Object.keys(EventHandlers).forEach((eventKey) => {
-        ipcMain.on(eventKey, EventHandlers[eventKey]);
-    });
-
-    // Emitted when the window is closed.
-    windows.root.on('closed', () => {
-        // Dereference the window object, usually you would store windows
-        // in an array if your app supports multi windows, this is the time
-        // when you should delete the corresponding element.
-        windows.root = null
-    })
 }
 
 // This method will be called when Electron has finished
@@ -407,24 +247,26 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
     // Create main window
-    createWindow();
+    Window.Open('root');
+
+    // Register IPC events
+    Object.keys(EventHandlers).forEach((eventKey) => {
+        ipcMain.on(eventKey, EventHandlers[eventKey]);
+    });
+
+    // Create the main menu from the template
+    const menu = Menu.buildFromTemplate(template);
+    Menu.setApplicationMenu(menu);
 
     // Open welcome dialog
-    OpenNewWindow('welcome.html', {
-        parent: windows.root,
-        modal: true,
-        frame: false,
-        width: 660,
-        height: 685,
-        template: {
-            recent: Settings.recentMaps.map((dir) => {
-                return {
-                    name: dir.split('\\').reverse()[0],
-                    path: dir.replace(/\\/g, "\\\\")
-                }
-            })
-        }
-    });
+    Window.Open('welcome', {
+        recent: Settings.recentMaps.map((dir) => {
+            return {
+                name: dir.split('\\').reverse()[0],
+                path: dir.replace(/\\/g, "\\\\")
+            }
+        })
+    })
 
     // The hbs:// protocol is used to render handlebars files
     // See http://stackoverflow.com/a/41368514 for more details
@@ -474,7 +316,7 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (windows.root === null) {
-        createWindow()
+    if (!Window.openWindows.root) {
+        Window.Open('root');
     }
 })
