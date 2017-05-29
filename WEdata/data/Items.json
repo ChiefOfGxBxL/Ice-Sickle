@@ -34,7 +34,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Crown of Kings +5"
     },
     "modt": {
         "InBeta": "1",
@@ -71,7 +72,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "mask of death"
     },
     "tkno": {
         "InBeta": "1",
@@ -108,7 +110,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Tome of Power"
     },
     "ratf": {
         "InBeta": "1",
@@ -145,7 +148,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Claws of Attack +15"
     },
     "rde4": {
         "InBeta": "1",
@@ -182,7 +186,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Ring of Protection +5"
     },
     "ofro": {
         "InBeta": "1",
@@ -219,7 +224,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Orb of Frost"
     },
     "desc": {
         "InBeta": "1",
@@ -256,7 +262,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Dagger of Escape"
     },
     "fgdg": {
         "InBeta": "1",
@@ -293,7 +300,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Demonic Figurine"
     },
     "infs": {
         "InBeta": "1",
@@ -330,7 +338,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Inferno Stone"
     },
     "shar": {
         "InBeta": "1",
@@ -367,7 +376,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Ice Shard"
     },
     "sand": {
         "InBeta": "1",
@@ -404,7 +414,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Scroll of Animate Dead"
     },
     "wild": {
         "InBeta": "1",
@@ -441,7 +452,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Amulet of the Wild"
     },
     "srrc": {
         "InBeta": "1",
@@ -478,7 +490,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Scroll of Resurrection"
     },
     "odef": {
         "InBeta": "1",
@@ -515,7 +528,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Orb of Darkness"
     },
     "rde3": {
         "InBeta": "1",
@@ -552,7 +566,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Ring of Protection +4"
     },
     "pmna": {
         "InBeta": "1",
@@ -589,12 +604,13 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Pendant of Mana"
     },
     "rhth": {
         "InBeta": "1",
         "itemID": "rhth",
-        "comment": "Khadgar\"s Gem of Health",
+        "comment": "Khadgar's Gem of Health",
         "scriptname": "KhadgarsGemofHealth",
         "version": "0",
         "class": "Permanent",
@@ -626,7 +642,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Khadgar's Gem of Health"
     },
     "ssil": {
         "InBeta": "1",
@@ -663,7 +680,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Staff of Silence"
     },
     "spsh": {
         "InBeta": "1",
@@ -700,7 +718,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Amulet of Spell Shield"
     },
     "sres": {
         "InBeta": "1",
@@ -737,7 +756,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Scroll of Restoration"
     },
     "pdiv": {
         "InBeta": "1",
@@ -774,7 +794,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Potion of Divinity"
     },
     "pres": {
         "InBeta": "1",
@@ -811,7 +832,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Potion of Restoration"
     },
     "totw": {
         "InBeta": "1",
@@ -848,7 +870,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "talisman of the wild"
     },
     "fgfh": {
         "InBeta": "1",
@@ -885,7 +908,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Spiked Collar"
     },
     "fgrd": {
         "InBeta": "1",
@@ -922,7 +946,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Red Drake Egg"
     },
     "fgrg": {
         "InBeta": "1",
@@ -959,7 +984,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Stone Token"
     },
     "hcun": {
         "InBeta": "1",
@@ -996,7 +1022,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Hood of Cunning"
     },
     "hval": {
         "InBeta": "1",
@@ -1033,7 +1060,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Helm of Valor"
     },
     "mcou": {
         "InBeta": "1",
@@ -1070,7 +1098,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Medallion of Courage"
     },
     "ajen": {
         "InBeta": "1",
@@ -1107,7 +1136,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Ancient Janggo of Endurance"
     },
     "clfm": {
         "InBeta": "1",
@@ -1144,7 +1174,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Cloak of Flames"
     },
     "ratc": {
         "InBeta": "1",
@@ -1181,7 +1212,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Claws of Attack +12"
     },
     "ward": {
         "InBeta": "1",
@@ -1218,12 +1250,13 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Warsong Battle Drums"
     },
     "kpin": {
         "InBeta": "1",
         "itemID": "kpin",
-        "comment": "Khadgar\"s Pipe of Insight",
+        "comment": "Khadgar's Pipe of Insight",
         "scriptname": "KhadgarsPipeofInsight",
         "version": "0",
         "class": "Permanent",
@@ -1255,7 +1288,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Khadgar's Pipe of Insight"
     },
     "crys": {
         "InBeta": "1",
@@ -1292,7 +1326,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Crystal Ball"
     },
     "lgdh": {
         "InBeta": "1",
@@ -1329,7 +1364,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Legion Doom-Horn"
     },
     "ankh": {
         "InBeta": "1",
@@ -1366,7 +1402,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Ankh of Reincarnation"
     },
     "whwd": {
         "InBeta": "1",
@@ -1403,7 +1440,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Healing Wards"
     },
     "fgsk": {
         "InBeta": "1",
@@ -1440,7 +1478,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Book of the Dead"
     },
     "wcyc": {
         "InBeta": "1",
@@ -1477,7 +1516,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Wand of the Wind"
     },
     "hlst": {
         "InBeta": "1",
@@ -1514,7 +1554,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Health Stone"
     },
     "mnst": {
         "InBeta": "1",
@@ -1551,12 +1592,13 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Mana Stone"
     },
     "belv": {
         "InBeta": "1",
         "itemID": "belv",
-        "comment": "Boots of Quel\"Thalas +6",
+        "comment": "Boots of Quel'Thalas +6",
         "scriptname": "BootsofQuelThalas6",
         "version": "0",
         "class": "Permanent",
@@ -1588,7 +1630,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Boots of Quel'Thalas +6"
     },
     "bgst": {
         "InBeta": "1",
@@ -1625,7 +1668,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Belt of Giant Strength +6"
     },
     "ciri": {
         "InBeta": "1",
@@ -1662,7 +1706,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Robe of the Magi +6"
     },
     "lhst": {
         "InBeta": "1",
@@ -1699,12 +1744,13 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Lion Horn of Stormwind"
     },
     "afac": {
         "InBeta": "1",
         "itemID": "afac",
-        "comment": "Alleria\"s Flute of Accuracy",
+        "comment": "Alleria's Flute of Accuracy",
         "scriptname": "AlleriasFluteofAccuracy",
         "version": "0",
         "class": "Permanent",
@@ -1736,7 +1782,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Alleria's Flute of Accuracy"
     },
     "sbch": {
         "InBeta": "1",
@@ -1773,7 +1820,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Scourge Bone Chimes"
     },
     "brac": {
         "InBeta": "1",
@@ -1810,7 +1858,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Runed Bracers"
     },
     "rwiz": {
         "InBeta": "1",
@@ -1847,7 +1896,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Sobi Mask"
     },
     "pghe": {
         "InBeta": "1",
@@ -1884,7 +1934,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "potion of greater healing"
     },
     "pgma": {
         "InBeta": "1",
@@ -1921,7 +1972,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Potion of Greater Mana"
     },
     "pnvu": {
         "InBeta": "1",
@@ -1958,7 +2010,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "potion of invulnerability"
     },
     "sror": {
         "InBeta": "1",
@@ -1995,7 +2048,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Scroll of the Beast"
     },
     "woms": {
         "InBeta": "1",
@@ -2032,7 +2086,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Wand of Mana Stealing"
     },
     "evtl": {
         "InBeta": "1",
@@ -2069,7 +2124,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Talisman of Evasion"
     },
     "penr": {
         "InBeta": "1",
@@ -2106,7 +2162,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Pendant of Energy"
     },
     "prvt": {
         "InBeta": "1",
@@ -2143,7 +2200,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Periapt of Vitality"
     },
     "rat9": {
         "InBeta": "1",
@@ -2180,7 +2238,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Claws of Attack +9"
     },
     "rde2": {
         "InBeta": "1",
@@ -2217,7 +2276,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Ring of Protection +3"
     },
     "rlif": {
         "InBeta": "1",
@@ -2254,7 +2314,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Ring of regeneration"
     },
     "bspd": {
         "InBeta": "1",
@@ -2291,7 +2352,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Boots of Speed"
     },
     "rej3": {
         "InBeta": "1",
@@ -2328,7 +2390,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Replenishment Potion"
     },
     "will": {
         "InBeta": "1",
@@ -2365,7 +2428,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Wand of Illusion"
     },
     "wlsd": {
         "InBeta": "1",
@@ -2402,7 +2466,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Wand of Lightning Shield"
     },
     "wswd": {
         "InBeta": "1",
@@ -2439,7 +2504,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Sentry Wards"
     },
     "cnob": {
         "InBeta": "1",
@@ -2476,7 +2542,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Circlet of Nobility"
     },
     "gcel": {
         "InBeta": "1",
@@ -2513,7 +2580,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Gloves of Haste"
     },
     "rat6": {
         "InBeta": "1",
@@ -2550,7 +2618,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Claws of Attack +6"
     },
     "rde1": {
         "InBeta": "1",
@@ -2587,7 +2656,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Ring of Protection +2"
     },
     "tdx2": {
         "InBeta": "1",
@@ -2624,7 +2694,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Tome of Agility +2"
     },
     "texp": {
         "InBeta": "1",
@@ -2661,7 +2732,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Tome of Experience"
     },
     "tin2": {
         "InBeta": "1",
@@ -2698,7 +2770,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Tome of Intelligence +2"
     },
     "tpow": {
         "InBeta": "1",
@@ -2735,7 +2808,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Tome of Knowledge"
     },
     "tst2": {
         "InBeta": "1",
@@ -2772,7 +2846,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Tome of Strength +2"
     },
     "pnvl": {
         "InBeta": "1",
@@ -2809,7 +2884,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Potion of Lesser Invulnerability"
     },
     "clsd": {
         "InBeta": "1",
@@ -2846,7 +2922,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Cloak of Shadows"
     },
     "rag1": {
         "InBeta": "1",
@@ -2883,7 +2960,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Slippers of Agility +3"
     },
     "rin1": {
         "InBeta": "1",
@@ -2920,7 +2998,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Mantle of Intelligence +3"
     },
     "rst1": {
         "InBeta": "1",
@@ -2957,7 +3036,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Gauntlets of Ogre Strength +3"
     },
     "manh": {
         "InBeta": "1",
@@ -2994,7 +3074,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Manual of Health"
     },
     "tdex": {
         "InBeta": "1",
@@ -3031,7 +3112,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Tome of Agility +1"
     },
     "tint": {
         "InBeta": "1",
@@ -3068,7 +3150,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Tome of Intelligence"
     },
     "tstr": {
         "InBeta": "1",
@@ -3105,7 +3188,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Tome of Strength +1"
     },
     "pomn": {
         "InBeta": "1",
@@ -3142,7 +3226,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Potion of Omniscience"
     },
     "wshs": {
         "InBeta": "1",
@@ -3179,7 +3264,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Wand of Shadowsight"
     },
     "rej6": {
         "InBeta": "0",
@@ -3216,7 +3302,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Greater Scroll of Replenishment"
     },
     "rej5": {
         "InBeta": "0",
@@ -3253,7 +3340,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Lesser Scroll of Replenishment"
     },
     "rej4": {
         "InBeta": "0",
@@ -3290,7 +3378,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Greater Replenishment Potion"
     },
     "ram4": {
         "InBeta": "0",
@@ -3327,7 +3416,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Fourth Ring of the Archmagi"
     },
     "dsum": {
         "InBeta": "1",
@@ -3364,7 +3454,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Diamond of Summoning"
     },
     "ofir": {
         "InBeta": "1",
@@ -3401,7 +3492,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Orb of Fire"
     },
     "ocor": {
         "InBeta": "1",
@@ -3438,7 +3530,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Orb of Corruption"
     },
     "oli2": {
         "InBeta": "1",
@@ -3475,7 +3568,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Orb of Lightning"
     },
     "oven": {
         "InBeta": "1",
@@ -3512,7 +3606,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Orb of Venom"
     },
     "ram3": {
         "InBeta": "0",
@@ -3549,7 +3644,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Third Ring of the Archmagi"
     },
     "tret": {
         "InBeta": "1",
@@ -3586,7 +3682,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Tome of Retraining"
     },
     "tgrh": {
         "InBeta": "1",
@@ -3623,7 +3720,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Tiny Great Hall"
     },
     "rej2": {
         "InBeta": "0",
@@ -3660,7 +3758,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Lesser Replenishment Potion"
     },
     "gemt": {
         "InBeta": "1",
@@ -3697,7 +3796,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Gem of True Seeing"
     },
     "ram2": {
         "InBeta": "0",
@@ -3734,7 +3834,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Second Ring of the Archmagi"
     },
     "stel": {
         "InBeta": "1",
@@ -3771,7 +3872,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Staff of Teleportation"
     },
     "stwp": {
         "InBeta": "1",
@@ -3808,7 +3910,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Scroll of Town Portal"
     },
     "wneg": {
         "InBeta": "1",
@@ -3845,7 +3948,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Wand of Negation"
     },
     "sneg": {
         "InBeta": "1",
@@ -3882,7 +3986,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Staff of Negation"
     },
     "wneu": {
         "InBeta": "1",
@@ -3919,7 +4024,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Wand of Neutralization"
     },
     "shea": {
         "InBeta": "1",
@@ -3956,7 +4062,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Scroll of Healing"
     },
     "sman": {
         "InBeta": "1",
@@ -3993,7 +4100,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Scroll of Mana"
     },
     "rej1": {
         "InBeta": "0",
@@ -4030,7 +4138,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Minor Replenishment Potion"
     },
     "pspd": {
         "InBeta": "1",
@@ -4067,7 +4176,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Potion of Speed"
     },
     "dust": {
         "InBeta": "1",
@@ -4104,7 +4214,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Dust of Appearance"
     },
     "ram1": {
         "InBeta": "0",
@@ -4141,7 +4252,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "First Ring of the Archmagi"
     },
     "pinv": {
         "InBeta": "1",
@@ -4178,7 +4290,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "potion of invisibility"
     },
     "phea": {
         "InBeta": "1",
@@ -4215,7 +4328,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "potion of healing"
     },
     "pman": {
         "InBeta": "1",
@@ -4252,7 +4366,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Potion of Mana"
     },
     "spro": {
         "InBeta": "1",
@@ -4289,7 +4404,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Scroll of Protection"
     },
     "hslv": {
         "InBeta": "1",
@@ -4326,7 +4442,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Healing Salve"
     },
     "moon": {
         "InBeta": "1",
@@ -4363,7 +4480,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Moonstone"
     },
     "shas": {
         "InBeta": "1",
@@ -4400,7 +4518,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Scroll of Speed"
     },
     "skul": {
         "InBeta": "1",
@@ -4437,7 +4556,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Sacrificial Skull"
     },
     "mcri": {
         "InBeta": "1",
@@ -4474,7 +4594,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Mechanical Critter"
     },
     "rnec": {
         "InBeta": "1",
@@ -4511,7 +4632,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Rod of Necromancy"
     },
     "tsct": {
         "InBeta": "1",
@@ -4548,7 +4670,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Ivory Tower"
     },
     "azhr": {
         "InBeta": "0",
@@ -4585,7 +4708,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Heart of Aszune"
     },
     "bzbe": {
         "InBeta": "0",
@@ -4622,7 +4746,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Empty Vial"
     },
     "bzbf": {
         "InBeta": "0",
@@ -4659,7 +4784,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Full Vial"
     },
     "ches": {
         "InBeta": "0",
@@ -4696,7 +4822,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Cheese"
     },
     "cnhn": {
         "InBeta": "0",
@@ -4733,12 +4860,13 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Horn of Cenarius"
     },
     "glsk": {
         "InBeta": "0",
         "itemID": "glsk",
-        "comment": "Guldan\"s Skull",
+        "comment": "Guldan's Skull",
         "scriptname": "GuldansSkull",
         "version": "0",
         "class": "Campaign",
@@ -4770,7 +4898,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Guldan's Skull"
     },
     "gopr": {
         "InBeta": "0",
@@ -4807,7 +4936,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Glyph of Purification"
     },
     "k3m1": {
         "InBeta": "0",
@@ -4844,7 +4974,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Key of 3 Moons - 1"
     },
     "k3m2": {
         "InBeta": "0",
@@ -4881,7 +5012,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Key of 3 Moons - 2"
     },
     "k3m3": {
         "InBeta": "0",
@@ -4918,12 +5050,13 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Key of 3 Moons - 3"
     },
     "ktrm": {
         "InBeta": "0",
         "itemID": "ktrm",
-        "comment": "Urn of Kel\"Thuzad",
+        "comment": "Urn of Kel'Thuzad",
         "scriptname": "UrnofKelThuzad",
         "version": "0",
         "class": "Campaign",
@@ -4955,7 +5088,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Urn of Kel'Thuzad"
     },
     "kybl": {
         "InBeta": "0",
@@ -4992,7 +5126,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "bloody key"
     },
     "kygh": {
         "InBeta": "0",
@@ -5029,7 +5164,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "ghost key"
     },
     "kymn": {
         "InBeta": "0",
@@ -5066,7 +5202,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "moon key"
     },
     "kysn": {
         "InBeta": "0",
@@ -5103,12 +5240,13 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "sun key"
     },
     "ledg": {
         "InBeta": "0",
         "itemID": "ledg",
-        "comment": "Gerard\"s Lost Ledger",
+        "comment": "Gerard's Lost Ledger",
         "scriptname": "GerardsLostLedger",
         "version": "0",
         "class": "Campaign",
@@ -5140,7 +5278,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Gerard's Lost Ledger"
     },
     "phlt": {
         "InBeta": "0",
@@ -5177,12 +5316,13 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Phat Lewt"
     },
     "sehr": {
         "InBeta": "0",
         "itemID": "sehr",
-        "comment": "Searinox\"s Heart",
+        "comment": "Searinox's Heart",
         "scriptname": "SearinoxsHeart",
         "version": "0",
         "class": "Campaign",
@@ -5214,7 +5354,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Searinox's Heart"
     },
     "engs": {
         "InBeta": "0",
@@ -5251,7 +5392,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Enchanted Gemstone"
     },
     "sorf": {
         "InBeta": "0",
@@ -5288,7 +5430,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Shadow Orb Fragment"
     },
     "gmfr": {
         "InBeta": "0",
@@ -5325,7 +5468,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Gem Fragment"
     },
     "jpnt": {
         "InBeta": "0",
@@ -5362,7 +5506,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "note to jaina proudmoore"
     },
     "shwd": {
         "InBeta": "0",
@@ -5399,7 +5544,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "shimmerweed"
     },
     "skrt": {
         "InBeta": "0",
@@ -5436,7 +5582,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Skeletal Artifact"
     },
     "thle": {
         "InBeta": "0",
@@ -5473,7 +5620,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "thunder lizard egg"
     },
     "sclp": {
         "InBeta": "0",
@@ -5510,12 +5658,13 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "secret level powerup"
     },
     "wtlg": {
         "InBeta": "0",
         "itemID": "wtlg",
-        "comment": "Wirt\"s Leg",
+        "comment": "Wirt's Leg",
         "scriptname": "WirtsLeg",
         "version": "1",
         "class": "Campaign",
@@ -5547,12 +5696,13 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Wirt's Leg"
     },
     "wolg": {
         "InBeta": "0",
         "itemID": "wolg",
-        "comment": "Wirt\"s Other Leg",
+        "comment": "Wirt's Other Leg",
         "scriptname": "WirtsOtherLeg",
         "version": "1",
         "class": "Campaign",
@@ -5584,12 +5734,13 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Wirt's Other Leg"
     },
     "mgtk": {
         "InBeta": "0",
         "itemID": "mgtk",
-        "comment": "Magtheridon\"s Keys",
+        "comment": "Magtheridon's Keys",
         "scriptname": "MagtheridonsKeys",
         "version": "1",
         "class": "Campaign",
@@ -5621,12 +5772,13 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Magtheridon's Keys"
     },
     "mort": {
         "InBeta": "0",
         "itemID": "mort",
-        "comment": "Mogrin\"s Report",
+        "comment": "Mogrin's Report",
         "scriptname": "MogrinsReport",
         "version": "1",
         "class": "Campaign",
@@ -5658,7 +5810,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Mogrin's Report"
     },
     "dphe": {
         "InBeta": "0",
@@ -5695,7 +5848,8 @@
         "selSize": "0",
         "colorR": "100",
         "colorG": "100",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Thunder Hawk Egg"
     },
     "dkfw": {
         "InBeta": "0",
@@ -5732,7 +5886,8 @@
         "selSize": "80",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Keg of Thunderwater"
     },
     "dthb": {
         "InBeta": "0",
@@ -5769,7 +5924,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "140",
-        "colorB": "140"
+        "colorB": "140",
+        "name": "Thunderbloom Bulb"
     },
     "fgun": {
         "InBeta": "1",
@@ -5806,7 +5962,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Flare Gun"
     },
     "lure": {
         "InBeta": "1",
@@ -5843,7 +6000,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Monster Lure"
     },
     "olig": {
         "InBeta": "1",
@@ -5880,7 +6038,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Orb of Lightning(old)"
     },
     "amrc": {
         "InBeta": "1",
@@ -5917,7 +6076,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Amulet of Recall"
     },
     "ccmd": {
         "InBeta": "1",
@@ -5954,7 +6114,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Scepter of Mastery"
     },
     "flag": {
         "InBeta": "1",
@@ -5991,7 +6152,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "human flag"
     },
     "gobm": {
         "InBeta": "1",
@@ -6028,7 +6190,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Goblin Land Mine"
     },
     "gsou": {
         "InBeta": "1",
@@ -6065,7 +6228,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Soul Gem"
     },
     "nflg": {
         "InBeta": "1",
@@ -6102,7 +6266,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "NightElf flag"
     },
     "nspi": {
         "InBeta": "1",
@@ -6139,7 +6304,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Necklace of Spell Immunity"
     },
     "oflg": {
         "InBeta": "1",
@@ -6176,7 +6342,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Orc flag"
     },
     "pams": {
         "InBeta": "1",
@@ -6213,7 +6380,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Anti-Magic Potion"
     },
     "pgin": {
         "InBeta": "1",
@@ -6250,7 +6418,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "potion of greater invisibility"
     },
     "rat3": {
         "InBeta": "1",
@@ -6287,7 +6456,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Claws of Attack +3"
     },
     "rde0": {
         "InBeta": "1",
@@ -6324,7 +6494,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Ring of Protection +1"
     },
     "rnsp": {
         "InBeta": "0",
@@ -6361,7 +6532,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Ring of Superiority"
     },
     "soul": {
         "InBeta": "0",
@@ -6398,7 +6570,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Soul"
     },
     "tels": {
         "InBeta": "1",
@@ -6435,7 +6608,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Goblin Night Scope"
     },
     "tgxp": {
         "InBeta": "1",
@@ -6472,7 +6646,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Tome of Greater Experience"
     },
     "uflg": {
         "InBeta": "1",
@@ -6509,7 +6684,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Undead flag"
     },
     "anfg": {
         "InBeta": "0",
@@ -6546,7 +6722,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Ancient Figurine"
     },
     "brag": {
         "InBeta": "0",
@@ -6583,7 +6760,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Bracer of Agility"
     },
     "drph": {
         "InBeta": "0",
@@ -6620,7 +6798,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Druid Pouch"
     },
     "iwbr": {
         "InBeta": "0",
@@ -6657,7 +6836,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Ironwood Branch"
     },
     "jdrn": {
         "InBeta": "0",
@@ -6694,12 +6874,13 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Jade Ring"
     },
     "lnrn": {
         "InBeta": "0",
         "itemID": "lnrn",
-        "comment": "Lion\"s Ring",
+        "comment": "Lion's Ring",
         "scriptname": "LionsRing",
         "version": "0",
         "class": "Miscellaneous",
@@ -6731,7 +6912,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Lion's Ring"
     },
     "mlst": {
         "InBeta": "0",
@@ -6768,7 +6950,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Maul of Strength"
     },
     "oslo": {
         "InBeta": "1",
@@ -6805,7 +6988,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Orb of Slow"
     },
     "sbok": {
         "InBeta": "1",
@@ -6842,7 +7026,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Spell Book"
     },
     "sksh": {
         "InBeta": "0",
@@ -6879,7 +7064,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Skull Shield"
     },
     "sprn": {
         "InBeta": "0",
@@ -6916,7 +7102,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Spider Ring"
     },
     "tmmt": {
         "InBeta": "0",
@@ -6953,7 +7140,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Totem of Might"
     },
     "vddl": {
         "InBeta": "0",
@@ -6990,7 +7178,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Voodoo Doll"
     },
     "spre": {
         "InBeta": "1",
@@ -7027,7 +7216,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Staff of Preservation"
     },
     "sfog": {
         "InBeta": "0",
@@ -7064,7 +7254,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Horn of the Clouds"
     },
     "sor1": {
         "InBeta": "0",
@@ -7101,7 +7292,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Shadow Orb +1"
     },
     "sor2": {
         "InBeta": "0",
@@ -7138,7 +7330,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Shadow Orb +2"
     },
     "sor3": {
         "InBeta": "0",
@@ -7175,7 +7368,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Shadow Orb +3"
     },
     "sor4": {
         "InBeta": "0",
@@ -7212,7 +7406,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Shadow Orb +4"
     },
     "sor5": {
         "InBeta": "0",
@@ -7249,7 +7444,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Shadow Orb +5"
     },
     "sor6": {
         "InBeta": "0",
@@ -7286,7 +7482,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Shadow Orb +6"
     },
     "sor7": {
         "InBeta": "0",
@@ -7323,7 +7520,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Shadow Orb +7"
     },
     "sor8": {
         "InBeta": "0",
@@ -7360,7 +7558,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Shadow Orb +8"
     },
     "sor9": {
         "InBeta": "0",
@@ -7397,7 +7596,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Shadow Orb +9"
     },
     "sora": {
         "InBeta": "0",
@@ -7434,7 +7634,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Shadow Orb +10"
     },
     "fwss": {
         "InBeta": "0",
@@ -7471,7 +7672,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Frostwyrm Skull Shield"
     },
     "shtm": {
         "InBeta": "0",
@@ -7508,7 +7710,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Shamanic Totem"
     },
     "esaz": {
         "InBeta": "0",
@@ -7545,7 +7748,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Essence of Aszune"
     },
     "btst": {
         "InBeta": "0",
@@ -7582,7 +7786,8 @@
         "selSize": "80",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "orcish battle standard"
     },
     "tbsm": {
         "InBeta": "0",
@@ -7619,7 +7824,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Tiny Blacksmith"
     },
     "tfar": {
         "InBeta": "0",
@@ -7656,7 +7862,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Tiny Farm"
     },
     "tlum": {
         "InBeta": "0",
@@ -7693,7 +7900,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Tiny Lumber Mill"
     },
     "tbar": {
         "InBeta": "0",
@@ -7730,7 +7938,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Tiny Barracks"
     },
     "tbak": {
         "InBeta": "0",
@@ -7767,12 +7976,13 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Tiny Altar of Kings"
     },
     "gldo": {
         "InBeta": "0",
         "itemID": "gldo",
-        "comment": "Orb of Kil\"jaeden",
+        "comment": "Orb of Kil'jaeden",
         "scriptname": "OrbofKiljaeden",
         "version": "1",
         "class": "Miscellaneous",
@@ -7804,7 +8014,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Orb of Kil'jaeden"
     },
     "stre": {
         "InBeta": "0",
@@ -7841,7 +8052,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Staff of Reanimation"
     },
     "horl": {
         "InBeta": "0",
@@ -7878,7 +8090,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Holy Relic"
     },
     "hbth": {
         "InBeta": "0",
@@ -7915,7 +8128,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Helm of Battlethirst"
     },
     "blba": {
         "InBeta": "0",
@@ -7952,7 +8166,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Bladebane Armor"
     },
     "rugt": {
         "InBeta": "0",
@@ -7989,7 +8204,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Runed Gauntlets"
     },
     "frhg": {
         "InBeta": "0",
@@ -8026,7 +8242,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Firehand Gauntlets"
     },
     "gvsm": {
         "InBeta": "0",
@@ -8063,7 +8280,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Gloves of Spell Mastery"
     },
     "crdt": {
         "InBeta": "0",
@@ -8100,7 +8318,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Crown of the Deathlord"
     },
     "arsc": {
         "InBeta": "0",
@@ -8137,7 +8356,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Arcane Scroll"
     },
     "scul": {
         "InBeta": "0",
@@ -8174,7 +8394,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Scroll of the Unholy Legion"
     },
     "tmsc": {
         "InBeta": "0",
@@ -8211,12 +8432,13 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Tome of Sacrifices"
     },
     "dtsb": {
         "InBeta": "0",
         "itemID": "dtsb",
-        "comment": "Drek\"thar\"s Spellbook",
+        "comment": "Drek'thar's Spellbook",
         "scriptname": "DrektharsSpellbook",
         "version": "1",
         "class": "Miscellaneous",
@@ -8248,7 +8470,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Drek'thar's Spellbook"
     },
     "grsl": {
         "InBeta": "0",
@@ -8285,7 +8508,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Grimoire of Souls"
     },
     "arsh": {
         "InBeta": "0",
@@ -8322,7 +8546,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Arcanite Shield"
     },
     "shdt": {
         "InBeta": "0",
@@ -8359,7 +8584,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Shield of the Deathlord"
     },
     "shhn": {
         "InBeta": "0",
@@ -8396,7 +8622,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Shield of Honor"
     },
     "shen": {
         "InBeta": "0",
@@ -8433,7 +8660,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Enchanted Shield"
     },
     "thdm": {
         "InBeta": "0",
@@ -8470,7 +8698,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Thunderlizard Diamond"
     },
     "stpg": {
         "InBeta": "0",
@@ -8507,7 +8736,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Stuffed Penguin"
     },
     "shrs": {
         "InBeta": "0",
@@ -8544,12 +8774,13 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Shimmerglaze Roast"
     },
     "bfhr": {
         "InBeta": "0",
         "itemID": "bfhr",
-        "comment": "Bloodfeather\"s Heart",
+        "comment": "Bloodfeather's Heart",
         "scriptname": "BloodfeathersHeart",
         "version": "1",
         "class": "Miscellaneous",
@@ -8581,7 +8812,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Bloodfeather's Heart"
     },
     "cosl": {
         "InBeta": "0",
@@ -8618,7 +8850,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Celestial Orb of Souls"
     },
     "shcw": {
         "InBeta": "0",
@@ -8655,7 +8888,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Shaman Claws"
     },
     "srbd": {
         "InBeta": "0",
@@ -8692,7 +8926,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Searing Blade"
     },
     "frgd": {
         "InBeta": "0",
@@ -8729,7 +8964,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Frostguard"
     },
     "envl": {
         "InBeta": "0",
@@ -8766,7 +9002,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Enchanted Vial"
     },
     "rump": {
         "InBeta": "0",
@@ -8803,7 +9040,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Rusty Mining Pick"
     },
     "srtl": {
         "InBeta": "0",
@@ -8840,7 +9078,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Serathil"
     },
     "stwa": {
         "InBeta": "0",
@@ -8877,7 +9116,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Sturdy War Axe"
     },
     "klmm": {
         "InBeta": "0",
@@ -8914,7 +9154,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Killmaim"
     },
     "rots": {
         "InBeta": "0",
@@ -8951,7 +9192,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Rod of the Sea"
     },
     "axas": {
         "InBeta": "0",
@@ -8988,7 +9230,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Ancestral Staff"
     },
     "mnsf": {
         "InBeta": "0",
@@ -9025,7 +9268,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Mindstaff"
     },
     "schl": {
         "InBeta": "0",
@@ -9062,12 +9306,13 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Scepter of Healing"
     },
     "asbl": {
         "InBeta": "0",
         "itemID": "asbl",
-        "comment": "Assassin\"s Blade",
+        "comment": "Assassin's Blade",
         "scriptname": "AssassinsBlade",
         "version": "1",
         "class": "Miscellaneous",
@@ -9099,7 +9344,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Assassin's Blade"
     },
     "kgal": {
         "InBeta": "0",
@@ -9136,7 +9382,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Keg of Ale"
     },
     "gold": {
         "InBeta": "0",
@@ -9173,7 +9420,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Chest of Gold"
     },
     "lmbr": {
         "InBeta": "0",
@@ -9210,7 +9458,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Bundle of Lumber"
     },
     "gfor": {
         "InBeta": "1",
@@ -9247,7 +9496,8 @@
         "selSize": "120",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Glyph of Fortification"
     },
     "guvi": {
         "InBeta": "1",
@@ -9284,7 +9534,8 @@
         "selSize": "120",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Glyph of UltraVision"
     },
     "rspl": {
         "InBeta": "1",
@@ -9321,7 +9572,8 @@
         "selSize": "80",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Rune of Spirit Link"
     },
     "rre1": {
         "InBeta": "1",
@@ -9358,7 +9610,8 @@
         "selSize": "80",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Rune of Lesser Resurrection"
     },
     "rre2": {
         "InBeta": "1",
@@ -9395,7 +9648,8 @@
         "selSize": "80",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Rune of Greater Resurrection"
     },
     "gomn": {
         "InBeta": "1",
@@ -9432,7 +9686,8 @@
         "selSize": "120",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Glyph of Omniscience"
     },
     "rsps": {
         "InBeta": "1",
@@ -9469,7 +9724,8 @@
         "selSize": "80",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Rune of Shielding"
     },
     "rspd": {
         "InBeta": "1",
@@ -9506,7 +9762,8 @@
         "selSize": "80",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Rune of Speed"
     },
     "rman": {
         "InBeta": "1",
@@ -9543,7 +9800,8 @@
         "selSize": "80",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Rune of Mana(Lesser)"
     },
     "rma2": {
         "InBeta": "1",
@@ -9580,7 +9838,8 @@
         "selSize": "80",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Rune of Mana(Greater)"
     },
     "rres": {
         "InBeta": "1",
@@ -9617,7 +9876,8 @@
         "selSize": "80",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Rune of Restoration"
     },
     "rreb": {
         "InBeta": "1",
@@ -9654,7 +9914,8 @@
         "selSize": "80",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Rune of Rebirth"
     },
     "rhe1": {
         "InBeta": "1",
@@ -9691,7 +9952,8 @@
         "selSize": "80",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Rune of Lesser Healing"
     },
     "rhe2": {
         "InBeta": "1",
@@ -9728,7 +9990,8 @@
         "selSize": "80",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Rune of Healing"
     },
     "rhe3": {
         "InBeta": "1",
@@ -9765,7 +10028,8 @@
         "selSize": "80",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Rune of Greater Healing"
     },
     "rdis": {
         "InBeta": "1",
@@ -9802,7 +10066,8 @@
         "selSize": "80",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Rune of Dispel Magic"
     },
     "rwat": {
         "InBeta": "1",
@@ -9839,7 +10104,8 @@
         "selSize": "80",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Rune of the Watcher"
     },
     "pclr": {
         "InBeta": "1",
@@ -9876,7 +10142,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Clarity Potion"
     },
     "plcl": {
         "InBeta": "1",
@@ -9913,7 +10180,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Lesser Clarity Potion"
     },
     "silk": {
         "InBeta": "0",
@@ -9950,7 +10218,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Spider Silk"
     },
     "vamp": {
         "InBeta": "1",
@@ -9987,7 +10256,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Potion of Vampirism"
     },
     "sreg": {
         "InBeta": "1",
@@ -10024,7 +10294,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Scroll of Regeneration"
     },
     "ssan": {
         "InBeta": "1",
@@ -10061,7 +10332,8 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Staff of Sanctuary"
     },
     "tcas": {
         "InBeta": "0",
@@ -10098,6 +10370,7 @@
         "selSize": "0",
         "colorR": "255",
         "colorG": "255",
-        "colorB": "255"
+        "colorB": "255",
+        "name": "Tiny Castle"
     }
 }
