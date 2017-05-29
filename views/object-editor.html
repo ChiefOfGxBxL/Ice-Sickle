@@ -213,6 +213,11 @@
                                         value: data.value
                                     }
                                 });
+
+                                // Refresh the map after the above changes
+                                // Note: we already have a listener to store updates on event
+                                // Note: we do this instead of manually updating object-editor's copy of Map to avoid code redundancy
+                                ipcRenderer.send('request-project');
                             }
                         );
                     }
