@@ -1,0 +1,14 @@
+{
+    "name": "welcome",
+    "path": "welcome.html",
+    "description": "",
+
+    "width": 660,
+    "height": 685,
+
+    "parent": "__root",
+    "modal": true,
+    "frame": false,
+    "allowMultiple": false,
+    "requiresTemplate": true
+}

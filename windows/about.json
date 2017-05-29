@@ -1,0 +1,14 @@
+{
+    "name": "about",
+    "path": "about.html",
+    "description": "",
+
+    "width": 300,
+    "height": 200,
+
+    "parent": "__root",
+    "modal": true,
+    "frame": false,
+    "allowMultiple": false,
+    "requiresTemplate": false
+}

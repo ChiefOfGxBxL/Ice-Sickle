@@ -1,0 +1,14 @@
+{
+    "name": "newProject",
+    "path": "new-project.html",
+    "description": "",
+
+    "width": 620,
+    "height": 540,
+
+    "parent": "__root",
+    "modal": true,
+    "frame": false,
+    "allowMultiple": false,
+    "requiresTemplate": false
+}

@@ -1,0 +1,14 @@
+{
+    "name": "objectEditor",
+    "path": "object-editor.html",
+    "description": "",
+
+    "width": 1000,
+    "height": 600,
+
+    "parent": "",
+    "modal": false,
+    "frame": true,
+    "allowMultiple": false,
+    "requiresTemplate": false
+}

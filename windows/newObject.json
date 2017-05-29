@@ -1,0 +1,11 @@
+{
+    "name": "newObject",
+    "path": "new-object.html",
+    "description": "",
+
+    "width": 500,
+    "height": 400,
+
+    "allowMultiple": false,
+    "requiresTemplate": true
+}
