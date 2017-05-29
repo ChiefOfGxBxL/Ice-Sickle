@@ -33,6 +33,9 @@ function createNewItem(item, events, size) {
         }
     }
 
+    // Store the HTMLElement <option> associated with this Item
+    item.HTMLElement = option;
+
     if(events) {
         if(events.onDblClick) {
             option.addEventListener('dblclick', function(e) {
@@ -48,7 +51,7 @@ const defaultSize = 75;
 
 class ListView {
     // items: []
-    // An item may have: `id`, `label`, `value`, `default`
+    // An item may have: `id`, `label`, `value`, `default`, and stores `HTMLElement`
 
     constructor(startElements, events, size) {
         this.size = size || defaultSize;
