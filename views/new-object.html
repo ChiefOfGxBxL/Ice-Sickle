@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Ice Sickle - User input</title>
+    <title>Ice Sickle - New Object</title>
 
     <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="../assets/css/mini-default.min.css">
@@ -12,12 +12,14 @@
         var {ipcRenderer} = require('electron');
 
         function submitUserDataForm() {
-            var name = document.getElementById('customUnitName').value,
-                base = document.getElementById('customUnitBase').value;
+            var objType = '{{type}}', // unit, doodad, etc.
+                name = document.getElementById('customObjName').value,
+                base = document.getElementById('customObjBase').value;
 
-            ipcRenderer.send('request-id-counter', { type: 'unit' });
+            ipcRenderer.send('request-id-counter', { type: objType });
             ipcRenderer.on('response-id-counter', function(_, customId) {
-                ipcRenderer.send('new-custom-unit', {
+                ipcRenderer.send('new-custom-object', {
+                    type: objType,
                     name: name,
                     base: base,
                     id: customId + ':' + base // e.g. h001:hfoo
@@ -29,19 +31,18 @@
     </script>
   </head>
   <body>
-
     <form>
         <fieldset>
-            <legend>New Unit</legend>
+            <legend>New Object ({{type}})</legend>
 
             <label>
                 Name:
-                <input id='customUnitName' type='text' value='' focus/>
+                <input id='customObjName' type='text' value='' focus/>
             </label>
 
             <label>
-                Base Unit:
-                <input id='customUnitBase' type='text' value='hfoo'/>
+                Base Object:
+                <input id='customObjBase' type='text' value='hfoo'/>
             </label>
 
             <div class='buttons-right'>
@@ -50,6 +51,5 @@
             </div>
         </fieldset>
     </form>
-
   </body>
 </html>

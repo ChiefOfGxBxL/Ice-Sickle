@@ -25,8 +25,8 @@ global.globals = {
 // be closed automatically when the JavaScript object is garbage collected.
 let windows = {}; // Always contains 'root'
 let availableWindows = {
-    newUnit: {
-        path: 'new-unit.html',
+    newObject: {
+        path: 'new-object.html',
         height: 300,
         width: 470
     }
@@ -336,21 +336,26 @@ const EventHandlers = {
     'request-open-window': function(event, data) {
         if(!data.window) return false;
 
+        // TODO: this can be remedied by adding a 3rd param, `template`, to OpenNewWindow()
+        var windowOptions = availableWindows[data.window];
+        windowOptions.template = data.template;
+
         OpenNewWindow(
             availableWindows[data.window].path,
-            availableWindows[data.window]
+            windowOptions
         );
     },
-    'new-custom-unit': function(event, data) {
-        // Add new unit to mapObj, with custom name specified
-        mapObj.objects.units.custom[data.id] = [{
-            id: 'unam',
+    'new-custom-object': function(event, data) {
+        // Add new object to mapObj, with custom name specified
+        var mapObjName = data.type + 's'; // e.g. units, doodads, etc.
+        mapObj.objects[mapObjName].custom[data.id] = [{
+            id: 'unam', // TODO: unam, inam, etc.
             type: 'string',
             value: data.name
         }];
 
         // Send event to all windows
-        BroadcastEvent('new-custom-unit', data);
+        BroadcastEvent('new-custom-object', data);
     },
     'request-id-counter': function(event, data) {
         event.sender.webContents.send('response-id-counter', getNextIdCounter(data.type));
