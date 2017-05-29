@@ -22,22 +22,23 @@
             Map = map;
         })
 
-        ipcRenderer.on('new-custom-unit', function(_, data) {
-            // The new unit is already registered from app.js,
+        ipcRenderer.on('new-custom-object', function(_, data) {
+            // The new object is already registered from app.js,
             // but we need to refresh our map data here
             ipcRenderer.send('request-project');
 
             // Update the object editor UI
-            unitListView.Add({
+            objEntityListView[data.type].Add({
                 label: '(' + data.id + ') ' + data.name,
                 value: '',
                 data: {
-                    id: data.id
+                    id: data.id,
+                    entityType: data.type
                 }
             })
 
             // Load the newly-created unit
-            selectUnitIntoEditor(data.id);
+            selectEntityIntoEditor(data.type, data.id);
         })
 
         var userInputListener = false;
@@ -57,41 +58,37 @@
             }
         }
 
-        function OpenNewUnitDialog() {
+        function OpenNewObjDialog(type) {
             ipcRenderer.send('request-open-window', {
-                window: 'newUnit'
+                window: 'newObject',
+                template: {
+                    type: type
+                }
             });
         }
     </script>
     <script data-script-name="Units">
         var objEntityListView = {
-            // unit: <HTMLElement> (left),
+            // unit: <ListView> (left),
             // ...
         };
 
         var objEntityFieldListView = {
-            // unit: <HTMLElement> (right),
+            // unit: <ListView> (right),
             // ...
         };
 
         var editor = {
-            // unit: (Editor),
+            // unit: <HTMLElement> (Editor),
             // ...
         };
 
         var unitListView,
             unitFieldListView,
 
-            selectUnitIntoEditor; // function(unitId)
+            selectEntityIntoEditor; // function(ObjectEntityType, entityId)
 
         window.addEventListener('load', function() {
-            var unitEditor = document.getElementById('unit-editor'),
-                unitList = document.getElementById('unit-list'),
-                unitFieldList = document.getElementById('unit-field-list'),
-
-                unitFields = ObjectEditor.Fields.Units,
-                unitFieldElems = {}; // Stores all HTMLElements for <option> in unit edit list (key = unitID)
-
             // TODO: clean up init
             editor.unit = document.getElementById('unit-editor');
             editor.item = document.getElementById('item-editor');
@@ -104,10 +101,12 @@
             /*
                 Events
             */
-            function onUnitSelected(e) {
-                // The <option> value stores the unit ID to load
-                console.log('select unit', e.target.getAttribute('data-id'));
-                selectUnitIntoEditor(e.target.getAttribute('data-id'));
+            function onEntitySelected(e) {
+                // The <option> value stores the entity type and id to load
+                selectEntityIntoEditor(
+                    e.target.getAttribute('data-entitytype'),
+                    e.target.getAttribute('data-id')
+                );
             }
 
             /*
@@ -134,7 +133,8 @@
                         label: '(' + entityId + ') ' + ObjectEditor.Data[objectEditorDataName][entityId].name,
                         value: '',
                         data: {
-                            id: entityId
+                            id: entityId,
+                            entityType: objEntityType
                         }
                     }
 
@@ -156,6 +156,7 @@
                             value: '',
                             data: {
                                 id: customEntityId,
+                                entityType: objEntityType,
                                 baseId: ids[1],
                                 newId: ids[0],
                                 modified: true // modifications always exist for a custom entities
@@ -166,22 +167,26 @@
                 });
 
                 // Create and append unit ListView
-                entityListView = new ListView(entityData, { onDblClick: onUnitSelected });
+                entityListView = new ListView(entityData, { onDblClick: onEntitySelected });
                 objEntityListView[objEntityType] = entityListView;
                 editor[objEntityType].querySelector('.objLeft').appendChild(entityListView.HTMLElement);
             }
 
-            function populateUnitFieldsList() {
-                // Fill the units editing list with the Fields
-                var unitFieldData = [];
+            function populateObjectEntityFieldList(objEntityType) {
+                // Fill the editing list with the available fields
+                var objFieldData = [],
+                    // the corresponding field name in Map, e.g. units, doodads, etc.
+                    mapObjectDataName = objEntityType + 's',
+                    // corresponding name in ObjectEditor class, e.g. Units, Buffs
+                    objectEditorDataName = objEntityType[0].toUpperCase() + objEntityType.substr(1) + 's';
 
-                Object.keys(ObjectEditor.Fields.Units).forEach((fieldKey) => {
-                    var field = ObjectEditor.Fields.Units[fieldKey],
+                Object.keys(ObjectEditor.Fields[objectEditorDataName]).forEach((fieldKey) => {
+                    var field = ObjectEditor.Fields[objectEditorDataName][fieldKey],
                         label = (field.editorName && field.editorName != '.') ?
                             field.category[0].toUpperCase() + field.category.substr(1) + ' - ' + (field.editorName) :
                             field.ID;
 
-                    unitFieldData.push({
+                    objFieldData.push({
                         id: field.ID,
                         label: label,
                         value: field.minVal,
@@ -204,20 +209,20 @@
                             {
                                 type: fieldType,
                                 id: fieldId,
-                                tooltip: ObjectEditor.Fields.Units[fieldId].editorHelp,
+                                tooltip: ObjectEditor.Fields[objectEditorDataName][fieldId].editorHelp,
                                 currentValue: item.value
                             },
                             entryId,
                             function(data) {
                                 // Change the value in the ListView
-                                unitFieldListView.UpdateItem(data.id, data.value);
-                                unitFieldListView.Refresh();
+                                objEntityFieldListView[objEntityType].UpdateItem(data.id, data.value);
+                                objEntityFieldListView[objEntityType].Refresh();
 
                                 // Modify the original or custom unit field
-                                var isCustomUnit = data.entryId.indexOf(':') >= 0;
+                                var isCustomObj = data.entryId.indexOf(':') >= 0;
                                 ipcRenderer.send('patch-project-object', {
                                     specType: 'units',
-                                    table: isCustomUnit ? 'custom' : 'original',
+                                    table: isCustomObj ? 'custom' : 'original',
                                     entryId: data.entryId,
                                     modification: {
                                         id: data.id,
@@ -236,21 +241,25 @@
                 };
 
                 // Create and append unit-field ListView
-                unitFieldListView = new ListView(unitFieldData, events);
-                unitEditor.querySelector('.objRight').appendChild(unitFieldListView.HTMLElement);
+                objEntityFieldListView[objEntityType] = new ListView(objFieldData, events);
+                editor[objEntityType].querySelector('.objRight').appendChild(objEntityFieldListView[objEntityType].HTMLElement);
             }
 
-            selectUnitIntoEditor = function(unitId) {
-                var isCustomUnit = unitId.indexOf(':') !== -1,
-                    baseUnitId = (isCustomUnit) ?
-                        unitId.split(':')[1] : unitId,
-                    baseUnit = ObjectEditor.Data.Units[baseUnitId],
-                    baseUnitFields = [];
+            selectEntityIntoEditor = function(objEntityType, entityId) {
+                var // the corresponding field name in Map, e.g. units, doodads, etc.
+                    mapObjectDataName = objEntityType + 's',
+                    // corresponding name in ObjectEditor class, e.g. Units, Buffs
+                    objectEditorDataName = objEntityType[0].toUpperCase() + objEntityType.substr(1) + 's',
+                    isCustomEntity = entityId.indexOf(':') !== -1,
+                    baseEntityId = (isCustomEntity) ?
+                        entityId.split(':')[1] : entityId,
+                    baseEntity = ObjectEditor.Data[objectEditorDataName][baseEntityId],
+                    baseEntityFields = [];
 
                 // Re-generate the list view items
-                Object.keys(unitFields).forEach((fieldKey) => {
-                    var field = ObjectEditor.Fields.Units[fieldKey],
-                        value = baseUnit[ObjectEditor.Find.UnitFieldLongNameById(fieldKey)],
+                Object.keys(ObjectEditor.Fields[objectEditorDataName]).forEach((fieldKey) => {
+                    var field = ObjectEditor.Fields[objectEditorDataName][fieldKey],
+                        value = baseEntity[ObjectEditor.Find.FieldLongNameById(objEntityType, fieldKey)],
                         isAttrModified = false,
                         label = (field.editorName && field.editorName != '.') ?
                             field.category[0].toUpperCase() + field.category.substr(1) + ' - ' + (field.editorName) :
@@ -259,22 +268,22 @@
                             id: fieldKey,
                             label: label,
                             data: {
-                                id: unitId,
+                                id: entityId,
                                 fieldId: fieldKey,
-                                isCustom: isCustomUnit,
+                                isCustom: isCustomEntity,
                                 default: value || '',
-                                type: ObjectEditor.Fields.Units[fieldKey].type
+                                type: ObjectEditor.Fields[objectEditorDataName][fieldKey].type
                             }
                         };
 
-                    var objectTable = (isCustomUnit) ?
-                        Map.objects.units.custom :
-                        Map.objects.units.original;
+                    var objectTable = (isCustomEntity) ?
+                        Map.objects[mapObjectDataName].custom :
+                        Map.objects[mapObjectDataName].original;
 
-                    if(objectTable[unitId]) {
+                    if(objectTable[entityId]) {
                         // We have changes, so find if a change is made
                         // to the current attribute
-                        var modifiedField = objectTable[unitId].find((mod) => {
+                        var modifiedField = objectTable[entityId].find((mod) => {
                             return mod.id === fieldKey;
                         });
 
@@ -286,16 +295,19 @@
 
                     if(isAttrModified) listViewItem.data.modified = true;
                     listViewItem.value = value;
-                    baseUnitFields.push(listViewItem);
+                    baseEntityFields.push(listViewItem);
                 });
 
-                unitFieldListView.Clear();
-                unitFieldListView.Add(baseUnitFields);
+                objEntityFieldListView[objEntityType].Clear();
+                objEntityFieldListView[objEntityType].Add(baseEntityFields);
             }
 
             // Init
             populateObjectEntityList(ObjectEntityType.Unit);
-            populateUnitFieldsList();
+            populateObjectEntityFieldList(ObjectEntityType.Unit);
+
+            populateObjectEntityList(ObjectEntityType.Item);
+            populateObjectEntityFieldList(ObjectEntityType.Item);
         });
     </script>
   </head>
@@ -306,7 +318,7 @@
       <label for="tab1" aria-hidden="true">Units</label>
       <div id='unit-editor' class='object-edit-view'>
           <div>
-              <a class='button small' onclick='OpenNewUnitDialog()'>New Unit</a>
+              <a class='button small' onclick='OpenNewObjDialog("unit")'>New Unit</a>
           </div>
           <div class='obj objLeft'></div>
           <div class='obj objRight'></div>
@@ -316,7 +328,7 @@
       <label for="tab2" aria-hidden="true">Items</label>
       <div id='item-editor' class='object-edit-view'>
           <div>
-              <a class='button small' onclick='OpenNewItemDialog()'>New Unit</a>
+              <a class='button small' onclick='OpenNewObjDialog("item")'>New Item</a>
           </div>
           <div class='obj objLeft'></div>
           <div class='obj objRight'></div>
@@ -326,7 +338,7 @@
       <label for="tab3" aria-hidden="true">Destructables</label>
       <div id='destructable-editor' class='object-edit-view'>
           <div>
-              <a class='button small' onclick='OpenNewDestructableDialog()'>New Unit</a>
+              <a class='button small' onclick='OpenNewObjDialog("destructable")'>New Destructable</a>
           </div>
           <div class='obj objLeft'></div>
           <div class='obj objRight'></div>
@@ -336,7 +348,7 @@
       <label for="tab4" aria-hidden="true">Doodads</label>
       <div id='doodad-editor' class='object-edit-view'>
           <div>
-              <a class='button small' onclick='OpenNewDoodadDialog()'>New Unit</a>
+              <a class='button small' onclick='OpenNewObjDialog("doodad")'>New Doodad</a>
           </div>
           <div class='obj objLeft'></div>
           <div class='obj objRight'></div>
@@ -346,7 +358,7 @@
       <label for="tab5" aria-hidden="true">Abilities</label>
       <div id='ability-editor' class='object-edit-view'>
           <div>
-              <a class='button small' onclick='OpenNewAbilityDialog()'>New Unit</a>
+              <a class='button small' onclick='OpenNewObjDialog("ability")'>New Ability</a>
           </div>
           <div class='obj objLeft'></div>
           <div class='obj objRight'></div>
@@ -356,7 +368,7 @@
       <label for="tab6" aria-hidden="true">Buffs/Effects</label>
       <div id='buff-editor' class='object-edit-view'>
           <div>
-              <a class='button small' onclick='OpenNewBuffDialog()'>New Unit</a>
+              <a class='button small' onclick='OpenNewObjDialog("buff")'>New Buff</a>
           </div>
           <div class='obj objLeft'></div>
           <div class='obj objRight'></div>
@@ -366,7 +378,7 @@
       <label for="tab7" aria-hidden="true">Upgrades</label>
       <div id='upgrade-editor' class='object-edit-view'>
           <div>
-              <a class='button small' onclick='OpenNewUpgradeDialog()'>New Unit</a>
+              <a class='button small' onclick='OpenNewObjDialog("upgrade")'>New Upgrade</a>
           </div>
           <div class='obj objLeft'></div>
           <div class='obj objRight'></div>

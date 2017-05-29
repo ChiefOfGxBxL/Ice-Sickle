@@ -25,9 +25,10 @@ var ObjectEditor = {
             // console.error('Unable to lookup unit field by long name:', longName);
             return null; // Unable to find by long name
         },
-        UnitFieldLongNameById: function(id) {
+        FieldLongNameById: function(objEditorType, id) {
             // e.g. ubdi -> bountydice
-            return ObjectEditor.Fields.Units[id].field;
+            var objEditorFieldName = objEditorType[0].toUpperCase() + objEditorType.substr(1) + 's';
+            return ObjectEditor.Fields[objEditorFieldName][id].field;
         }
     }
 }
