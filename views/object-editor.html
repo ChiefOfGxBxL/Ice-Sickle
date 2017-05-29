@@ -9,10 +9,13 @@
     <link rel="stylesheet" href="../assets/css/object-editor.css">
 
     <script>
+        const {ipcRenderer} = require('electron');
+        var ObjectEditor = require('../classes/ObjectEditor.js');
+        var ListView = require('../classes/Listview.js');
+
         var Map;
 
-        const {ipcRenderer} = require('electron');
-        ipcRenderer.send('request-project', {});
+        ipcRenderer.send('request-project');
         ipcRenderer.on('response-project', function(a, map) {
             Map = map;
         })
@@ -34,11 +37,6 @@
             // Load the newly-created unit
             selectUnitIntoEditor(data.id);
         })
-
-        //var Map = require('../classes/Map.js');
-        var ObjectEditor = require('../classes/ObjectEditor.js');
-        var ListView = require('../classes/Listview.js');
-
 
         var userInputListener = false;
         function requestUserInput(type, context, entryId, cb) {
@@ -130,13 +128,11 @@
                     unitData.push(listViewItem);
                 });
 
-                // Append element
-                unitListView = new ListView(unitData, {
-                    onDblClick: onUnitSelected
-                });
-
+                // Create and append unit ListView
+                unitListView = new ListView(unitData, { onDblClick: onUnitSelected });
                 unitEditor.querySelector('.objLeft').appendChild(unitListView.HTMLElement);
             }
+
             function populateUnitFieldsList() {
                 // Fill the units editing list with the Fields
                 var unitFieldData = [];
@@ -163,8 +159,6 @@
                     onDblClick: function(e, item) {
                         var fieldType = e.target.getAttribute('data-type'),
                             fieldId = e.target.getAttribute('data-fieldId'),
-                            isCustom = (e.target.getAttribute('data-iscustom') === 'true'),
-                            defaultValue = e.target.getAttribute('data-default'),
                             entryId = e.target.getAttribute('data-id');
 
                         requestUserInput(
@@ -203,9 +197,8 @@
                     }
                 };
 
-                // Append element
+                // Create and append unit-field ListView
                 unitFieldListView = new ListView(unitFieldData, events);
-
                 unitEditor.querySelector('.objRight').appendChild(unitFieldListView.HTMLElement);
             }
 
