@@ -60,7 +60,7 @@
 
         function OpenNewObjDialog(type) {
             ipcRenderer.send('request-open-window', {
-                window: 'newObject',
+                windowName: 'newObject',
                 template: {
                     type: type
                 }
