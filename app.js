@@ -24,6 +24,14 @@ global.globals = {
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let windows = {}; // Always contains 'root'
+let availableWindows = {
+    newUnit: {
+        path: 'new-unit.html',
+        preferredHeight: 300,
+        preferredWidth: 300
+    }
+    // TODO: load dynamically from /windows and have a Register method
+};
 
 function OpenNewWindow(view, options) {
     var viewPath = path.join(__dirname, '/views/' + view);
@@ -318,6 +326,15 @@ const EventHandlers = {
         else {
             mapObj.objects[data.specType][data.table][data.entryId].push(data.modification);
         }
+    },
+    'request-open-window': function(event, data) {
+        if(!data.window) return false;
+
+        OpenNewWindow(
+            availableWindows[data.window].path,
+            availableWindows[data.window]
+        );
+    },
     }
 }
 

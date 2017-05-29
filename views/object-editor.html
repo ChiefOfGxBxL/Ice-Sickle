@@ -54,6 +54,12 @@
             }
         }
 
+        function OpenNewUnitDialog() {
+            ipcRenderer.send('request-open-window', {
+                window: 'newUnit'
+            });
+        }
+
         // window.alert('Loaded ' + Object.keys(ObjectEditor.Data.Units).length + ' units');
         // window.alert(JSON.stringify(ObjectEditor.Data.Units['hfoo']));
     </script>
@@ -261,7 +267,11 @@
       <input type="radio" name="tab-group" id="tab1" checked aria-hidden="true">
       <label for="tab1" aria-hidden="true">Units</label>
       <div id='unit-editor' class='object-edit-view'>
-
+          <div>
+              <a class='button small' onclick='OpenNewUnitDialog()'>New Unit</a>
+          </div>
+          <div class='obj objLeft'></div>
+          <div class='obj objRight'></div>
       </div>
 
       <input type="radio" name="tab-group" id="tab2" aria-hidden="true">
