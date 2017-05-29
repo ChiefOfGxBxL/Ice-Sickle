@@ -1,0 +1,14 @@
+.obj { float: left; height: 80%; }
+.objLeft { width: 15%; }
+.objRight { width: 85%; }
+
+select {
+    padding: 0px;
+    height: 100%;
+    width: 97%;
+}
+select option { font-family: monospace; }
+
+select option[data-modified] {
+    color: #dd00dd;
+}
