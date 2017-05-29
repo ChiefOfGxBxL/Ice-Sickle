@@ -800,5 +800,30 @@
         "useItem": "1",
         "useSpecific": "",
         "version": "0"
+    },
+    "inam": {
+        "section": "",
+        "ID": "inam",
+        "field": "name",
+        "slk": "ItemData",
+        "index": "-1",
+        "category": "text",
+        "displayName": "WESTRING_UEVAL_INAM",
+        "sort": "d0a06",
+        "type": "string",
+        "changeFlags": "",
+        "importType": "",
+        "stringExt": "0",
+        "caseSens": "1",
+        "canBeEmpty": "0",
+        "minVal": "",
+        "maxVal": "",
+        "forceNonNeg": "0",
+        "useHero": "0",
+        "useUnit": "0",
+        "useBuilding": "0",
+        "useItem": "1",
+        "useSpecific": "",
+        "version": "0"
     }
 }
