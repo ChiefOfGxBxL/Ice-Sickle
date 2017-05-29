@@ -2,10 +2,12 @@
 
 var ObjectEditor = {
     Data: {
-        Units: require('../WEdata/data/Units.json')
+        Units: require('../WEdata/data/Units.json'),
+        Items: require('../WEdata/data/Items.json')
     },
     Fields: {
-        Units: require('../WEdata/fields/UnitMetaData.json')
+        Units: require('../WEdata/fields/UnitMetaData.json'),
+        Items: require('../WEdata/fields/ItemMetaData.json')
     },
 
     Find: {
