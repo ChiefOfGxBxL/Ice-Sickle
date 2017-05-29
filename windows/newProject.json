@@ -6,7 +6,7 @@
     "width": 620,
     "height": 540,
 
-    "parent": "__root",
+    "parent": "root",
     "modal": true,
     "frame": false,
     "allowMultiple": false,
