@@ -101,6 +101,13 @@ var Map = {
         mapObj.imports =               loadJson('imports.json', []);
         mapObj.strings =               loadJson('strings.json', {});
 
+        // Ensure that the objectFile contains `original` and `custom`,
+        // even if they are empty
+        Object.values(mapObj.objects).forEach((objectFile) => {
+            objectFile.original = objectFile.original || {};
+            objectFile.custom = objectFile.custom || {};
+        });
+
         console.log("Loading project: " + mapObj.info.name);
         console.log(" @ " + projectDir);
 
