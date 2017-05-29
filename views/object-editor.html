@@ -64,6 +64,21 @@
         }
     </script>
     <script data-script-name="Units">
+        var objEntityListView = {
+            // unit: <HTMLElement> (left),
+            // ...
+        };
+
+        var objEntityFieldListView = {
+            // unit: <HTMLElement> (right),
+            // ...
+        };
+
+        var editor = {
+            // unit: (Editor),
+            // ...
+        };
+
         var unitListView,
             unitFieldListView,
 
@@ -77,6 +92,15 @@
                 unitFields = ObjectEditor.Fields.Units,
                 unitFieldElems = {}; // Stores all HTMLElements for <option> in unit edit list (key = unitID)
 
+            // TODO: clean up init
+            editor.unit = document.getElementById('unit-editor');
+            editor.item = document.getElementById('item-editor');
+            editor.destructable = document.getElementById('destructable-editor');
+            editor.doodad = document.getElementById('doodad-editor');
+            editor.ability = document.getElementById('ability-editor');
+            editor.buff = document.getElementById('buff-editor');
+            editor.upgrade = document.getElementById('upgrade-editor');
+
             /*
                 Events
             */
@@ -89,50 +113,62 @@
             /*
                 Functions
             */
-            function populateUnitsList() {
-                // Fill the units list
-                var unitData = [];
 
-                // List original units
-                Object.keys(ObjectEditor.Data.Units).forEach((unitId) => {
+            /**
+             * @method populateObjectEntityList(objEntityType)
+             * @param {Enum} objEntityType
+             * Populates the given object entity list (the list on the left
+             * side of the object editor)
+             */
+            function populateObjectEntityList(objEntityType) {
+                // Fill the object entities list
+                var entityData = [],
+                    // the corresponding field name in Map, e.g. units, doodads, etc.
+                    mapObjectDataName = objEntityType + 's',
+                    // corresponding name in ObjectEditor class, e.g. Units, Buffs
+                    objectEditorDataName = objEntityType[0].toUpperCase() + objEntityType.substr(1) + 's';
+
+                // List original object entities
+                Object.keys(ObjectEditor.Data[objectEditorDataName]).forEach((entityId) => {
                     var listViewItem = {
-                        label: '(' + unitId + ') ' + ObjectEditor.Data.Units[unitId].name,
+                        label: '(' + entityId + ') ' + ObjectEditor.Data[objectEditorDataName][entityId].name,
                         value: '',
                         data: {
-                            id: unitId
+                            id: entityId
                         }
                     }
 
-                    if(Map.objects.units.original[unitId]) {
-                        // modifications exist for this base unit
+                    if(Map.objects[mapObjectDataName].original[entityId]) {
+                        // modifications exist for this base entity
                         // set data-modified on element (colored pink via CSS)
                         listViewItem.data.modified = true;
                     }
 
-                    unitData.push(listViewItem);
+                    entityData.push(listViewItem);
                 });
 
-                // List custom units
-                Object.keys(Map.objects.units.custom).forEach((customUnitId) => {
-                    // customUnitId is of the form <newId>:<baseId> (e.g. h000:hfoo)
-                    var unitIds = customUnitId.split(':'),
+                // List custom object entities
+                Object.keys(Map.objects[mapObjectDataName].custom).forEach((customEntityId) => {
+                    // customEntityId is of the form <newId>:<baseId> (e.g. h000:hfoo, a001:Adef)
+                    var ids = customEntityId.split(':'),
                         listViewItem = {
-                            label: '(' + customUnitId + ') ',
+                            label: '(' + customEntityId + ') ',
                             value: '',
                             data: {
-                                id: customUnitId,
-                                baseId: unitIds[1],
-                                newId: unitIds[0],
-                                modified: true // modifications always exist for a custom unit
+                                id: customEntityId,
+                                baseId: ids[1],
+                                newId: ids[0],
+                                modified: true // modifications always exist for a custom entities
                             }
                         };
 
-                    unitData.push(listViewItem);
+                    entityData.push(listViewItem);
                 });
 
                 // Create and append unit ListView
-                unitListView = new ListView(unitData, { onDblClick: onUnitSelected });
-                unitEditor.querySelector('.objLeft').appendChild(unitListView.HTMLElement);
+                entityListView = new ListView(entityData, { onDblClick: onUnitSelected });
+                objEntityListView[objEntityType] = entityListView;
+                editor[objEntityType].querySelector('.objLeft').appendChild(entityListView.HTMLElement);
             }
 
             function populateUnitFieldsList() {
@@ -258,7 +294,7 @@
             }
 
             // Init
-            populateUnitsList();
+            populateObjectEntityList(ObjectEntityType.Unit);
             populateUnitFieldsList();
         });
     </script>
