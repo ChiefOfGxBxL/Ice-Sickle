@@ -265,6 +265,12 @@ Settings.recentMaps.forEach((recentMap) => {
     });
 })
 
+var counter = 0;
+function getNextIdCounter(type) {
+    // TODO: respond based on data.type
+    return ('0000' + (counter++)).substr(-4);
+}
+
 const EventHandlers = {
     'create-new-project': function(event, data) {
         windows.root.webContents.send('create-new-project', data);
@@ -335,6 +341,19 @@ const EventHandlers = {
             availableWindows[data.window]
         );
     },
+    'new-custom-unit': function(event, data) {
+        // Add new unit to mapObj, with custom name specified
+        mapObj.objects.units.custom[data.id] = [{
+            id: 'unam',
+            type: 'string',
+            value: data.name
+        }];
+
+        // Send event to all windows
+        BroadcastEvent('new-custom-unit', data);
+    },
+    'request-id-counter': function(event, data) {
+        event.sender.webContents.send('response-id-counter', getNextIdCounter(data.type));
     }
 }
 

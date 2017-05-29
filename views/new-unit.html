@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Ice Sickle - User input</title>
+
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/mini-default.min.css">
+    <link rel="stylesheet" href="../assets/css/user-input-page.css">
+
+    <script>
+        var {ipcRenderer} = require('electron');
+
+        function submitUserDataForm() {
+            var name = document.getElementById('customUnitName').value,
+                base = document.getElementById('customUnitBase').value;
+
+            ipcRenderer.send('request-id-counter', { type: 'unit' });
+            ipcRenderer.on('response-id-counter', function(_, customId) {
+                ipcRenderer.send('new-custom-unit', {
+                    name: name,
+                    base: base,
+                    id: customId + ':' + base // e.g. h001:hfoo
+                });
+
+                window.close();
+            });
+        }
+    </script>
+  </head>
+  <body>
+
+    <form>
+        <fieldset>
+            <legend>New Unit</legend>
+
+            <label>
+                Name:
+                <input id='customUnitName' type='text' value='' focus/>
+            </label>
+
+            <label>
+                Base Unit:
+                <input id='customUnitBase' type='text' value='hfoo'/>
+            </label>
+
+            <div class='buttons-right'>
+                <a class='button' onclick='window.close()'>Cancel</a>
+                <a class='button primary' onclick='submitUserDataForm()'>OK</a>
+            </div>
+        </fieldset>
+    </form>
+
+  </body>
+</html>

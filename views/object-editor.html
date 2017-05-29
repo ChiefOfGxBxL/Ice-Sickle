@@ -8,13 +8,15 @@
     <link rel="stylesheet" href="../assets/css/mini-default.min.css">
 
     <style>
+        .obj { float: left; height: 80%; }
+        .objLeft { width: 15%; }
+        .objRight { width: 85%; }
+
         select {
             padding: 0px;
             height: 100%;
-            float: left;
+            width: 97%;
         }
-        select:first-child {width:15%;}
-        select:last-child {width:83%;}
         select option { font-family: monospace; }
 
         select option[data-modified] {
@@ -30,6 +32,24 @@
         ipcRenderer.on('response-project', function(a, map) {
             Map = map;
             // ipcRenderer.send('patch-project', {field: 'units', data: ['new unit']})
+        })
+
+        ipcRenderer.on('new-custom-unit', function(_, data) {
+            // The new unit is already registered from app.js,
+            // but we need to refresh our map data here
+            ipcRenderer.send('request-project');
+
+            // Update the object editor UI
+            unitListView.Add({
+                label: '(' + data.id + ') ' + data.name,
+                value: '',
+                data: {
+                    id: data.id
+                }
+            })
+
+            // Load the newly-created unit
+            selectUnitIntoEditor(data.id);
         })
 
         //var Map = require('../classes/Map.js');
@@ -64,13 +84,15 @@
         // window.alert(JSON.stringify(ObjectEditor.Data.Units['hfoo']));
     </script>
     <script data-script-name="Units">
+        var unitListView,
+            unitFieldListView,
+
+            selectUnitIntoEditor; // function(unitId)
+
         window.addEventListener('load', function() {
             var unitEditor = document.getElementById('unit-editor'),
                 unitList = document.getElementById('unit-list'),
                 unitFieldList = document.getElementById('unit-field-list'),
-
-                unitListView,
-                unitFieldListView,
 
                 unitFields = ObjectEditor.Fields.Units,
                 unitFieldElems = {}; // Stores all HTMLElements for <option> in unit edit list (key = unitID)
@@ -133,7 +155,7 @@
                     onDblClick: onUnitSelected
                 });
 
-                unitEditor.appendChild(unitListView.HTMLElement);
+                unitEditor.querySelector('.objLeft').appendChild(unitListView.HTMLElement);
             }
             function populateUnitFieldsList() {
                 // Fill the units editing list with the Fields
@@ -199,10 +221,10 @@
                 // Append element
                 unitFieldListView = new ListView(unitFieldData, events);
 
-                unitEditor.appendChild(unitFieldListView.HTMLElement);
+                unitEditor.querySelector('.objRight').appendChild(unitFieldListView.HTMLElement);
             }
 
-            function selectUnitIntoEditor(unitId) {
+            selectUnitIntoEditor = function(unitId) {
                 var isCustomUnit = unitId.indexOf(':') !== -1,
                     baseUnitId = (isCustomUnit) ?
                         unitId.split(':')[1] : unitId,
