@@ -95,6 +95,12 @@ var Window = {
         });
     },
 
+    SendMessage: function(windowName, eventName, data) {
+        if(Window.openWindows[windowName]) {
+            Window.openWindows[windowName].webContents.send(eventName, data);
+        }
+    },
+
     Broadcast: function(eventName, data) {
         console.log('[ Event ]', eventName);
 
