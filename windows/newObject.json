@@ -6,6 +6,8 @@
     "width": 500,
     "height": 400,
 
+    "parent": "objectEditor",
+    "modal": true,
     "allowMultiple": false,
     "requiresTemplate": true
 }
