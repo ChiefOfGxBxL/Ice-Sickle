@@ -1,4 +1,5 @@
-var fs = require('fs-extra'),
+const
+    fs = require('fs-extra'),
     Path = require('path'),
     Url = require('url'),
     {BrowserWindow} = require('electron');
@@ -16,7 +17,7 @@ var Window = {
 
         // If the requested view does not exist, exit
         if(!fs.existsSync(viewPath)) {
-            console.log('Error opening new window: could not find view', viewPath);
+            console.error('Error opening new window: could not find view', viewPath);
             return false;
         }
 
@@ -37,13 +38,7 @@ var Window = {
         // Otherwise we create a new window
         var windowOptions = window;
         if(windowOptions.parent) {
-            if(windowOptions.parent === '__root') {
-                console.log('TODO: set window root');
-                //windowOptions.parent = openWindows.root;
-            }
-            else {
-                windowOptions.parent = Window.openWindows[windowOptions.parent];
-            }
+            windowOptions.parent = Window.openWindows[windowOptions.parent];
         }
         windowOptions.webPreferences = {
             // Set preload on all windows to run the global-script
@@ -110,6 +105,26 @@ var Window = {
     }
 }
 
+function loadDefaultInputWindows() {
+    var inputTypes = ['int', 'unknown'];
+
+    inputTypes.forEach((type) => {
+        var inputName = 'input' + (type[0].toUpperCase()) + type.substr(1);
+        Window.availableWindows[inputName] = {
+            "name": inputName,
+            "path": "/input/" + type + ".html",
+            "description": "",
+            "width": 400,
+            "height": 300,
+            "parent": "objectEditor",
+            "modal": true,
+            "frame": false,
+            "allowMultiple": false,
+            "requiresTemplate": true
+        };
+    })
+}
+
 function loadWindowsFromDir() {
     var windowsPath = Path.resolve(__dirname, '..', 'windows'),
         windowManifests = fs.readdirSync(windowsPath);
@@ -120,6 +135,7 @@ function loadWindowsFromDir() {
     });
 }
 
+loadDefaultInputWindows();
 loadWindowsFromDir();
 console.log('Loaded ' + Object.keys(Window.availableWindows).length + ' windows');
 module.exports = Window;
