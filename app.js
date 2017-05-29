@@ -27,8 +27,8 @@ let windows = {}; // Always contains 'root'
 let availableWindows = {
     newUnit: {
         path: 'new-unit.html',
-        preferredHeight: 300,
-        preferredWidth: 300
+        height: 300,
+        width: 470
     }
     // TODO: load dynamically from /windows and have a Register method
 };
