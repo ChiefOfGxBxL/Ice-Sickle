@@ -1,0 +1,90 @@
+upgradeid,name,class,race,sort,used,global,maxlevel,inherit,goldbase,goldmod,lumberbase,lumbermod,timebase,timemod,effect1,base1,mod1,code1,effect2,base2,mod2,code2,effect3,base3,mod3,code3,effect4,base4,mod4,code4,version,InBeta
+Rhme,human melee attack,melee,human,_,1,0,3,0,100,75,50,125,60,15,ratd,1,1,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rhra,human ranged attack,ranged,human,_,1,0,3,0,100,75,50,125,60,15,ratd,1,1,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rhhb,human hammer bounce,_,human,_,1,0,1,1,125,0,225,0,45,0,rasd,200,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rhar,human armor,armor,human,_,1,0,3,0,125,25,75,100,60,15,rarm,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rhgb,human gyro bombs,_,human,_,1,0,1,1,150,50,100,0,35,0,renw,3,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rhac,human architecture,armor,human,_,1,0,3,0,100,25,25,25,60,15,rarm,-,-,-,rhpo,0.1,0.1,-,_,-,-,-,_,-,-,-,0,1
+Rhde,human footman defend,_,human,_,1,0,1,1,150,0,100,0,45,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rhan,human animal breeding,_,human,_,1,0,1,1,125,0,175,0,40,0,rhpx,150,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rhpt,human priest training,caster,human,_,1,0,2,1,100,0,50,100,60,15,rmnx,100,100,-,rmnr,0.325,0.325,-,rhpx,40,40,-,ratd,0,0,-,0,1
+Rhst,human sorceress training,caster,human,_,1,0,2,1,100,0,50,100,60,15,rmnx,100,100,-,rmnr,0.325,0.325,-,rhpx,40,40,-,ratd,0,0,-,0,1
+Rhla,human leather armor,armor,human,_,1,0,3,0,100,50,100,75,60,15,rarm,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rhri,human rifleman plus range,_,human,_,1,0,1,1,75,0,125,0,30,0,ratr,200,200,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rhlh,human lumber harvesting,_,human,_,1,0,2,1,100,100,0,0,60,15,rlum,10,10,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rhse,human magical sentinal,_,human,_,1,0,1,0,50,0,50,0,30,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rhfl,human flare,_,human,_,1,0,1,1,50,0,50,0,30,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rhss,human control magic,_,human,_,1,0,1,1,75,0,75,0,45,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,1
+Rhrt,human rocket tank,_,human,_,1,1,1,1,50,0,150,0,40,0,rtma,1,-,hmtt,rtma,-1,-,hrtt,_,-,-,-,_,-,-,-,1,1
+Rhpm,human backpack,_,human,_,1,0,1,0,50,0,25,0,20,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,1
+Rhfc,human flak cannon,_,human,_,1,0,1,1,100,0,150,0,40,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,1
+Rhfs,human frag shards,_,human,_,1,0,1,1,50,0,100,0,40,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,1
+Rhcd,human cloud research,_,human,_,1,0,1,1,50,0,100,0,35,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,1
+Rome,orc melee attack,melee,orc,_,1,0,3,0,100,50,75,100,60,15,ratd,1,1,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rora,orc ranged attack,ranged,orc,_,1,0,3,0,100,50,100,100,60,15,ratd,1,1,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Roar,orc armor,armor,orc,_,1,0,3,0,150,75,75,150,60,15,rarm,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rwdm,orc war drums damage,_,orc,_,1,0,1,1,100,0,150,0,40,0,raud,0.1,0.1,Aakb,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Ropg,orc pillage,_,orc,_,1,0,1,1,75,0,25,0,45,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Robs,orc grunt berserk,_,orc,_,1,0,1,1,50,0,150,0,40,0,rhpx,100,-,-,ratx,3,-,-,_,-,-,-,_,-,-,-,0,1
+Rows,orc tauren smash,_,orc,_,1,0,1,1,100,0,250,0,40,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Roen,orc raider ensare,_,orc,_,1,0,1,1,50,0,75,0,40,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rovs,orc wyvern venom spear,_,orc,_,1,0,1,1,100,0,150,0,40,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rowd,orc witch doctor training,caster,orc,_,1,0,2,1,100,0,50,100,60,15,rmnx,100,100,-,rmnr,0.325,0.325,-,rhpx,40,40,-,ratd,0,0,-,0,1
+Rost,orc shaman training,caster,orc,_,1,0,2,1,100,0,50,100,60,15,rmnx,100,100,-,rmnr,0.325,0.325,-,rhpx,40,40,-,ratd,0,0,-,0,1
+Rosp,orc spiked barricade,_,orc,_,1,0,3,0,25,25,75,100,60,15,rspi,4,6,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rotr,orc troll regeneration,_,orc,_,1,0,1,1,100,0,100,0,35,0,rhpr,0.8,1,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rolf,orc liquid fire,_,orc,_,1,0,1,1,75,0,125,0,75,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,1
+Roch,orc chaos conversion,_,demon,_,1,1,1,0,0,0,0,0,0,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rowt,orc spiritwalker training,caster,orc,_,1,0,2,1,100,0,50,100,60,15,rmnx,150,150,-,rmnr,0.42,0.42,-,rhpx,60,60,-,ratd,0,0,-,1,1
+Rorb,orc reinforced defense,_,orc,_,1,0,1,0,50,0,200,0,60,0,rart,1,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,1
+Robk,orc berserkers,_,orc,_,1,1,1,1,75,0,175,0,40,0,rtma,1,-,ohun,rtma,-1,-,otbk,_,-,-,-,_,-,-,-,1,1
+Ropm,orc backpack,_,orc,_,1,0,1,0,50,0,25,0,20,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,1
+Robf,orc naptha,_,orc,_,1,0,1,1,50,0,150,0,30,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,1
+Rume,undead unholy strength,melee,undead,_,1,0,3,0,125,75,50,100,60,15,ratd,1,1,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rura,undead creature attack,ranged,undead,_,1,0,3,0,150,50,50,75,60,15,ratd,1,1,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Ruar,undead unholy armor,armor,undead,_,1,0,3,0,125,75,50,100,60,15,rarm,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Ruac,undead ghoul cannibalize,_,undead,_,1,0,1,1,75,0,0,0,30,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rugf,undead ghoul frenzy,_,undead,_,1,0,1,1,100,0,150,0,45,0,rats,0.25,-,-,rmvx,80,-,-,_,-,-,-,_,-,-,-,0,1
+Ruwb,undead fiend web,_,undead,_,1,0,1,1,150,0,150,0,30,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rusf,undead gargoyle stone,_,undead,_,1,0,1,1,75,0,150,0,40,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rune,undead necromancer training,caster,undead,_,1,0,2,1,100,0,50,100,30,15,rmnx,100,100,-,rmnr,0.325,0.325,-,rhpx,40,40,-,ratd,0,0,-,0,1
+Ruba,undead banshee training,caster,undead,_,1,0,2,1,100,0,50,100,60,15,rmnx,100,100,-,rmnr,0.325,0.325,-,rhpx,40,40,-,ratd,0,0,-,0,1
+Rufb,undead frost wyrm breath,_,undead,_,1,0,1,1,150,0,275,0,60,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rusl,undead skeleton life span,_,undead,_,1,0,1,1,50,0,75,0,15,0,rrai,15,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rucr,undead creature armor,armor,undead,_,1,0,3,0,150,50,75,125,60,15,rarm,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rupc,undead plague cloud,_,undead,_,1,0,1,1,100,0,200,0,45,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rusm,undead skeletal mastery,_,undead,_,1,0,1,1,125,0,150,0,30,0,rlev,1,1,Arai,_,-,-,-,_,-,-,-,_,-,-,-,1,1
+Rubu,undead burrowing,_,undead,_,1,0,1,1,75,0,75,0,45,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,1
+Rusp,undead avenger transform,_,undead,_,1,0,1,1,75,0,150,0,60,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,1
+Ruex,undead exhume corpses,_,undead,_,1,0,1,1,75,0,50,0,20,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,1
+Rupm,undead backpack,_,undead,_,1,0,1,0,50,0,25,0,20,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,1
+Resm,nightelf strength of moon,melee,nightelf,_,1,0,3,0,125,50,75,100,60,15,ratd,1,1,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Resw,nightelf strength of wild,ranged,nightelf,_,1,0,3,0,100,75,75,100,60,15,ratd,1,1,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rema,nightelf moon armor,armor,nightelf,_,1,0,3,0,150,50,75,75,60,15,rarm,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Rerh,nightelf reinforced hides,armor,nightelf,_,1,0,3,0,150,50,50,100,60,15,rarm,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Reuv,nightelf ultravision,_,nightelf,_,1,0,1,1,50,0,50,0,45,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Renb,nightelf nature's blessing,_,nightelf,_,1,0,1,1,150,0,200,0,60,0,rmvx,40,-,-,rarm,-,-,-,_,-,-,-,_,-,-,-,0,1
+Resc,nightelf scout,_,nightelf,_,1,0,1,1,100,0,100,0,20,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Remg,nightelf moon glaive upgrade,_,nightelf,_,1,0,1,1,100,0,150,0,35,0,ratc,1,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Reib,nightelf improved bows,_,nightelf,_,1,0,1,1,50,0,100,0,35,0,ratr,200,200,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Remk,nightelf marksmanship,_,nightelf,_,1,0,1,1,100,0,175,0,40,0,ratx,3,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Redt,nightelf DoT training,caster,nightelf,_,1,0,2,1,100,0,50,100,60,15,rmnx,100,100,-,rmnr,0.325,0.325,-,rhpx,40,40,-,ratd,0,0,-,0,1
+Redc,nightelf DoC training,caster,nightelf,_,1,0,2,1,100,0,50,100,25,10,rmnx,100,100,-,rmnr,0.325,0.325,-,rhpx,75,75,-,ratd,1,1,-,0,1
+Resi,nightelf abolish magic,_,nightelf,_,1,0,1,1,50,0,50,0,45,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Recb,nightelf corrosive breath,_,nightelf,_,1,0,1,1,125,0,225,0,40,0,renw,3,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Reht,nightelf hippogryph taming,_,nightelf,_,1,0,1,1,75,0,75,0,30,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,0,1
+Repb,nightelf impaling bolt,_,nightelf,_,1,0,1,1,125,0,100,0,60,0,rasd,200,-,-,renw,2,-,-,_,-,-,-,_,-,-,-,0,1
+Rers,nightelf resistant skin,_,nightelf,_,1,0,1,1,50,0,100,0,75,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,1
+Rehs,nightelf hardened skin,_,nightelf,_,1,0,1,1,100,0,175,0,40,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,1
+Reeb,nightelf enchanted bears,_,nightelf,_,1,0,1,1,25,0,100,0,20,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,1
+Reec,nightelf enchanted crows,_,nightelf,_,1,0,1,1,25,0,100,0,20,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,1
+Rews,nightelf well spring,_,nightelf,_,1,0,1,1,75,0,150,0,30,0,rmnx,125,-,-,rmnr,0.52,-,-,_,-,-,-,_,-,-,-,1,1
+Repm,nightelf backpack,_,nightelf,_,1,0,1,0,50,0,25,0,20,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,1
+Rgfo,glyph of fortification,_,unknown,_,1,0,3,0,100,50,100,50,60,15,rarm,-,-,-,rhpo,0.2,0.2,-,_,-,-,-,_,-,-,-,1,1
+Rguv,glyph of ultravision,_,unknown,_,1,0,1,1,100,50,100,50,60,15,rauv,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,1
+Rnen,naga myrmidon ensnare,_,naga,_,1,0,1,1,50,0,75,0,40,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,0
+Rnsw,naga sea witch training,caster,naga,_,1,0,2,1,100,0,50,100,60,15,rmnx,100,100,-,rmnr,0.325,0.325,-,rhpx,40,40,-,ratd,0,0,-,1,0
+Rnsi,naga abolish magic,_,naga,_,1,0,1,1,50,0,50,0,45,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,0
+Rnat,naga attack,melee,naga,_,1,0,3,0,150,75,75,150,60,15,ratd,1,1,-,_,-,-,-,_,-,-,-,_,-,-,-,1,0
+Rnam,naga armor,armor,naga,_,1,0,3,0,125,100,75,150,60,15,rarm,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,0
+Rnsb,naga submerge,_,naga,_,1,0,1,1,25,0,25,0,20,0,_,-,-,-,_,-,-,-,_,-,-,-,_,-,-,-,1,0

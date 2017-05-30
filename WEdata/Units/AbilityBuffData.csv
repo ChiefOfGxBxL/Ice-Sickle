@@ -1,0 +1,238 @@
+alias,code,name,isEffect,version,useInEditor,sort,race,InBeta
+BPSE,BPSE,Pause,0,0,1,unit,other,1
+BSTN,BSTN,Stun,0,0,1,unit,other,1
+Bchd,Bchd,CargoHoldDeath ,0,0,1,unit,other,1
+Bdef,Bdef,Defense        ,0,0,1,item,other,1
+Bdet,Bdet,Detected       ,0,0,1,item,other,1
+Bfre,Bfre,Freeze         ,0,0,1,unit,other,1
+Bfro,Bfro,Frost          ,0,0,1,unit,other,1
+Bvul,Bvul,Invulnerable   ,0,0,1,unit,other,1
+Bpoi,Bpoi,PoisonAttack   ,0,0,1,unit,other,1
+Bpsd,Bpsd,PoisonAttackStackDoT ,0,0,1,unit,other,1
+Bpsi,Bpsi,PoisonAttackStackInfo,0,0,1,unit,other,1
+Bsha,Bsha,SharedVision   ,0,0,1,unit,other,1
+Bspe,Bspe,SpeedBonus     ,0,0,1,unit,other,1
+Btrv,Btrv,TeleportReveal ,0,0,1,item,other,1
+Bclf,Bclf,CloudOfFog     ,0,1,1,unit,human,1
+Bcmg,Bcmg,ControlMagic   ,0,1,1,unit,human,1
+Bhea,Bhea,Heal                   ,0,0,1,unit,human,1
+Binf,Binf,InnerFire              ,0,0,1,unit,human,1
+Binv,Binv,Invisibility           ,0,0,1,unit,human,1
+Bmlc,Bmlc,MagicLeashCaster       ,0,1,1,unit,human,1
+Bmlt,Bmlt,MagicLeashTarget       ,0,1,1,unit,human,1
+Bmil,Bmil,Militia                ,0,0,1,unit,human,1
+Bpxf,Bpxf,PhoenixFire            ,0,1,1,unit,human,1
+Bphx,Bphx,Phoenix                ,0,1,1,unit,human,1
+Bply,Bply,Polymorph              ,0,0,1,unit,human,1
+Bslo,Bslo,Slow                   ,0,0,1,unit,human,1
+BHab,BHab,AuraBrilliance         ,0,0,1,hero,human,1
+BHad,BHad,AuraDevotion           ,0,0,1,hero,human,1
+BHav,BHav,Avatar                 ,0,0,1,hero,human,1
+BHbn,BHbn,Banish                 ,0,1,1,hero,human,1
+BHbd,BHbd,Blizzard               ,0,0,1,hero,human,1
+BHbz,BHbz,BlizzardAoe            ,0,0,1,hero,human,1
+BHds,BHds,DivineShield           ,0,0,1,hero,human,1
+Bdcb,Bdcb,DrainCaster            ,0,1,1,hero,human,1
+Bdcl,Bdcl,DrainCasterLife        ,0,1,1,hero,human,1
+Bdcm,Bdcm,DrainCasterMana        ,0,1,1,hero,human,1
+Bdtb,Bdtb,DrainTarget            ,0,1,1,hero,human,1
+Bdtl,Bdtl,DrainTargetLife        ,0,1,1,hero,human,1
+Bdtm,Bdtm,DrainTargetMana        ,0,1,1,hero,human,1
+BHfs,BHfs,FlameStrike            ,0,1,1,hero,human,1
+BHtc,BHtc,ThunderClap            ,0,0,1,hero,human,1
+BHwe,BHwe,WaterElemental         ,0,0,1,hero,human,1
+Bakb,Bakb,AuraKotoBeast          ,0,0,1,unit,orc,1
+Boar,Boar,AuraRegenLife          ,0,0,1,unit,orc,1
+Barm,Barm,AuraRegenMana          ,0,0,1,unit,orc,1
+Bbof,Bbof,BallsOfFire            ,0,1,1,unit,orc,1
+Bbsk,Bbsk,BerserkerRage          ,0,1,1,unit,orc,1
+Bblo,Bblo,Bloodlust              ,0,0,1,unit,orc,1
+Bdvv,Bdvv,DevourVision           ,0,0,1,unit,orc,1
+Bdig,Bdig,Digesting              ,0,0,1,unit,orc,1
+Bens,Bens,Ensnare                ,0,0,1,unit,orc,1
+Bena,Bena,EnsnareAir             ,0,0,1,unit,orc,1
+Beng,Beng,EnsnareGround          ,0,0,1,unit,orc,1
+Beye,Beye,EvilEye                ,0,0,1,unit,orc,1
+Bhwd,Bhwd,HealingWard            ,0,0,1,unit,orc,1
+Blsh,Blsh,LightningShield        ,0,0,1,unit,orc,1
+Blsa,Blsa,LightningShieldAoe     ,0,0,1,unit,orc,1
+Bliq,Bliq,LiquidFire             ,0,1,1,unit,orc,1
+Bprg,Bprg,Purge                  ,0,0,1,unit,orc,1
+Bspl,Bspl,SpiritLink             ,0,1,1,unit,orc,1
+Bstt,Bstt,StasisTrapTrigger      ,0,0,1,unit,orc,1
+BOac,BOac,AuraCommand            ,0,0,1,hero,orc,1
+BOae,BOae,AuraEndurance          ,0,0,1,hero,orc,1
+BOeq,BOeq,Earthquake             ,0,0,1,hero,orc,1
+BOea,BOea,EarthquakeAoe          ,0,0,1,hero,orc,1
+BOhx,BOhx,Hex                    ,0,1,1,hero,orc,1
+BOmi,BOmi,MirrorImage            ,0,0,1,hero,orc,1
+BOsh,BOsh,Shockwave              ,0,0,1,hero,orc,1
+BOsf,BOsf,SpiritWolf             ,0,0,1,hero,orc,1
+BOvd,BOvd,Voodoo                 ,0,1,1,hero,orc,1
+BOvc,BOvc,VoodooCaster           ,0,1,1,hero,orc,1
+BOwd,BOwd,Ward                   ,0,1,1,hero,orc,1
+BOww,BOww,WhirlwindAoe           ,0,0,1,hero,orc,1
+BOwk,BOwk,WindWalk               ,0,0,1,hero,orc,1
+Bbar,Bbar,Barkskin               ,0,0,1,unit,nightelf,1
+Bcor,Bcor,CorrosiveBreath        ,0,0,1,unit,nightelf,1
+Bcyc,Bcyc,Cyclone                ,0,0,1,unit,nightelf,1
+Bcy2,Bcy2,CycloneTwo             ,0,0,1,unit,nightelf,1
+Beat,Beat,EatTree                ,0,0,1,unit,nightelf,1
+Bfae,Bfae,FaerieFire             ,0,0,1,unit,nightelf,1
+Bgra,Bgra,GrabTree               ,0,1,1,unit,nightelf,1
+Bmfl,Bmfl,ManaFlare              ,0,1,1,unit,nightelf,1
+Bmfa,Bmfa,ManaFlareAoe           ,0,1,1,unit,nightelf,1
+Bpsh,Bpsh,PhaseShift             ,0,1,1,unit,nightelf,1
+Brej,Brej,Rejuvination           ,0,0,1,unit,nightelf,1
+Broa,Broa,Roar                   ,0,0,1,unit,nightelf,1
+Bspo,Bspo,SlowPoison             ,0,0,1,unit,nightelf,1
+Bssd,Bssd,SlowPoisonStackDoT     ,0,0,1,unit,nightelf,1
+Bssi,Bssi,SlowPoisonStackInfo    ,0,0,1,unit,nightelf,1
+Bvng,Bvng,Vengeance              ,0,1,1,unit,nightelf,1
+BEah,BEah,AuraThorns             ,0,0,1,hero,nightelf,1
+BEar,BEar,AuraTrueshot           ,0,0,1,hero,nightelf,1
+BEer,BEer,EntanglingRoots        ,0,0,1,hero,nightelf,1
+BEfn,BEfn,ForceOfNature          ,0,0,1,hero,nightelf,1
+BEim,BEim,Immolation             ,0,0,1,hero,nightelf,1
+BEia,BEia,ImmolationAoe          ,0,0,1,hero,nightelf,1
+BEme,BEme,Metamorphosis          ,0,0,1,hero,nightelf,1
+BEst,BEst,Scout                  ,0,0,1,hero,nightelf,1
+BEsh,BEsh,ShadowStrike           ,0,1,1,hero,nightelf,1
+BEsv,BEsv,SpiritOfVengeance      ,0,1,1,hero,nightelf,1
+Bams,Bams,AntiMagicShell         ,0,0,1,unit,undead,1
+Bam2,Bam2,AntiMagicShell (Matrix),0,0,1,unit,undead,1
+Babr,Babr,AuraBlightRegen        ,0,0,1,unit,undead,1
+Bapl,Bapl,AuraPlague             ,0,0,1,unit,undead,1
+Bcri,Bcri,Cripple                ,0,0,1,unit,undead,1
+Bcrs,Bcrs,Curse                  ,0,0,1,unit,undead,1
+Bfrz,Bfrz,FreezingBreath         ,0,0,1,unit,undead,1
+Bplg,Bplg,PlagueWard             ,0,0,1,unit,undead,1
+Bpoc,Bpoc,Possession,0,0,1,unit,undead,1
+Bpos,Bpos,Possession,0,0,1,unit,undead,1
+Brai,Brai,RaiseDead              ,0,0,1,unit,undead,1
+Brpb,Brpb,Replenish              ,0,1,1,unit,undead,1
+Brpl,Brpl,ReplenishLife          ,0,1,1,unit,undead,1
+Brpm,Brpm,ReplenishMana          ,0,1,1,unit,undead,1
+Bspa,Bspa,SpiderAttack           ,0,0,1,unit,undead,1
+Buhf,Buhf,UnholyFrenzy           ,0,0,1,unit,undead,1
+Buns,Buns,Unsummon               ,0,0,1,unit,undead,1
+Bweb,Bweb,Web                    ,0,0,1,unit,undead,1
+Bwea,Bwea,WebAir                 ,0,0,1,unit,undead,1
+BUan,BUan,AnimateDead            ,0,0,1,hero,undead,1
+BUau,BUau,AuraUnholy             ,0,0,1,hero,undead,1
+BUav,BUav,AuraVampiric           ,0,0,1,hero,undead,1
+BUcb,BUcb,CarrionScarab          ,0,1,1,hero,undead,1
+BUcs,BUcs,CarrionSwarm           ,0,0,1,hero,undead,1
+BUdd,BUdd,DeathAndDecayAoe       ,0,0,1,hero,undead,1
+BUfa,BUfa,FrostArmor             ,0,0,1,hero,undead,1
+BUim,BUim,Impale                 ,0,1,1,hero,undead,1
+BUsl,BUsl,Sleep                  ,0,0,1,hero,undead,1
+BUsp,BUsp,SleepPause             ,0,0,1,hero,undead,1
+BUst,BUst,SleepStun              ,0,0,1,hero,undead,1
+BUts,BUts,ThornyShield           ,0,1,1,hero,undead,1
+Basl,Basl,AuraSlow               ,0,0,1,unit,other,1
+BCbf,BCbf,BreathOfFrost          ,0,1,1,unit,other,1
+BCtc,BCtc,CreepThunderClap       ,0,0,1,unit,other,1
+Bfzy,Bfzy,Frenzy                 ,0,0,1,unit,other,1
+Bmec,Bmec,MechanicalCritter      ,0,1,1,unit,other,1
+BNmr,BNmr,MindRot                ,0,1,1,unit,other,1
+Bpig,Bpig,PandaImmolation        ,0,1,1,unit,other,1
+BNpi,BNpi,PermImmolation         ,0,0,1,unit,other,1
+BNsa,BNsa,Sanctuary              ,0,0,1,unit,other,1
+Bshs,Bshs,ShadowSight            ,0,1,1,unit,other,1
+BNss,BNss,SpellShield            ,0,1,1,unit,other,1
+Btdg,Btdg,TornadoDamageAoe       ,0,1,1,unit,other,1
+Btsp,Btsp,TornadoSpin            ,0,1,1,unit,other,1
+Btsa,Btsa,TornadoSpinAoe         ,0,1,1,unit,other,1
+BNba,BNba,BlackArrow             ,0,1,1,unit,other,1
+BNbf,BNbf,BreathOfFire           ,0,1,1,unit,other,1
+BHca,BHca,ColdArrow              ,0,0,1,unit,other,1
+Bcsd,Bcsd,ColdArrowStackDoT      ,0,0,1,unit,other,1
+Bcsi,Bcsi,ColdArrowStackInfo     ,0,0,1,unit,other,1
+BNdm,BNdm,DarkMinion             ,0,1,1,unit,other,1
+BNdo,BNdo,Doom                   ,0,1,1,unit,other,1
+BNdi,BNdi,DoomMinion             ,0,1,1,unit,other,1
+BNdh,BNdh,DrunkenHaze            ,0,1,1,unit,other,1
+BNef,BNef,ElementalFury          ,0,1,1,unit,other,1
+BNht,BNht,HowlOfTerror           ,0,1,1,unit,other,1
+BNms,BNms,ManaShield             ,0,1,1,unit,other,1
+BNsi,BNsi,Silence                ,0,1,1,unit,other,1
+BNst,BNst,Stampede               ,0,1,1,unit,other,1
+BNsg,BNsg,SummonGrizzly          ,0,1,1,unit,other,1
+BNsq,BNsq,SummonQuillbeast       ,0,1,1,unit,other,1
+BNsw,BNsw,SummonWarEagle         ,0,1,1,unit,other,1
+BNto,BNto,Tornado                ,0,1,1,unit,other,1
+BNwm,BNwm,WateryMinion           ,0,1,1,unit,other,1
+BNbr,BNbr,BattleRoar             ,0,1,1,unit,other,1
+BNdc,BNdc,DarkConversion         ,0,0,1,unit,other,1
+BNin,BNin,Infernal               ,0,0,1,unit,other,1
+BNpa,BNpa,Parasite               ,0,1,1,unit,other,1
+BNpm,BNpm,ParasiteMinion         ,0,1,1,unit,other,1
+BNrd,BNrd,RainOfFire             ,0,1,1,unit,other,1
+BNrf,BNrf,RainOfFireAoe,0,1,1,unit,other,1
+BNsl,BNsl,SoulPreservation       ,0,0,1,unit,other,1
+BIcb,BIcb,Corruption             ,0,1,1,item,other,1
+BFig,BFig,Figurine               ,0,0,1,item,other,1
+BIcf,BIcf,ItemCloakOfFlames      ,0,0,1,item,other,1
+BIil,BIil,ItemIllusion           ,0,0,1,item,other,1
+BIrb,BIrb,Rebirth                ,0,1,1,item,other,1
+BIrg,BIrg,Regeneration           ,0,0,1,item,other,1
+BIrl,BIrl,RegenLife              ,0,0,1,item,other,1
+BIrm,BIrm,RegenMana              ,0,0,1,item,other,1
+BIsv,BIsv,SoulTrapVision         ,0,0,1,item,other,1
+BIsh,BIsh,SpiritTroll            ,0,1,1,item,other,1
+BIwb,BIwb,ItemWeb                ,0,1,1,item,other,1
+BImo,BImo,ItemMonsterLure        ,0,1,1,item,other,1
+BIpv,BIpv,ItemVampirePotion      ,0,1,1,item,other,1
+Xclf,Xclf,CloudOfFog           ,1,1,1,unit,human,1
+Xfla,Xfla,Flare                ,1,0,1,unit,human,1
+XHbz,XHbz,Blizzard             ,1,0,1,hero,human,1
+XHfs,XHfs,FlameStrike          ,1,1,1,hero,human,1
+Xbof,Xbof,BallsOfFire          ,1,1,1,unit,orc,1
+XOeq,XOeq,Earthquake           ,1,0,1,hero,orc,1
+XOre,XOre,Reincarnation        ,1,0,1,hero,orc,1
+Xesn,Xesn,Sentinel             ,1,0,1,unit,nightelf,1
+XEsf,XEsf,Starfall             ,1,0,1,hero,nightelf,1
+XEtq,XEtq,Tranquility          ,1,0,1,hero,nightelf,1
+XUdd,XUdd,DeathAndDecay        ,1,0,1,hero,undead,1
+XNmo,XNmo,Monsoon              ,1,1,1,unit,other,1
+XErc,XErc,RainOfChaos          ,1,0,1,hero,other,1
+XErf,XErf,RainOfFire           ,1,0,1,hero,other,1
+XIct,XIct,ItemChangeTOD        ,1,1,1,item,other,1
+AEsd,AEsd,Starfall target,0,0,1,hero,nightelf,1
+AEtr,AEtr,Tranquility target,0,0,1,hero,nightelf,1
+ANmd,ANmd,Monsoon              ,0,1,1,hero,other,1
+Bivs,Bivs,Invisibility           ,0,0,1,unit,human,1
+BUad,BUad,AnimateDead            ,0,0,1,hero,undead,1
+Bult,Bult,Ultravision,0,0,1,unit,nightelf,1
+BNab,BNab,AcidBomb,0,1,1,hero,other,1
+BNcr,BNcr,ChemicalRage,0,1,1,hero,other,1
+BNhs,BNhs,HealingSpray,0,1,1,hero,other,1
+XNhs,XNhs,HealingSpray,1,1,1,hero,other,1
+BNtm,BNtm,Transmute,0,1,1,hero,other,1
+BNeg,BNeg,EngineeringUpgrade,0,1,1,hero,other,1
+BNcs,BNcs,ClusterRockets,0,1,1,hero,other,1
+XNcs,XNcs,ClusterRockets,1,1,1,hero,other,1
+BNfy,BNfy,SummonFactory,0,1,1,hero,other,1
+BNcg,BNcg,ClockwerkGoblin,0,1,1,hero,other,1
+BNic,BNic,Incinerate,0,1,1,hero,other,1
+BNso,BNso,SoulBurn,0,1,1,hero,other,1
+BNlm,BNlm,LavaMonster,0,1,1,hero,other,1
+BNvc,BNvc,Volcano,0,1,1,hero,other,1
+BNva,BNva,VolcanoAOE,0,1,1,hero,other,1
+XNvc,XNvc,Volcano,1,1,1,hero,other,1
+Xbdt,Xbdt,EFFECT_BASEDETECTOR,1,0,1,unit,other,1
+Xbli,Xbli,EFFECT_BLIGHT,1,0,1,unit,other,1
+Xdis,Xdis,EFFECT_HERODISSIPATE,1,0,1,unit,other,1
+Xfhs,Xfhs,EFFECT_OnFireHumanSml,1,0,1,unit,human,1
+Xfhm,Xfhm,EFFECT_OnFireHumanMed,1,0,1,unit,human,1
+Xfhl,Xfhl,EFFECT_OnFireHumanLrg,1,0,1,unit,human,1
+Xfos,Xfos,EFFECT_OnFireOrcSml,1,0,1,unit,orc,1
+Xfom,Xfom,EFFECT_OnFireOrcMed,1,0,1,unit,orc,1
+Xfol,Xfol,EFFECT_OnFireOrcLrg,1,0,1,unit,orc,1
+Xfns,Xfns,EFFECT_OnFireNightElfSml,1,0,1,unit,nightelf,1
+Xfnm,Xfnm,EFFECT_OnFireNightElfMed,1,0,1,unit,nightelf,1
+Xfnl,Xfnl,EFFECT_OnFireNightElfLrg,1,0,1,unit,nightelf,1
+Xfus,Xfus,EFFECT_OnFireUndeadSml,1,0,1,unit,undead,1
+Xfum,Xfum,EFFECT_OnFireUndeadMed,1,0,1,unit,undead,1
+Xful,Xful,EFFECT_OnFireUndeadLrg,1,0,1,unit,undead,1
