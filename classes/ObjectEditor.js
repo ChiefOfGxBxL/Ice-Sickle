@@ -3,11 +3,13 @@
 var ObjectEditor = {
     Data: {
         Units: require('../WEdata/data/Units.json'),
-        Items: require('../WEdata/data/Items.json')
+        Items: require('../WEdata/data/Items.json'),
+        Destructables: require('../WEdata/data/Destructables.json')
     },
     Fields: {
         Units: require('../WEdata/fields/UnitMetaData.json'),
-        Items: require('../WEdata/fields/ItemMetaData.json')
+        Items: require('../WEdata/fields/ItemMetaData.json'),
+        Destructables: require('../WEdata/fields/DestructableMetaData.json')
     },
 
     Find: {
