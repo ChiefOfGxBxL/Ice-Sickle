@@ -35,4 +35,8 @@ var ObjectEditor = {
     }
 }
 
+Object.keys(ObjectEditor.Data).forEach((data) => {
+    console.log(data, Object.keys(ObjectEditor.Data[data]).length, Object.keys(ObjectEditor.Fields[data]).length);
+})
+
 module.exports = ObjectEditor;
