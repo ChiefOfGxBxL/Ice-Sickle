@@ -1,0 +1,13 @@
+{
+    "name": "newTrigger",
+    "path": "new-trigger.html",
+    "description": "",
+
+    "width": 400,
+    "height": 300,
+
+    "parent": "triggerEditor",
+    "frame": false,
+    "modal": true,
+    "allowMultiple": false
+}

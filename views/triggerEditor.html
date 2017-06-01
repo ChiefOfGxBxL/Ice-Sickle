@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Ice Sickle - Trigger Editor</title>
+
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/mini-default.min.css">
+    <style>
+      select,textarea {width: 100%;min-height:400px;}
+      #triggerText {font-family: monospace;font-size: 0.8em;}
+    </style>
+
+    <script>
+        var {ipcRenderer} = require('electron'),
+            ListView = require('../classes/ListView'),
+            triggerListView, // <ListView>
+            triggerListViewData = [],
+            textarea, // trigger textarea
+            findTriggerByName = function(triggerName) {
+              for(var i = 0; i < triggers.length; i++) {
+                if(triggers[i].name === triggerName) return triggers[i];
+              }
+              return false;
+            },
+            selectedTrigger,
+            triggers = [];
+
+        function openNewTriggerWindow() {
+          ipcRenderer.send('request-open-window', { windowName: 'newTrigger' });
+        }
+
+        function selectTriggerByName(name) {
+          selectedTrigger = findTriggerByName(name);
+
+          if(!selectedTrigger) return false;
+
+          textarea.value = selectedTrigger.content;
+        }
+    </script>
+    <script>
+      window.addEventListener('load', function() {
+        textarea = document.getElementById('triggerText');
+        var saveInterval;
+
+        // Textarea events
+        textarea.addEventListener('keydown', function(e) {
+          triggerListView.HTMLElement.setAttribute('disabled', 'disabled');
+
+          if(e.keyCode == 9) { // Tab
+              e.preventDefault(); // Prevent tabbing to the next element on page
+              var selStart = e.target.selectionStart;
+              textarea.value = textarea.value.substr(0, e.target.selectionStart) + '    ' + textarea.value.substr(e.target.selectionStart);
+              e.target.selectionStart = selStart + '    '.length;
+              e.target.selectionEnd = selStart + '    '.length;
+          }
+
+          // Update the trigger to contain the latest content
+          if(saveInterval) window.clearTimeout(saveInterval);
+          saveInterval = window.setTimeout(() => {
+            triggerListView.HTMLElement.removeAttribute('disabled');
+            selectedTrigger.content = e.target.value;
+
+            // Send updated trigger content to app.js
+            ipcRenderer.send('update-trigger', {
+              name: selectedTrigger.name,
+              content: e.target.value
+            })
+          }, 500)
+        })
+
+        // Read all triggers in the map
+        ipcRenderer.send('request-triggers');
+        ipcRenderer.on('response-triggers', (_, _triggers) => {
+          triggers = _triggers;
+
+          triggers.forEach((trigger) => {
+            // Populate list view of triggers
+            triggerListViewData.push({
+              label: trigger.name + ' (' + trigger.type + ')',
+              value: '',
+              data: {
+                name: trigger.name,
+                path: trigger.path,
+                type: trigger.type
+              }
+            })
+          })
+
+          var events = {
+            onDblClick: function(e, item) {
+              window.selectedTrigger = findTriggerByName(item.data.name);
+              document.getElementById('triggerText').value = window.selectedTrigger.content;
+            }
+          }
+
+          triggerListView = new ListView(triggerListViewData, events);
+          document.getElementById('triggerLeft').appendChild(triggerListView.HTMLElement);
+        });
+
+        // Handle new triggers being created
+        ipcRenderer.on('new-trigger', (_, trigger) => {
+          triggers.push(trigger);
+
+          selectTriggerByName(trigger.name);
+
+          triggerListView.Add({
+            label: trigger.name + ' (' + trigger.type + ')',
+            value: '',
+            data: {
+              name: trigger.name,
+              path: trigger.path,
+              type: trigger.type
+            }
+          })
+        })
+      })
+    </script>
+  </head>
+  <body>
+    <div>
+      <a href='#' onclick='openNewTriggerWindow()' class='button small'>New Trigger</a>
+    </div>
+    <div id='triggerLeft' style='float:left;width:20%;margin-right:10px;'>
+
+    </div>
+    <div id='triggerRight' style='float:left;width:70%;'>
+        <textarea id='triggerText'>
+
+        </textarea>
+    </div>
+  </body>
+</html>

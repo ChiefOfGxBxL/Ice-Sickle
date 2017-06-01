@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Ice Sickle - New Object</title>
+
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/mini-default.min.css">
+    <link rel="stylesheet" href="../assets/css/user-input-page.css">
+
+    <script>
+        var {ipcRenderer} = require('electron');
+
+        function submitForm() {
+            var name = document.getElementById('triggerName').value,
+                type = document.getElementById('triggerType').value;
+
+            ipcRenderer.send('new-trigger', {
+              name: name,
+              type: type
+            });
+
+            window.close();
+        }
+    </script>
+  </head>
+  <body>
+    <form>
+        <fieldset>
+            <legend>New Trigger</legend>
+
+            <label>
+                Name:
+                <input id='triggerName' type='text' value='' focus/>
+            </label>
+
+            <label>
+                Type:
+                <select id='triggerType'>
+                  <option value='jass' selected>Regular JASS (.jass)</option>
+                  <option value='nova'>Nova (.nova)</option>
+                </select>
+            </label>
+
+            <div class='buttons-right'>
+                <a class='button' onclick='window.close()'>Cancel</a>
+                <a class='button primary' onclick='submitForm()'>OK</a>
+            </div>
+        </fieldset>
+    </form>
+  </body>
+</html>

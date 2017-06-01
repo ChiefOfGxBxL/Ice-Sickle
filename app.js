@@ -114,6 +114,13 @@ var template = [
               click() {
                   Window.Open('objectEditor');
               }
+          },
+          {
+              label: 'Trigger Editor',
+              sublabel: '',
+              click() {
+                  Window.Open('triggerEditor');
+              }
           }
       ]
   },
@@ -239,6 +246,37 @@ const EventHandlers = {
     },
     'request-id-counter': function(event, data) {
         event.sender.webContents.send('response-id-counter', getNextIdCounter(data.type));
+    },
+    'request-triggers': function(event, data) {
+        event.sender.webContents.send('response-triggers', mapObj.triggers);
+    },
+    'update-trigger': function(event, data) {
+        // Update a specified trigger's contents
+        var triggerToUpdate = mapObj.triggers.find((t) => {
+          return t.name === data.name;
+        });
+
+        if(triggerToUpdate) {
+          triggerToUpdate.content = data.content;
+        }
+    },
+    'new-trigger': function(event, data) {
+      // TODO: check for conflicting trigger paths
+      var newTriggerFilePath = path.resolve(mapObj.__Dir, 'triggers/', (data.name + '.' + data.type)),
+          newTrigger = {
+              name: data.name,
+              path: newTriggerFilePath,
+              type: data.type,
+              content: ''
+          };
+
+      // Create a new file in the project
+      fs.ensureFileSync(newTriggerFilePath);
+
+      // Create a new trigger in the map
+      mapObj.triggers.push(newTrigger)
+
+      Window.Broadcast('new-trigger', newTrigger);
     }
 }
 
