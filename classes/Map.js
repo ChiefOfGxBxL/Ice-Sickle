@@ -1,5 +1,6 @@
 var Path = require('path'),
-    fs = require('fs-extra');
+    fs = require('fs-extra'),
+    klaw = require('klaw-sync');
 
 function setEmptyMap() {
     Map.info = {};
@@ -9,6 +10,7 @@ function setEmptyMap() {
     Map.regions = [];
     Map.cameras = [];
     Map.sounds = [];
+    Map.triggers = [];
 
     Map.objects = {
         units: {},
@@ -35,6 +37,7 @@ var Map = {
     // regions: [],
     // cameras: [],
     // sounds: [],
+    // triggers: [],
     // objects: {
     //     units: {},
     //     items: {},
@@ -108,6 +111,23 @@ var Map = {
             objectFile.custom = objectFile.custom || {};
         });
 
+        // Load any triggers that exist
+        var triggerFilePaths = klaw(Path.resolve(projectDir, 'triggers/'));
+        mapObj.triggers = [];
+        triggerFilePaths.forEach((triggerFile) => {
+          // TODO: use a better, more resilient method here to get file name
+          var fileName = triggerFile.path.split('\\').reverse()[0].split('.');
+
+          mapObj.triggers.push({
+            name: fileName[0],
+            path: triggerFile.path,
+            type: fileName[1],
+            content: fs.readFileSync(triggerFile.path, {encoding: 'utf8'}).replace('\r\n', '\n')
+          });
+        });
+
+        console.log(mapObj.triggers[0]);
+
         console.log("Loading project: " + mapObj.info.name);
         console.log(" @ " + projectDir);
 
@@ -144,6 +164,12 @@ var Map = {
         writeJson('objects/upgrades.json',       mapObj.objects.upgrades);
         writeJson('imports.json',                mapObj.imports);
         writeJson('strings.json',                mapObj.strings);
+
+        // Iterate through map triggers to save each file
+        mapObj.triggers.forEach((trigger) => {
+            // Save this trigger
+            fs.writeFileSync(trigger.path, trigger.content);
+        });
 
         console.log("Saved map " + mapObj.info.name);
         console.log(" @ " + mapObj.__Dir);
