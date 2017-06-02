@@ -311,9 +311,10 @@ app.on('ready', () => {
     protocol.registerBufferProtocol('hbs', function (req, callback) {
         // The JSON context is passed through as uploaded POST data
         var context = (req.uploadData && req.uploadData[0]) ? JSON.parse(req.uploadData[0].bytes) : {},
-            pathToFile = req.url.substr(7);
+            pathToFile = req.url.substr(7); // get rid of "hbs:///"
 
         if(fs.existsSync(pathToFile)) {
+          if(req.url.endsWith('.html') || req.url.endsWith('.hbs')) {
             fs.readFile(pathToFile, 'utf8', function(err, data) {
                 var template = Handlebars.compile(data),
                     page = template(context);
@@ -323,17 +324,16 @@ app.on('ready', () => {
                     data: new Buffer(page)
                 });
             });
-        }
-        else {
+          }
+          else {
             // Try the corresponding file under the file:/// protocol
-            pathToFile = path.resolve(__dirname, pathToFile.substr(3));
             fs.readFile(pathToFile, 'utf8', function(err, data) {
-                //console.log(err, data);
-                callback({
-                    //mimeType: 'text/css',
-                    data: new Buffer(data)
-                });
+              callback({
+                  //mimeType: 'text/css',
+                  data: new Buffer(data)
+              });
             });
+          }
         }
     });
 });
