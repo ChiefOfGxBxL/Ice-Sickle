@@ -95,6 +95,18 @@ var template = [
     ]
   },
   {
+      label: 'Scenario',
+      submenu: [
+          {
+              label: 'Map Properties',
+              sublabel: '',
+              click() {
+                  Window.Open('mapProperties', mapObj.info);
+              }
+          }
+      ]
+  },
+  {
       label: 'Project',
       submenu: [
           {

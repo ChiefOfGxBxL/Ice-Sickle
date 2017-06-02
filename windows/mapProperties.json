@@ -1,0 +1,14 @@
+{
+    "name": "mapProperties",
+    "path": "map-properties.html",
+    "description": "",
+
+    "width": 400,
+    "height": 600,
+
+    "parent": "root",
+    "modal": true,
+    "frame": false,
+    "allowMultiple": false,
+    "requiresTemplate": true
+}

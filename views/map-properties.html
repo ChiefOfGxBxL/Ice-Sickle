@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Ice Sickle - Map Properties</title>
+
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/mini-default.min.css">
+
+    <style>
+      input,select,textarea {padding: 2px !important;margin-bottom:1em !important;}
+      .full-width {
+        width:100%;
+      }
+    </style>
+
+    <script>
+        var {ipcRenderer} = require('electron');
+
+        function submitUserDataForm() {
+            var objType = '{{type}}', // unit, doodad, etc.
+                name = document.getElementById('customObjName').value,
+                base = document.getElementById('customObjBase').value;
+
+            // ipcRenderer.send('new-custom-object', {
+            //     type: objType,
+            //     name: name,
+            //     base: base,
+            //     id: customId + ':' + base // e.g. h001:hfoo
+            // });
+
+            window.close();
+        }
+    </script>
+  </head>
+  <body>
+    <div class="tabs">
+        <!-- General -->
+        <input type="radio" name="tab-group" id="tab1" checked aria-hidden="true">
+        <label for="tab1" aria-hidden="true">General</label>
+        <div>
+          <form>
+              <label>
+                  Display Name
+                  <input class='full-width' id='mapName' type='text' value='{{map.name}}' focus/>
+              </label>
+
+              <label>
+                  Description
+                  <textarea class='full-width' id='mapDescription'>{{map.description}}</textarea>
+              </label>
+
+              <label>
+                  Suggested Players
+                  <input class='full-width' id='mapSuggestedPlayers' type='text' value='{{map.recommendedPlayers}}'/>
+              </label>
+
+              <label>
+                  Author name
+                  <input class='full-width' id='mapAuthor' type='text' value='{{map.author}}'/>
+              </label>
+          </form>
+        </div>
+
+        <!-- Options -->
+        <input type="radio" name="tab-group" id="tab2" checked aria-hidden="true">
+        <label for="tab2" aria-hidden="true">Options</label>
+        <div>
+          <div class="input-group">
+            <input type="checkbox" id="check1" tabindex="0">
+            <label for="check1">Hide minimap in preview screens</label>
+          </div>
+
+          <div class="input-group">
+            <input type="checkbox" id="check2" tabindex="0">
+            <label for="check2">Masked areas are partially visible</label>
+          </div>
+
+          <div class="input-group">
+            <input type="checkbox" id="check3" tabindex="0">
+            <label for="check3">Show water waves on cliff shores</label>
+          </div>
+
+          <div class="input-group">
+            <input type="checkbox" id="check4" tabindex="0">
+            <label for="check4">Show water waves on rolling shores</label>
+          </div>
+
+          <div class="input-group">
+            <input type="checkbox" id="check5" tabindex="0">
+            <label for="check5">Use item classification system</label>
+          </div>
+
+          <fieldset>
+            <legend>Fog</legend>
+
+            <label>
+              Style
+              <select>
+                <option>None</option>
+                <option>Linear</option>
+                <option>Exponential 1</option>
+                <option>Exponential 2</option>
+              </select>
+            </label>
+
+            <label>
+              Z Start
+              <input type='number' value='3000.00'/>
+            </label>
+
+            <label>
+              Z End
+              <input type='number' value='5000.00'/>
+            </label>
+
+            <label>
+              Density (%)
+              <input type='number' value='5' min='0' max='100'/>
+            </label>
+
+            <label>
+              Color
+              <input type='color' value='#000000'/>
+            </label>
+          </fieldset>
+
+          <label>
+            Global weather
+            <select class='full-width'>
+              <option>None</option>
+            </select>
+          </label>
+
+          <label>
+            Custom sound environment
+            <select class='full-width'>
+              <option>None</option>
+            </select>
+          </label>
+
+          <label>
+            Custom light environment
+            <select class='full-width'>
+              <option>None</option>
+            </select>
+          </label>
+
+          <label>
+            Water tinting color
+            <input type='color' value='#000000'/>
+          </label>
+        </div>
+
+        <!-- Size and Camera Bounds -->
+        <input type="radio" name="tab-group" id="tab3" checked aria-hidden="true">
+        <label for="tab3" aria-hidden="true">Size &amp; Camera Bounds</label>
+        <div>
+          (TODO)
+        </div>
+
+        <!-- Loading Screen -->
+        <input type="radio" name="tab-group" id="tab4" checked aria-hidden="true">
+        <label for="tab4" aria-hidden="true">Loading Screen</label>
+        <div>
+          <div class="input-group">
+            <input type="checkbox" id="checkLoadingScreen" tabindex="0">
+            <label for="checkLoadingScreen">Enable custom loading screen</label>
+          </div>
+
+          <fieldset>
+            <legend>Loading screen</legend>
+
+            <label>
+              Title
+              <input class='full-width' type='text' />
+            </label>
+
+            <label>
+              Subtitle
+              <input class='full-width' type='text' />
+            </label>
+
+            <label>
+              Text
+              <textarea class='full-width'></textarea>
+            </label>
+          </fieldset>
+        </div>
+    </div>
+    <div class='buttons-right' style='float:right;'>
+        <a class='button' onclick='window.close()'>Cancel</a>
+        <a class='button primary' onclick='submitUserDataForm()'>OK</a>
+    </div>
+  </body>
+</html>
