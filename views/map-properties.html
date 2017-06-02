@@ -18,19 +18,81 @@
         var {ipcRenderer} = require('electron');
 
         function submitUserDataForm() {
-            var objType = '{{type}}', // unit, doodad, etc.
-                name = document.getElementById('customObjName').value,
-                base = document.getElementById('customObjBase').value;
+            // Determines what type of loading screen the user has chosen
+            var isDefaultLoadingScreen = document.getElementById('defaultScreen').checked,
+                isCampaignLoadingScreen = document.getElementById('campaignScreen').checked,
+                isImportedLoadingScreen = document.getElementById('importedScreen').checked;
 
-            // ipcRenderer.send('new-custom-object', {
-            //     type: objType,
-            //     name: name,
-            //     base: base,
-            //     id: customId + ':' + base // e.g. h001:hfoo
-            // });
+            var updatedInfo = {
+                map: {
+                    name: document.getElementById('mapName').value,
+                    author: document.getElementById('mapAuthor').value,
+                    description: document.getElementById('mapDescription').value,
+                    recommendedPlayers: document.getElementById('mapSuggestedPlayers').value,
+                    flags: {
+                        hideMinimapInPreview: document.getElementById('check1').checked,
+                        //modifyAllyPriorities: ,
+                        //isMeleeMap: false,
+                        maskedPartiallyVisible: document.getElementById('check2').checked,
+                        fixedPlayerSetting: false,
+                        useCustomForces: false,
+                        useCustomTechtree: false,
+                        useCustomAbilities: false,
+                        useCustomUpgrades: false,
+                        waterWavesOnCliffShores: document.getElementById('check3').checked,
+                        waterWavesOnRollingShores: document.getElementById('check4').checked
+                    }
+                },
+                loadingScreen: {
+                    background: 0, // Index of campaign screen image, or -1
+                    path: '', // Custom path of loading screen, or empty
+
+                    // Text, title, and subtitle are only allowed for loading screens other than default
+                    text: (!isDefaultLoadingScreen) ? document.getElementById('loadingScreenText').value : '',
+                    title: (!isDefaultLoadingScreen) ? document.getElementById('loadingScreenTitle').value : '',
+                    subtitle: (!isDefaultLoadingScreen) ? document.getElementById('loadingScreenSubtitle').value : ''
+                },
+                fog: {
+                    type: document.getElementById('fogStyle').value,
+                    startHeight: document.getElementById('fogZStart').value,
+                    endHeight: document.getElementById('fogZEnd').value,
+                    density: document.getElementById('fogDensity').value,
+                    color: document.getElementById('fogColor').value // TODO: triplet array RGB
+                },
+                globalWeather: document.getElementById('globalWeather').value,
+                customSoundEnvironment: document.getElementById('soundEnv').value,
+                customLightEnv: document.getElementById('lightEnv').value,
+                water: document.getElementById('waterTintingColor').value // TODO: triplet array RGB
+            };
+
+            ipcRenderer.send('update-map-info', updatedInfo);
 
             window.close();
         }
+    </script>
+    <script>
+        window.addEventListener('load', function() {
+            var loadingScreenElem = document.getElementById('loadingScreen'),
+                loadingScreenDisplayTypeRadios = document.querySelectorAll('input[name=radio-group-1]'),
+
+                defaultScreenRadioInput = document.getElementById('defaultScreen'),
+                campaignScreenRadioInput = document.getElementById('campaignScreen'),
+                importedScreenRadioInput = document.getElementById('importedScreen'),
+
+                campaignScreenDiv = document.getElementById('campaignScreenDiv'),
+                importedScreenDiv = document.getElementById('importedScreenDiv');
+
+            // Hide or show the loading screen fields depending on if default is chosen
+            for(var i = 0; i < loadingScreenDisplayTypeRadios.length; i++) {
+
+                loadingScreenDisplayTypeRadios[i].addEventListener('change', function(e) {
+                    loadingScreenElem.style.display = (defaultScreenRadioInput.checked) ? 'none' : 'block';
+                    campaignScreenDiv.style.display = (campaignScreenRadioInput.checked) ? 'block' : 'none';
+                    importedScreenDiv.style.display = (importedScreenRadioInput.checked) ? 'block' : 'none';
+                })
+            }
+
+        });
     </script>
   </head>
   <body>
@@ -86,70 +148,91 @@
             <label for="check4">Show water waves on rolling shores</label>
           </div>
 
-          <div class="input-group">
+          <!-- <div class="input-group">
             <input type="checkbox" id="check5" tabindex="0">
             <label for="check5">Use item classification system</label>
-          </div>
+          </div> -->
 
           <fieldset>
             <legend>Fog</legend>
 
             <label>
               Style
-              <select>
-                <option>None</option>
-                <option>Linear</option>
-                <option>Exponential 1</option>
-                <option>Exponential 2</option>
+              <select id='fogStyle'>
+                <option value='0'>None</option>
+                <option value='1'>Linear</option>
+                <option value='2'>Exponential 1</option>
+                <option value='3'>Exponential 2</option>
               </select>
             </label>
 
             <label>
               Z Start
-              <input type='number' value='3000.00'/>
+              <input id='fogZStart' type='number' value='3000.00'/>
             </label>
 
             <label>
               Z End
-              <input type='number' value='5000.00'/>
+              <input id='fogZEnd' type='number' value='5000.00'/>
             </label>
 
             <label>
               Density (%)
-              <input type='number' value='5' min='0' max='100'/>
+              <input id='fogDensity' type='number' value='5' min='0' max='100'/>
             </label>
 
             <label>
               Color
-              <input type='color' value='#000000'/>
+              <input id='fogColor' type='color' value='#000000'/>
             </label>
           </fieldset>
 
           <label>
             Global weather
-            <select class='full-width'>
-              <option>None</option>
+            <select id='globalWeather' class='full-width'>
+                <!-- Char[4]: Iterate through enum/WeatherType.js -->
+                <option value='0000'>None</option>
             </select>
           </label>
 
           <label>
             Custom sound environment
-            <select class='full-width'>
-              <option>None</option>
+            <select id='soundEnv' class='full-width'>
+                <!-- String: Sound label from enum/SoundEnvironment -->
+                <option value=''>None</option>
+                <option value='mountains'>Mountains</option>
+                <option value='lake'>Lake</option>
+                <option value='psychotic'>Psychotic</option>
+                <option value='dungeon'>Dungeon</option>
             </select>
           </label>
 
           <label>
             Custom light environment
-            <select class='full-width'>
-              <option>None</option>
+            <select id='lightEnv' class='full-width'>
+                <!-- Char: Tileset ID of light env. -->
+                <option value=''>None</option>
             </select>
           </label>
 
           <label>
             Water tinting color
-            <input type='color' value='#000000'/>
+            <input id='waterTintingColor' type='color' value='#000000'/>
           </label>
+
+          <!-- <label>
+            Sky display
+            <select id='skyDisplay' class='full-width'>
+              <option>Generic Sky</option>
+            </select>
+          </label>
+
+          <label>
+            Time of day
+            <select id='timeOfDay' class='full-width'>
+              <option>Not Fixed</option>
+            </select>
+          </label> -->
         </div>
 
         <!-- Size and Camera Bounds -->
@@ -163,29 +246,54 @@
         <input type="radio" name="tab-group" id="tab4" aria-hidden="true">
         <label for="tab4" aria-hidden="true">Loading Screen</label>
         <div>
-          <div class="input-group">
-            <input type="checkbox" id="checkLoadingScreen" tabindex="0">
-            <label for="checkLoadingScreen">Enable custom loading screen</label>
-          </div>
+            <div class="input-group">
+              <input type="radio" id="defaultScreen" tabindex="0" name="radio-group-1" checked>
+              <label for="defaultScreen">Use default screen</label>
+            </div><br/>
+            <div class="input-group">
+              <input type="radio" id="campaignScreen" tabindex="0" name="radio-group-1">
+              <label for="campaignScreen">Use campaign screen</label>
+            </div><br/>
+            <div class="input-group">
+              <input type="radio" id="importedScreen" tabindex="0" name="radio-group-1">
+              <label for="importedScreen">Use imported file</label>
+            </div><br/><br/>
 
-          <fieldset>
-            <legend>Loading screen</legend>
+            <div id='loadingScreen' style='display:none;'>
+                <div id='campaignScreenDiv' style='display:none;'>
+                    <label>
+                        Loading screen
+                        <select id='campaignScreenDropdown'>
+                            <option value='1'>Tutorial 01</option>
+                            <!-- TODO: more elements in this list, and check if index starts at 0 or 1! -->
+                        </select>
+                    </label>
+                </div>
 
-            <label>
-              Title
-              <input class='full-width' type='text' />
-            </label>
+                <div id='importedScreenDiv' style='display:none;'>
+                    <label>
+                        Loading screen
+                        <select id='importedScreenPath'>
+                            <!-- TODO: populate with valid imported files -->
+                        </select>
+                    </label>
+                </div>
 
-            <label>
-              Subtitle
-              <input class='full-width' type='text' />
-            </label>
+                <label>
+                  Title
+                  <input id='loadingScreenTitle' class='full-width' type='text' />
+                </label>
 
-            <label>
-              Text
-              <textarea class='full-width'></textarea>
-            </label>
-          </fieldset>
+                <label>
+                  Subtitle
+                  <input id='loadingScreenSubtitle' class='full-width' type='text' />
+                </label>
+
+                <label>
+                  Text
+                  <textarea id='loadingScreenText' class='full-width'></textarea>
+                </label>
+            </div>
         </div>
     </div>
     <div class='buttons-right' style='float:right;'>
