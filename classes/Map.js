@@ -2,8 +2,59 @@ var Path = require('path'),
     fs = require('fs-extra'),
     klaw = require('klaw-sync');
 
-function setEmptyMap() {
-    Map.info = {};
+function setNewMap(name) {
+    Map.info = {
+      saves: 0,
+      editorVersion: 0,
+      map: {
+        name: name,
+        author: '',
+        description: 'Just Another WarCraft III Map',
+        recommendedPlayers: '',
+        playableArea: {
+          width: 0,
+          height: 0
+        },
+        flags: {
+          hideMinimapInPreview: false,
+          modifyAllyPriorities: false,
+          isMeleeMap: false,
+          maskedPartiallyVisible: false,
+          fixedPlayerSetting: false,
+          useCustomForces: false,
+          useCustomTechtree: false,
+          useCustomAbilities: false,
+          useCustomUpgrades: false,
+          waterWavesOnCliffShores: false,
+          waterWavesOnRollingShores: false,
+        },
+        mainTileType: 'L',
+        loadingScreen: {
+          background: 0,
+          path: '',
+          text: '',
+          title: '',
+          subtitle: ''
+        },
+        prologue: {
+          path: '',
+          text: '',
+          title: '',
+          subtitle: ''
+        },
+        fog: {
+          type: 0,
+          startHeight: 0,
+          endHeight: 0,
+          density: 0,
+          color: [255, 255, 255]
+        }
+      },
+      camera: {
+        bounds: [0, 0, 0, 0, 0, 0, 0, 0],
+        complements: [0, 0, 0, 0, 0, 0, 0, 0]
+      }
+    };
     Map.units = [];
     Map.doodads = [];
     Map.terrain = {};
@@ -58,7 +109,7 @@ var Map = {
         fs.ensureDirSync(Map.__Dir); // Creates the path if it doesn't exist
 
         // Set new Map object
-        setEmptyMap();
+        setNewMap();
 
         // Save the Map
         return Map.Save();
