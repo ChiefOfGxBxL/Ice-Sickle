@@ -8,9 +8,9 @@ function setNewMap(name) {
       editorVersion: 0,
       map: {
         name: name,
-        author: '',
+        author: 'No author specified',
         description: 'Just Another WarCraft III Map',
-        recommendedPlayers: '',
+        recommendedPlayers: 'Any',
         playableArea: {
           width: 0,
           height: 0
@@ -28,28 +28,32 @@ function setNewMap(name) {
           waterWavesOnCliffShores: false,
           waterWavesOnRollingShores: false
         },
-        mainTileType: 'L',
-        loadingScreen: {
-          background: 0,
-          path: '',
-          text: '',
-          title: '',
-          subtitle: ''
-        },
-        prologue: {
-          path: '',
-          text: '',
-          title: '',
-          subtitle: ''
-        },
-        fog: {
-          type: 0,
-          startHeight: 0,
-          endHeight: 0,
-          density: 0,
-          color: [255, 255, 255]
-        }
+        mainTileType: 'L', // char: tileset id
       },
+      loadingScreen: {
+        background: 0,
+        path: '',
+        text: '',
+        title: '',
+        subtitle: ''
+      },
+      prologue: {
+        path: '',
+        text: '',
+        title: '',
+        subtitle: ''
+      },
+      fog: {
+        type: 0,
+        startHeight: 3000.00,
+        endHeight: 5000.00,
+        density: 5,
+        color: [0, 0, 0]
+      },
+      globalWeather: '0000', // char[4]
+      customSoundEnvironment: '', // string
+      customLightEnv: '', // char - tileset id
+      water: [0, 0, 0],
       camera: {
         bounds: [0, 0, 0, 0, 0, 0, 0, 0],
         complements: [0, 0, 0, 0, 0, 0, 0, 0]
