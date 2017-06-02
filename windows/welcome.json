@@ -3,8 +3,8 @@
     "path": "welcome.html",
     "description": "",
 
-    "width": 660,
-    "height": 685,
+    "width": 540,
+    "height": 681,
 
     "parent": "root",
     "modal": true,
