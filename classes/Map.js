@@ -26,7 +26,7 @@ function setNewMap(name) {
           useCustomAbilities: false,
           useCustomUpgrades: false,
           waterWavesOnCliffShores: false,
-          waterWavesOnRollingShores: false,
+          waterWavesOnRollingShores: false
         },
         mainTileType: 'L',
         loadingScreen: {
