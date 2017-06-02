@@ -182,6 +182,18 @@ function getNextIdCounter(type) {
     return ('0000' + (counter++)).substr(-4);
 }
 
+function applyPartialObjectUpdate(obj, updates) {
+  Object.keys(updates).forEach((updateKey) => {
+    if(typeof updates[updateKey] != 'object') {
+      obj[updateKey] = updates[updateKey];
+    }
+    else {
+      obj[updateKey] = obj[updateKey] || {};
+      applyPartialObjectUpdate(obj[updateKey], updates[updateKey])
+    }
+  })
+}
+
 const EventHandlers = {
     'create-new-project': function(event, data) {
         Window.SendMessage('root', 'create-new-project', data);
@@ -273,22 +285,26 @@ const EventHandlers = {
         }
     },
     'new-trigger': function(event, data) {
-      // TODO: check for conflicting trigger paths
-      var newTriggerFilePath = path.resolve(mapObj.__Dir, 'triggers/', (data.name + '.' + data.type)),
-          newTrigger = {
-              name: data.name,
-              path: newTriggerFilePath,
-              type: data.type,
-              content: ''
-          };
+        // TODO: check for conflicting trigger paths
+        var newTriggerFilePath = path.resolve(mapObj.__Dir, 'triggers/', (data.name + '.' + data.type)),
+            newTrigger = {
+                name: data.name,
+                path: newTriggerFilePath,
+                type: data.type,
+                content: ''
+            };
 
-      // Create a new file in the project
-      fs.ensureFileSync(newTriggerFilePath);
+        // Create a new file in the project
+        fs.ensureFileSync(newTriggerFilePath);
 
-      // Create a new trigger in the map
-      mapObj.triggers.push(newTrigger)
+        // Create a new trigger in the map
+        mapObj.triggers.push(newTrigger)
 
-      Window.Broadcast('new-trigger', newTrigger);
+        Window.Broadcast('new-trigger', newTrigger);
+    },
+    'update-map-info': function(event, newInfo) {
+        // Applies a recursive, partial update to mapObj.info
+        applyPartialObjectUpdate(mapObj.info, newInfo);
     }
 }
 
