@@ -109,7 +109,7 @@ var Map = {
         fs.ensureDirSync(Map.__Dir); // Creates the path if it doesn't exist
 
         // Set new Map object
-        setNewMap();
+        setNewMap(name);
 
         // Save the Map
         return Map.Save();
