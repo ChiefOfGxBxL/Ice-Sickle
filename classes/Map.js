@@ -233,5 +233,5 @@ var Map = {
     }
 }
 
-setEmptyMap();
+setNewMap();
 module.exports = Map;
