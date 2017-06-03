@@ -9,6 +9,7 @@
     "parent": "root",
     "modal": true,
     "frame": false,
+    "resizable": false,
     "allowMultiple": false,
     "requiresTemplate": false
 }

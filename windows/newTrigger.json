@@ -9,5 +9,6 @@
     "parent": "triggerEditor",
     "frame": false,
     "modal": true,
+    "resizable": false,
     "allowMultiple": false
 }
