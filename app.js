@@ -341,8 +341,19 @@ app.on('ready', () => {
         var context = (req.uploadData && req.uploadData[0]) ? JSON.parse(req.uploadData[0].bytes) : {},
             pathToFile = req.url.substr(7); // get rid of "hbs:///"
 
+        // Sometimes the path is incorrect even now, but the file still exists
+        // We check to see if the path can be salvaged: combine the app path
+        // with the specified path without drive letter in front
+        if(!fs.existsSync(pathToFile)) {
+            if(fs.existsSync(path.resolve(app.getAppPath(), pathToFile.substr(3)))) {
+                pathToFile = path.resolve(app.getAppPath(), pathToFile.substr(3));
+            }
+        }
+
+        // If the file does not exist now then we cannot load it
         if(fs.existsSync(pathToFile)) {
           if(req.url.endsWith('.html') || req.url.endsWith('.hbs')) {
+            // Use Handlebars to compile the template and render the context
             fs.readFile(pathToFile, 'utf8', function(err, data) {
                 var template = Handlebars.compile(data),
                     page = template(context);
@@ -354,7 +365,7 @@ app.on('ready', () => {
             });
           }
           else {
-            // Try the corresponding file under the file:/// protocol
+            // Otherwise read the file normally and pass it through
             fs.readFile(pathToFile, 'utf8', function(err, data) {
               callback({
                   //mimeType: 'text/css',
