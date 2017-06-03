@@ -5,18 +5,36 @@
     <title>About</title>
     <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="../assets/css/mini-default.min.css">
+    <style>
+        html,body {text-align: center;}
+        h1,.title {
+            background-color: rgb(2,119,189);
+            padding: 10px;
+            margin: 0 0 15px 0;
+            color: #fff;
+            text-shadow: 1px 1px 1px #000;
+        }
+        h1 > small { margin: 0 !important; font-style: italic; font-size: 0.6em; }
+        p {margin: 0 10%;}
+    </style>
   </head>
   <body>
 
-    <header style='background-color:#136CBA;padding:10px;color:#FFF;'>
-        <h1>Ice Sickle</h1>
-        <h2>0.0.1 beta</h2>
-    </header>
+    <h1 class='title'>
+        {{appName}}
+        <small class='title'>Next-generation WC3 Editor</small>
+    </h1>
 
-    <div id='content'>
-        aaa
-        <a onclick='window.close()'>Close</a>
-    </div>
+    <b>ChiefOfGxBxL</b> (<i>Creator, Developer</i>)
+
+    <br/><br/>
+
+    <p>Ice Sickle is an open-source WarCraft III world editor written in Electron. It's core design principle is to be as extendable as possible through its plugin system.</p>
+
+    <br/>
+
+    <a class='button'>v{{appVersion}}</a>
+    <a class='button primary' onclick='window.close()'>Close</a>
 
   </body>
 </html>

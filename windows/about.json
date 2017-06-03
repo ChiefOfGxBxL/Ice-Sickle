@@ -3,12 +3,12 @@
     "path": "about.html",
     "description": "",
 
-    "width": 300,
-    "height": 200,
+    "width": 480,
+    "height": 330,
 
     "parent": "root",
     "modal": true,
     "frame": false,
     "allowMultiple": false,
-    "requiresTemplate": false
+    "requiresTemplate": true
 }
