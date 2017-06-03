@@ -72,9 +72,6 @@ var Window = {
             addlData
         );
 
-        // Always open dev tools
-        newWindow.webContents.openDevTools();
-
         // Iterate over events and add a new one to the window for each
         if(events) {
             Object.keys(events).forEach((event) => {
