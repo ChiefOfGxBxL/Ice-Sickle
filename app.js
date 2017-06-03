@@ -88,20 +88,70 @@ var template = [
             Window.SendMessage('root', 'save-project');
         }
       },
-      {
-        type: 'separator'
-      },
+      { type: 'separator' },
       /* Recent maps are generated here */
     ]
+  },
+  {
+      label: 'Edit',
+      submenu: [
+          {
+              label: 'Undo',
+              enabled: false
+          },
+          {
+              label: 'Redo',
+              enabled: false
+          },
+          { type: 'separator' },
+          {
+              label: 'Cut',
+              enabled: false
+          },
+          {
+              label: 'Copy',
+              enabled: false
+          },
+          {
+              label: 'Paste',
+              enabled: false
+          },
+          {
+              label: 'Delete',
+              enabled: false
+          },
+      ]
+  },
+  {
+      label: 'View',
+      enabled: false
   },
   {
       label: 'Scenario',
       submenu: [
           {
               label: 'Map Properties',
-              sublabel: '',
               click() {
                   Window.Open('mapProperties', mapObj.info);
+              }
+          }
+      ]
+  },
+  {
+      label: 'Editors',
+      submenu: [
+          {
+              label: 'Trigger Editor',
+              sublabel: '',
+              click() {
+                  Window.Open('triggerEditor');
+              }
+          },
+          {
+              label: 'Object Editor',
+              sublabel: '',
+              click() {
+                  Window.Open('objectEditor');
               }
           }
       ]
@@ -112,26 +162,8 @@ var template = [
           {
               label: 'Compile',
               sublabel: 'Generates the .w3x file',
-              role: 'new',
               click () {
                   Window.SendMessage('root', 'compile-project');
-              }
-          },
-          {
-              type: 'separator'
-          },
-          {
-              label: 'Object Editor',
-              sublabel: '',
-              click() {
-                  Window.Open('objectEditor');
-              }
-          },
-          {
-              label: 'Trigger Editor',
-              sublabel: '',
-              click() {
-                  Window.Open('triggerEditor');
               }
           }
       ]
@@ -140,25 +172,30 @@ var template = [
     role: 'help',
     submenu: [
       {
-        label: 'Learn More',
-        click () { require('electron').shell.openExternal('http://electron.atom.io') }
+        label: 'GitHub',
+        sublabel: 'View the application\'s source code',
+        icon: 'assets/img/github.png',
+        click () { require('electron').shell.openExternal('https://github.com/ChiefOfGxBxL/Ice-Sickle') }
       },
+      {
+          label: 'Debug',
+          submenu: [
+              {
+                  label: 'Open web console',
+                  role: 'toggledevtools'
+              }
+          ]
+      },
+      { type: 'separator' },
       {
         label: 'About',
         click () {
-            Window.Open('about');
+            Window.Open('about', {
+                appName: app.getName(),
+                appVersion: app.getVersion()
+            });
         }
       }
-    ]
-  },
-  {
-    label: 'Debug',
-    role: 'Debug',
-    submenu: [
-        {
-            label: 'Open web console',
-            click (e) { Window.openWindows.root.webContents.openDevTools(); }
-        }
     ]
   }
 ];
@@ -308,10 +345,16 @@ const EventHandlers = {
     }
 }
 
+// FUTURE:
+// We can use app.addRecentDocument(path) and app.setUserTasks(tasks) in the future
+// for enhanced Taskbar utility. See the `app` documentation for more details
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
+    app.setName('Ice Sickle'); // From package.json it's icesickle (since npm init required lowercase, no spaces)
+
     // Create main window
     Window.Open('root');
 
