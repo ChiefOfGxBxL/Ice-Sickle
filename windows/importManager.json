@@ -1,0 +1,14 @@
+{
+    "name": "importManager",
+    "path": "import-manager.html",
+    "description": "",
+
+    "width": 800,
+    "height": 500,
+
+    "parent": "",
+    "modal": false,
+    "frame": true,
+    "allowMultiple": false,
+    "requiresTemplate": false
+}

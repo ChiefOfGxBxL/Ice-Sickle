@@ -153,6 +153,14 @@ var template = [
               click() {
                   Window.Open('objectEditor');
               }
+          },
+          { type: 'separator' },
+          {
+              label: 'Import Manager',
+              sublabel: '',
+              click() {
+                  Window.Open('importManager');
+              }
           }
       ]
   },
@@ -342,6 +350,23 @@ const EventHandlers = {
     'update-map-info': function(event, newInfo) {
         // Applies a recursive, partial update to mapObj.info
         applyPartialObjectUpdate(mapObj.info, newInfo);
+    },
+    'request-import-list': function(event, data) {
+        event.sender.webContents.send('response-import-list', mapObj.imports);
+    },
+    'import-file': function(event, file) {
+        // First we copy the file into the project's /import folder
+        const destinationPath = path.resolve(mapObj.__Dir, 'imports', file.name);
+        fs.copySync(file.path, destinationPath, { overwrite: true });
+        // TODO: alert user of path conflict, giving the option to overwrite
+
+        // Then we add a record to the map object
+        mapObj.imports.push({
+            name: file.name,
+            path: file.path,
+            size: file.size,
+            type: file.type
+        });
     }
 }
 
