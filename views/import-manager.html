@@ -7,86 +7,103 @@
     <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="../assets/css/mini-default.min.css">
 
+    <style>
+        select { width: 98%; }
+        select option { font-family: monospace; }
+    </style>
     <script>
         var {ipcRenderer} = require('electron'),
+            ListView = require('../classes/ListView'),
             importList,
-            addImportRow = function(importItem) {
-                var tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${importItem.name}</td>
-                    <td>${importItem.type}</td>
-                    <td>${importItem.size}</td>
-                    <td>${importItem.path}</td>
-                `;
-
-                importList.appendChild(tr);
-            };
+            importListView;
     </script>
     <script>
+        function importedItemDblClick(e, item) {
+            ipcRenderer.send('request-open-window', {
+                windowName: 'editImport',
+                template: item
+            })
+        }
+
         window.addEventListener('load', function() {
             importList = document.getElementById('importList');
+            importListView = new ListView([], { onDblClick: importedItemDblClick }, 72);
+            importList.appendChild(importListView.HTMLElement);
+            importListView.HTMLElement.style.height = window.innerHeight - 150 + 'px';
 
             // List all of our imports here
             ipcRenderer.send('request-import-list');
             ipcRenderer.on('response-import-list', (event, imports) => {
                 // Create a row in the table for each import
                 imports.forEach((importItem) => {
-                    addImportRow(importItem);
+                    importListView.Add({
+                        id: importItem.name,
+                        label: importItem.name,
+                        value: importItem.fullPath,
+                        data: importItem
+                    })
                 });
             });
 
-            // Add drag-and-drop handler
-            document.ondragover = (e) => {
-                e.dataTransfer.dropEffect = 'copy';
-                return false;
-            }
-
-            document.ondragleave = document.ondragend = () => {
-                return false;
-            }
-
-            document.ondrop = (e) => {
-                e.preventDefault()
-
-                for (let f of e.dataTransfer.files) {
-                  ipcRenderer.send('import-file', {
-                      name: f.name,
-                      path: f.path,
-                      size: f.size,
-                      type: f.type
-                  });
-
-                  // Add a row in the table
-                  addImportRow({
-                      name: f.name,
-                      path: f.path,
-                      size: f.size,
-                      type: f.type
-                  });
-                }
-                return false;
-            }
+            // Respond to updated imports
+            ipcRenderer.on('import-updated', (_, importItem) => {
+                importListView.UpdateItem(importItem.name, importItem.fullPath);
+                importListView.Refresh();
+            })
         })
+    </script>
+
+    <script>
+        // Add drag-and-drop handler
+        document.ondragover = (e) => {
+            e.dataTransfer.dropEffect = 'copy';
+            return false;
+        }
+
+        document.ondragleave = document.ondragend = () => {
+            return false;
+        }
+
+        document.ondrop = (e) => {
+            e.preventDefault()
+
+            for (let f of e.dataTransfer.files) {
+              ipcRenderer.send('import-file', {
+                  name: f.name,
+                  fullPath: 'war3mapImported\\' + f.name,
+                  path: f.path,
+                  size: f.size,
+                  type: f.type
+              });
+
+              // Add a row in the table
+              importListView.Add({
+                  id: f.name,
+                  label: f.name,
+                  value: 'war3mapImported\\' + f.name,
+                  data: {
+                      name: f.name,
+                      fullPath: 'war3mapImported\\' + f.name,
+                      path: f.path,
+                      size: f.size,
+                      type: f.type
+                  }
+              })
+            }
+            return false;
+        }
     </script>
   </head>
   <body>
-    <table class='preset'>
-        <style inline>
-            table {width: 100%;}
-            th, tr, td {padding: 3px !important;}
-        </style>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Size (bytes)</th>
-                <th>Path</th>
-            </tr>
-        </thead>
-        <tbody id='importList'>
-            <!-- Rows are generated here when the window is loaded -->
-            <!-- Rows are also added when the user drops files on the window -->
-        </tbody>
-    </div>
+      <div class="card">
+        <div class="section">
+          <h3>Import files</h3>
+          <p>Drag and drop files on this window to import</p>
+        </div>
+      </div>
+      <div id='importList'>
+          <!-- Rows are generated here when the window is loaded -->
+          <!-- Rows are also added when the user drops files on the window -->
+      </div>
   </body>
 </html>

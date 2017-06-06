@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Edit Import</title>
+
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/mini-default.min.css">
+    <link rel="stylesheet" href="../assets/css/user-input-page.css">
+
+    <script>
+        var {ipcRenderer} = require('electron');
+
+        function submitForm() {
+            var name = '{{data.name}}',
+                fullPath = document.getElementById('fullPath').value;
+
+            ipcRenderer.send('update-import', {
+              name: name,
+              fullPath: fullPath
+            });
+
+            window.close();
+        }
+    </script>
+  </head>
+  <body>
+    <form>
+        <label class='left'>Name</label>
+        <label class='right'>{{data.name}}</label>
+
+        <br/>
+
+        <label class='left'>Type</label>
+        <label class='right'>{{data.type}}</label>
+
+        <br/>
+
+        <label class='left'>Size</label>
+        <label class='right'>{{data.size}} bytes</label>
+
+        <br/>
+
+        <label>
+            Full path:
+            <input id='fullPath' type='text' value='{{data.fullPath}}' />
+        </label>
+
+        <div class='buttons-right' style='float:right;'>
+            <a class='button' onclick='window.close()'>Cancel</a>
+            <a class='button primary' onclick='submitForm()'>OK</a>
+        </div>
+
+        <div style='clear:both;'></div>
+    </form>
+  </body>
+</html>

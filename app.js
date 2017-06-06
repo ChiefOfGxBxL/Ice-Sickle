@@ -367,10 +367,23 @@ const EventHandlers = {
         // Then we add a record to the map object
         mapObj.imports.push({
             name: file.name,
+            fullPath: 'war3mapImported\\' + file.name,
             path: file.path,
             size: file.size,
             type: file.type
         });
+    },
+    'update-import': function(event, file) {
+        var importToUpdate = mapObj.imports.find(
+            (imp) => { return imp.name == file.name; }
+        );
+
+        if(importToUpdate) {
+            // This is the only attribute that can be changed
+            // since size, name, and type are not modified by user
+            if(file.fullPath) importToUpdate.fullPath = file.fullPath;
+            Window.Broadcast('import-updated', importToUpdate);
+        }
     }
 }
 
