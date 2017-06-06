@@ -191,6 +191,10 @@ var template = [
               {
                   label: 'Open web console',
                   role: 'toggledevtools'
+              },
+              {
+                  label: 'Reload window',
+                  role: 'reload'
               }
           ]
       },
