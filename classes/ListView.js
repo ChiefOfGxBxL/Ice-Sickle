@@ -4,7 +4,13 @@ function spaceItemText(elem, size) {
             (elem.value) ? elem.value.toString().trim() : ''
         ],
         spacesToAdd = size - parts[0].length - parts[1].length,
+        overlength = (parts[1].length > (size - parts[0].length)) ? -(spacesToAdd) : 0,
         repeatSpace = (num) => { return Array(num + 1).join('\u00a0'); };
+
+    if(overlength > 0) { // The value was too long to fit
+        parts[1] = parts[1].substr(0, parts[1].length - overlength - 3) + '...';
+        spacesToAdd = -(spacesToAdd) - 3;
+    }
 
     // Set the text of the option to contain the padding spaces
     return parts[0] + repeatSpace(spacesToAdd) + parts[1] + repeatSpace(2);
