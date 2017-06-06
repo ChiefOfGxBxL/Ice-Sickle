@@ -89,7 +89,7 @@ class ListView {
             // Add an element to the collection
             this.Items.push(item);
 
-            var newItem = createNewItem(item, this.events);
+            var newItem = createNewItem(item, this.events, this.size);
 
             if(item.group && !this.groups[item.group]) {
                 // A new group must be created
@@ -108,7 +108,7 @@ class ListView {
 
     Draw() {
         this.Items.forEach((item) => {
-            var newItem = createNewItem(item, this.events);
+            var newItem = createNewItem(item, this.events, this.size);
 
             if(item.group) {
                 // Append element to correct group
