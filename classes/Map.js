@@ -110,13 +110,17 @@ var Map = {
         // since we don't want to overwrite changes
 
         Map.__Dir = Path.resolve('./' + name); // TODO: let user choose path with file chooser
+
         fs.ensureDirSync(Map.__Dir); // Creates the path if it doesn't exist
+
+        // Other subfolders
+        fs.ensureDirSync(Path.resolve(Map.__Dir), 'imports');
+        fs.ensureDirSync(Path.resolve(Map.__Dir), 'objects');
+        fs.ensureDirSync(Path.resolve(Map.__Dir), 'triggers');
 
         // Set new Map object
         setNewMap(name);
-
-        // Save the Map
-        return Map.Save();
+        return this;
     },
 
     Load: function(projectDir) {
@@ -167,7 +171,7 @@ var Map = {
         });
 
         // Load any triggers that exist
-        var triggerFilePaths = klaw(Path.resolve(projectDir, 'triggers/'));
+        var triggerFilePaths = klaw(Path.resolve(projectDir, 'triggers'));
         mapObj.triggers = [];
         triggerFilePaths.forEach((triggerFile) => {
           // TODO: use a better, more resilient method here to get file name
@@ -219,6 +223,10 @@ var Map = {
         writeJson('objects/upgrades.json',       mapObj.objects.upgrades);
         writeJson('imports.json',                mapObj.imports);
         writeJson('strings.json',                mapObj.strings);
+
+        fs.ensureDirSync(Path.resolve(mapObj.__Dir), 'imports');
+        fs.ensureDirSync(Path.resolve(mapObj.__Dir), 'objects');
+        fs.ensureDirSync(Path.resolve(mapObj.__Dir), 'triggers');
 
         // Iterate through map triggers to save each file
         mapObj.triggers.forEach((trigger) => {
