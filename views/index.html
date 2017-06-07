@@ -14,11 +14,6 @@
         // Listen for events sent from window process
         const {ipcRenderer} = require('electron');
 
-        ipcRenderer.on('create-new-project', (event, data) => {
-            Map.Create(data.name);
-            console.log(Map);
-        });
-
         ipcRenderer.on('open-project', (event, dir) => {
             ipcRenderer.send('request-open-project-map', dir);
         });
