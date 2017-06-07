@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Check for updates...</title>
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/mini-default.min.css">
+    <style>
+        html,body {text-align: center;}
+        h1,.title {
+            background-color: rgb(2,119,189);
+            padding: 10px;
+            margin: 0 0 15px 0;
+            color: #fff;
+            text-shadow: 1px 1px 1px #000;
+        }
+        h1 > small { margin: 0 !important; font-style: italic; font-size: 0.6em; }
+        p {margin: 0 10%;}
+    </style>
+    <script>
+        var {ipcRenderer} = require('electron');
+
+        ipcRenderer.on('checking-for-update', () => {
+            document.getElementById('checking').style.display = 'block';
+        })
+
+        ipcRenderer.on('update-available', () => {
+            document.getElementById('checking').style.display = 'none';
+            document.getElementById('updating').style.display = 'block';
+        })
+
+        ipcRenderer.on('update-not-available', () => {
+            // No updates are available, so close this window
+            window.close();
+        })
+
+        ipcRenderer.on('download-progress', (ev, progressObj) => {
+            document.getElementById('download-progress').value = progressObj.percent * 10; // mini.css requires progress to be out of 1000, when here it is only out of 100
+        })
+
+        ipcRenderer.on('update-downloaded', () => {
+            // Restart application
+            // Note that app.js is also listening and is responsible for restarting
+            document.getElementById('download-text').innerText = 'Download complete!';
+            document.getElementById('restarting').style.display = 'block';
+        })
+
+        ipcRenderer.on('error', () => {
+            // TODO: notify user of error
+            window.close(); // For now, just close the window
+        })
+    </script>
+  </head>
+  <body>
+
+    <h1 class='title'>
+        Ice Sickle
+        <small class='title'>Next-generation WC3 Editor</small>
+    </h1>
+
+    <div id='checking'>
+        <br/>
+        <div class='spinner-donut'></div>
+        <p>Checking for updates...</p>
+    </div>
+
+    <div id='updating' style='display:none;'>
+        <br/>
+        <b id='download-text'>Downloading update</b>
+        <progress id='download-progress' value='0' max='1000'></progress>
+
+        <p id='restarting' style='display:none;'>
+            Ice Sickle will automatically restart in a few seconds to install the latest version!
+        </p>
+    </div>
+
+  </body>
+</html>

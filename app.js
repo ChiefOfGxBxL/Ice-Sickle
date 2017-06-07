@@ -1,4 +1,6 @@
 const {app, BrowserWindow, Menu, dialog, ipcMain, protocol} = require('electron'),
+    autoUpdater = require("electron-updater").autoUpdater,
+    isDev = require('electron-is-dev'),
     path = require('path'),
     url = require('url'),
     fs = require('fs-extra'),
@@ -16,7 +18,8 @@ var mapObj; // Store Map in this object
 // Global variables across windows
 global.globals = {
     AppName: 'Ice-Sickle',
-    AppPath: app.getAppPath()
+    AppPath: app.getAppPath(),
+    isDevelopment: isDev
 };
 
 function OpenProjectWindow() {
@@ -182,7 +185,7 @@ var template = [
       {
         label: 'GitHub',
         sublabel: 'View the application\'s source code',
-        icon: 'assets/img/github.png',
+        //icon: 'assets/img/github.png',
         click () { require('electron').shell.openExternal('https://github.com/ChiefOfGxBxL/Ice-Sickle') }
       },
       {
@@ -391,10 +394,37 @@ const EventHandlers = {
 // We can use app.addRecentDocument(path) and app.setUserTasks(tasks) in the future
 // for enhanced Taskbar utility. See the `app` documentation for more details
 
+// Auto-Updates
+autoUpdater.on('checking-for-update',   () => { Window.Broadcast('checking-for-update'); })
+autoUpdater.on('update-available',      (ev, info) => {
+    // Open check-for-updates window
+    Window.Open('update');
+
+    Window.Broadcast('update-available', info);
+})
+autoUpdater.on('update-not-available',  (ev, info) => { Window.Broadcast('update-not-available', info); })
+autoUpdater.on('error',                 (ev, err) => { Window.Broadcast('update-error', err); })
+autoUpdater.on('download-progress',     (ev, progressObj) => { Window.Broadcast('update-error', progressObj ); })
+autoUpdater.on('update-downloaded',     (ev, info) => {
+  Window.Broadcast('update-downloaded', info);
+
+   // Wait 4 seconds, then quit and install
+  setTimeout(function() {
+    autoUpdater.quitAndInstall();
+  }, 4000)
+})
+
+
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
+    if(isDev) {
+        autoUpdater.logger = require("electron-log")
+        autoUpdater.logger.transports.file.level = "info"
+    }
+    autoUpdater.checkForUpdates(); // Use the autoUpdater from electron-updater
     app.setName('Ice Sickle'); // From package.json it's icesickle (since npm init required lowercase, no spaces)
 
     // Create main window

@@ -5,3 +5,6 @@ settings.json
 
 # Test maps which may be in the root directory
 map2
+
+# Builds and distributions
+dist

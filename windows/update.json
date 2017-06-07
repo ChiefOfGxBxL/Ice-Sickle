@@ -1,0 +1,15 @@
+{
+    "name": "update",
+    "path": "update.html",
+    "description": "",
+
+    "width": 400,
+    "height": 280,
+
+    "parent": "root",
+    "modal": true,
+    "frame": false,
+    "resizable": false,
+    "allowMultiple": false,
+    "requiresTemplate": false
+}
