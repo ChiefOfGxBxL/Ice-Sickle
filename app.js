@@ -250,7 +250,9 @@ function applyPartialObjectUpdate(obj, updates) {
 
 const EventHandlers = {
     'create-new-project': function(event, data) {
-        Window.SendMessage('root', 'create-new-project', data);
+        mapObj = Map.Create(data.name);
+        Window.Broadcast('project-created', mapObj);
+        Window.Close('welcome'); // In case this window is still open, close it
     },
     'request-new-project': function() {
         Window.Open('newProject');

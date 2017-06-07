@@ -87,6 +87,12 @@ var Window = {
         });
     },
 
+    Close: function(windowName) {
+        if(Window.openWindows[windowName]) {
+            Window.openWindows[windowName].close();
+        }
+    },
+
     SendMessage: function(windowName, eventName, data) {
         if(Window.openWindows[windowName]) {
             Window.openWindows[windowName].webContents.send(eventName, data);

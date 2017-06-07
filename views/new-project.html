@@ -11,14 +11,19 @@
     </style>
 
     <script>
-        var {ipcRenderer} = require('electron');
+        var {ipcRenderer} = require('electron'),
+            Path = require('path');
 
         function createNewMap() {
+            var projectName = document.getElementById('name').value
+
             ipcRenderer.send('create-new-project', {
-                name: document.getElementById('name').value
+                name: projectName
                 // author: document.getElementById('author').value,
                 // description: document.getElementById('description').value
             });
+
+            window.close();
         }
     </script>
   </head>
