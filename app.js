@@ -408,7 +408,7 @@ autoUpdater.on('update-available',      (ev, info) => {
 })
 autoUpdater.on('update-not-available',  (ev, info) => { Window.Broadcast('update-not-available', info); })
 autoUpdater.on('error',                 (ev, err) => { Window.Broadcast('update-error', err); })
-autoUpdater.on('download-progress',     (ev, progressObj) => { Window.Broadcast('update-error', progressObj ); })
+autoUpdater.on('download-progress',     (ev, progressObj) => { Window.Broadcast('download-progress', progressObj ); })
 autoUpdater.on('update-downloaded',     (ev, info) => {
   Window.Broadcast('update-downloaded', info);
 
