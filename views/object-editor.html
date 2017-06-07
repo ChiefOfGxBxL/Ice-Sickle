@@ -42,8 +42,46 @@
         })
 
         var userInputListener = false;
+
+        // Stores field whose selection mode is a simple dropdown menu
+        // where only one option may be selected; value is the enum file
+        var userInputSingleChoices = {
+            // fieldType:       enumeration file name
+            'armorType':        'ArmorType',
+            'attackType':       'AttackType',
+            'weaponType':       'WeaponType',
+            'moveType':         'MovementType',
+            'teamColor':        'TeamColor',
+            'defenseType':      'DefenseType',
+            'attributeType':    'AttributeType',
+            'unitRace':         'UnitRace',
+            'aiBuffer':         'AIBuffer'
+        };
         function requestUserInput(type, context, entryId, cb) {
             context.entryId = entryId;
+
+            // Is the input a single dropdown menu?
+            var singleChoice = userInputSingleChoices[type];
+            if(singleChoice) {
+                type = 'singleChoice';
+
+                var dataChoices = require('../enum/' + singleChoice),
+                    choices = Object.keys(dataChoices).map((key) => {
+                        return {
+                            key: key,
+                            value: dataChoices[key],
+                            selected:
+                                // Sometimes the enums have integer values, so we must check if they are integers
+                                // to avoid an error when trying to call toLowerCase() on them
+                                ((typeof dataChoices[key] == 'string') ? dataChoices[key].toLowerCase() : dataChoices[key])
+                                ==
+                                ((typeof context.currentValue == 'string') ? context.currentValue.toLowerCase() : context.currentValue)
+                        }
+                    });
+
+                context['choices'] = choices;
+            }
+
 
             ipcRenderer.send('request-user-input', {
                 type: type,

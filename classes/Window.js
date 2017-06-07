@@ -109,7 +109,7 @@ var Window = {
 }
 
 function loadDefaultInputWindows() {
-    var inputTypes = ['int', 'unknown'];
+    var inputTypes = ['int', 'singleChoice', 'unknown'];
 
     inputTypes.forEach((type) => {
         var inputName = 'input' + (type[0].toUpperCase()) + type.substr(1);
