@@ -1,5 +1,5 @@
 module.exports = {
-    None:                : '0000',
+    None                 : '0000',
     AshenvaleHeavyRain   : 'RAhr',
     AshenvaleLightRain   : 'RAlr',
     DalaranShield        : 'MEds',
