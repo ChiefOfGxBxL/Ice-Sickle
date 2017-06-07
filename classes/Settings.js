@@ -7,10 +7,17 @@ var Settings = {
         fs.ensureFileSync(currPath);
         fs.writeJsonSync(currPath, Settings);
     },
-    
+
     Load: function(dir) {
         // Load the settings into memory
         currPath = Path.resolve(dir, 'settings.json');
+
+        if(!fs.existsSync(currPath)) {
+            // Ensure the settings.json file exists with at least an empty object
+            fs.writeFileSync(currPath, '{}');
+        }
+
+
         var data = fs.readJsonSync(currPath);
 
         // Add them to the Settings object
