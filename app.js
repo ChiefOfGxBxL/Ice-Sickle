@@ -216,17 +216,19 @@ var template = [
 ];
 
 Settings.Load(app.getAppPath());
-Settings.recentMaps.forEach((recentMap) => {
-    var mapName = recentMap.split('\\').reverse()[0];
+if(Settings.recentMaps) {
+    Settings.recentMaps.forEach((recentMap) => {
+        var mapName = recentMap.split('\\').reverse()[0];
 
-    template[0].submenu.push({
-        label: mapName,
-        sublabel: recentMap,
-        click(entry) {
-            LoadProject(entry.sublabel);
-        }
-    });
-})
+        template[0].submenu.push({
+            label: mapName,
+            sublabel: recentMap,
+            click(entry) {
+                LoadProject(entry.sublabel);
+            }
+        });
+    })
+}
 
 var counter = 0;
 function getNextIdCounter(type) {
@@ -441,12 +443,12 @@ app.on('ready', () => {
 
     // Open welcome dialog
     Window.Open('welcome', {
-        recent: Settings.recentMaps.map((dir) => {
+        recent: (Settings.recentMaps) ? Settings.recentMaps.map((dir) => {
             return {
                 name: dir.split('\\').reverse()[0],
                 path: dir.replace(/\\/g, "\\\\")
             }
-        })
+        }) : []
     })
 
     // The hbs:// protocol is used to render handlebars files
