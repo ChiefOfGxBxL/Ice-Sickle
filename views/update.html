@@ -20,22 +20,24 @@
     <script>
         var {ipcRenderer} = require('electron');
 
-        ipcRenderer.on('checking-for-update', () => {
-            document.getElementById('checking').style.display = 'block';
-        })
+        // ipcRenderer.on('checking-for-update', () => {
+        //     document.getElementById('checking').style.display = 'block';
+        // })
 
-        ipcRenderer.on('update-available', () => {
-            document.getElementById('checking').style.display = 'none';
-            document.getElementById('updating').style.display = 'block';
-        })
+        // ipcRenderer.on('update-available', () => {
+        //     // document.getElementById('checking').style.display = 'none';
+        //     document.getElementById('updating').style.display = 'block';
+        // })
 
-        ipcRenderer.on('update-not-available', () => {
-            // No updates are available, so close this window
-            window.close();
-        })
+        // ipcRenderer.on('update-not-available', () => {
+        //     // No updates are available, so close this window
+        //     window.close();
+        // })
 
         ipcRenderer.on('download-progress', (ev, progressObj) => {
-            document.getElementById('download-progress').value = progressObj.percent * 10; // mini.css requires progress to be out of 1000, when here it is only out of 100
+            if(progressObj && progressObj.percent) {
+                document.getElementById('download-progress').value = progressObj.percent * 10; // mini.css requires progress to be out of 1000, when here it is only out of 100
+            }
         })
 
         ipcRenderer.on('update-downloaded', () => {
@@ -45,7 +47,7 @@
             document.getElementById('restarting').style.display = 'block';
         })
 
-        ipcRenderer.on('error', () => {
+        ipcRenderer.on('update-error', () => {
             // TODO: notify user of error
             window.close(); // For now, just close the window
         })
@@ -58,13 +60,13 @@
         <small class='title'>Next-generation WC3 Editor</small>
     </h1>
 
-    <div id='checking'>
+    <!-- <div id='checking'>
         <br/>
         <div class='spinner-donut'></div>
         <p>Checking for updates...</p>
-    </div>
+    </div> -->
 
-    <div id='updating' style='display:none;'>
+    <div id='updating'>
         <br/>
         <b id='download-text'>Downloading update</b>
         <progress id='download-progress' value='0' max='1000'></progress>
