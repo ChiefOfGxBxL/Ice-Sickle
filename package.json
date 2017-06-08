@@ -1,6 +1,6 @@
 {
   "name": "icesickle",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Next-generation WC3 map editor built in Electron",
   "homepage": "https://github.com/ChiefOfGxBxL/Ice-Sickle#readme",
   "main": "app.js",
