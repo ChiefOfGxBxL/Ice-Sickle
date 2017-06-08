@@ -176,7 +176,8 @@
                         }
                     }
 
-                    if(Map.objects[mapObjectDataName].original[entityId]) {
+                    if(Map.objects[mapObjectDataName].original
+                        && Map.objects[mapObjectDataName].original[entityId]) {
                         // modifications exist for this base entity
                         // set data-modified on element (colored pink via CSS)
                         listViewItem.data.modified = true;
@@ -186,23 +187,25 @@
                 });
 
                 // List custom object entities
-                Object.keys(Map.objects[mapObjectDataName].custom).forEach((customEntityId) => {
-                    // customEntityId is of the form <newId>:<baseId> (e.g. h000:hfoo, a001:Adef)
-                    var ids = customEntityId.split(':'),
-                        listViewItem = {
-                            label: '(' + customEntityId + ') ',
-                            value: '',
-                            data: {
-                                id: customEntityId,
-                                entityType: objEntityType,
-                                baseId: ids[1],
-                                newId: ids[0],
-                                modified: true // modifications always exist for a custom entities
-                            }
-                        };
+                if(Map.objects[mapObjectDataName].custom) {
+                    Object.keys(Map.objects[mapObjectDataName].custom).forEach((customEntityId) => {
+                        // customEntityId is of the form <newId>:<baseId> (e.g. h000:hfoo, a001:Adef)
+                        var ids = customEntityId.split(':'),
+                            listViewItem = {
+                                label: '(' + customEntityId + ') ',
+                                value: '',
+                                data: {
+                                    id: customEntityId,
+                                    entityType: objEntityType,
+                                    baseId: ids[1],
+                                    newId: ids[0],
+                                    modified: true // modifications always exist for a custom entities
+                                }
+                            };
 
-                    entityData.push(listViewItem);
-                });
+                        entityData.push(listViewItem);
+                    });
+                }
 
                 // Create and append unit ListView
                 entityListView = new ListView(entityData, { onDblClick: onEntitySelected });
@@ -318,7 +321,7 @@
                         Map.objects[mapObjectDataName].custom :
                         Map.objects[mapObjectDataName].original;
 
-                    if(objectTable[entityId]) {
+                    if(objectTable && objectTable[entityId]) {
                         // We have changes, so find if a change is made
                         // to the current attribute
                         var modifiedField = objectTable[entityId].find((mod) => {
