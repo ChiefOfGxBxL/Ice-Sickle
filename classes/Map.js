@@ -68,13 +68,13 @@ function setNewMap(name) {
     Map.triggers = [];
 
     Map.objects = {
-        units: {},
-        items: {},
-        destructables: {},
-        doodads: {},
-        abilities: {},
-        buffs: {},
-        upgrades: {}
+        units:          { original: {}, custom: {} },
+        items:          { original: {}, custom: {} },
+        destructables:  { original: {}, custom: {} },
+        doodads:        { original: {}, custom: {} },
+        abilities:      { original: {}, custom: {} },
+        buffs:          { original: {}, custom: {} },
+        upgrades:       { original: {}, custom: {} }
     };
 
     Map.imports = [];
