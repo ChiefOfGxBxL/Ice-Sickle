@@ -13,7 +13,7 @@
 
         const ObjectEntityType = require('../enum/ObjectEntityType.js');
         var ObjectEditor = require('../classes/ObjectEditor.js');
-        var ListView = require('../classes/Listview.js');
+        var ListView = require('../classes/ListView.js');
 
         var Map;
 
@@ -176,7 +176,7 @@
                         }
                     }
 
-                    if(Map.objects[mapObjectDataName].original
+                    if(Map.objects && Map.objects[mapObjectDataName].original
                         && Map.objects[mapObjectDataName].original[entityId]) {
                         // modifications exist for this base entity
                         // set data-modified on element (colored pink via CSS)
