@@ -6,9 +6,6 @@ const {app, BrowserWindow, Menu, dialog, ipcMain, protocol} = require('electron'
     fs = require('fs-extra'),
     Handlebars = require('handlebars');
 
-// Automatically reloads view if source is changed
-// require('electron-reload')(__dirname);
-
 var Map = require('./classes/Map'),
     Window = require('./classes/Window'),
     Settings = require('./classes/Settings');
