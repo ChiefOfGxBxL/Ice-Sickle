@@ -8,9 +8,8 @@ const {app, BrowserWindow, Menu, dialog, ipcMain, protocol} = require('electron'
 
 var Map = require('./classes/Map'),
     Window = require('./classes/Window'),
-    Settings = require('./classes/Settings');
-
-var mapObj; // Store Map in this object
+    Settings = require('./classes/Settings'),
+     mapObj; // Map data is stored in this object
 
 // Global variables across windows
 global.globals = {
