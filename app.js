@@ -25,13 +25,10 @@ function OpenProjectWindow() {
         defaultPath: app.getAppPath(),
         properties: ['openDirectory']
     }, function(projects) {
-        // should only be one project selected
         if(projects) {
             // Load and store the Map here in the app
-            if(Map.Load(projects[0])) { // Map loaded successfully
-                // Tell any renderer processes that a map load request has been initiated
-                Window.SendMessage('root', 'open-project', projects[0]);
-                Window.Broadcast('project-loaded', Map);
+            if(mapObj = Map.Load(projects[0])) { // Map loaded successfully
+                Window.Broadcast('project-loaded', mapObj);
 
                 // Store the project in recently-loaded settings
                 if(Settings.recentMaps.indexOf(projects[0]) === -1) {
