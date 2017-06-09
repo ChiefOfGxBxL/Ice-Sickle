@@ -27,22 +27,13 @@ function OpenProjectWindow() {
     }, function(projects) {
         if(projects) {
             // Load and store the Map here in the app
-            if(mapObj = Map.Load(projects[0])) { // Map loaded successfully
-                Window.Broadcast('project-loaded', mapObj);
-
-                // Store the project in recently-loaded settings
-                if(Settings.recentMaps.indexOf(projects[0]) === -1) {
-                    Settings.recentMaps.push(projects[0]);
-                    Settings.Save();
-                }
-            }
+            EventHandlers['load-project'](null, projects[0]);
         }
     });
 }
 
 function LoadProject(projectPath) {
-    if(Map.Load(projectPath)) {
-        Window.SendMessage('root', 'open-project', projectPath);
+    if(mapObj = Map.Load(projectPath)) {
         return true;
     }
     else {
@@ -75,7 +66,7 @@ var template = [
         sublabel: 'Saves the current project',
         role: 'save',
         click () {
-            Window.SendMessage('root', 'save-project');
+            EventHandlers['request-save-project']();
         }
       },
       { type: 'separator' },
@@ -161,7 +152,7 @@ var template = [
               label: 'Compile',
               sublabel: 'Generates the .w3x file',
               click () {
-                  Window.SendMessage('root', 'compile-project');
+                  EventHandlers['request-compile-project']();
               }
           }
       ]
@@ -248,12 +239,22 @@ const EventHandlers = {
         Map.Save(mapObj);
         Window.Broadcast('project-saved', mapObj);
     },
+    'request-compile-project': function() {
+        // TODO: note that map compilation is not yet implemented
+        Map.Compile(mapObj);
+    },
     'request-open-project-map': function(event, dir) {
         mapObj = Map.Load(dir);
     },
-    'load-project': function(event, data) {
-        if(LoadProject(data.path)) {
-            Window.Broadcast('project-loaded', Map);
+    'load-project': function(event, path) {
+        if(LoadProject(path)) {
+            Window.Broadcast('project-loaded', mapObj);
+
+            // Store the project in recently-loaded settings
+            if(Settings.recentMaps.indexOf(path) === -1) {
+                Settings.recentMaps.push(path);
+                Settings.Save();
+            }
         }
     },
     'request-project': function(event, data) {
@@ -413,7 +414,7 @@ app.on('ready', () => {
         autoUpdater.logger = require("electron-log")
         autoUpdater.logger.transports.file.level = "info"
     }
-    autoUpdater.checkForUpdates(); // Use the autoUpdater from electron-updater
+    //autoUpdater.checkForUpdates(); // Use the autoUpdater from electron-updater
     app.setName('Ice Sickle'); // From package.json it's icesickle (since npm init required lowercase, no spaces)
 
     // Create main window
