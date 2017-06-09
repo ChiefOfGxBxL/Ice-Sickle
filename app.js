@@ -254,9 +254,6 @@ const EventHandlers = {
         Window.Broadcast('project-created', mapObj);
         Window.Close('welcome'); // In case this window is still open, close it
     },
-    'request-new-project': function() {
-        Window.Open('newProject');
-    },
     'request-open-project': function() {
         OpenProjectWindow();
     },

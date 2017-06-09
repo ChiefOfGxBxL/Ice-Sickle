@@ -46,7 +46,7 @@
         });
 
         function createNewProject() {
-            ipcRenderer.send('request-new-project', {});
+            ipcRenderer.send('request-open-window', { windowName: 'newProject' });
         }
 
         function openProject() {
