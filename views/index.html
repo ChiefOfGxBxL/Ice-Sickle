@@ -6,27 +6,7 @@
 
     <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="../assets/css/mini-default.min.css">
-
-    <script>
-        var Map = require('../classes/Map.js');
-    </script>
-    <script>
-        // Listen for events sent from window process
-        const {ipcRenderer} = require('electron');
-
-        ipcRenderer.on('open-project', (event, dir) => {
-            ipcRenderer.send('request-open-project-map', dir);
-        });
-
-        ipcRenderer.on('save-project', () => {
-            // Sends a request to the application to save the project
-            ipcRenderer.send('request-save-project');
-        });
-
-        ipcRenderer.on('compile-project', () => {
-            Map.Compile();
-        });
-    </script>
+    
   </head>
   <body class='container'>
     <div class="row">
