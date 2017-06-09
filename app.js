@@ -259,6 +259,7 @@ const EventHandlers = {
     },
     'request-save-project': function() {
         Map.Save(mapObj);
+        Window.Broadcast('project-saved', mapObj);
     },
     'request-open-project-map': function(event, dir) {
         mapObj = Map.Load(dir);
