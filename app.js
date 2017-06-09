@@ -41,15 +41,8 @@ function OpenProjectWindow() {
                     Settings.recentMaps.push(projects[0]);
                     Settings.Save();
                 }
-
-                return true;
-            }
-            else {
-                return false;
             }
         }
-
-        return false;
     });
 }
 
