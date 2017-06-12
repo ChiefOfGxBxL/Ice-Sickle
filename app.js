@@ -9,7 +9,8 @@ const {app, BrowserWindow, Menu, dialog, ipcMain, protocol} = require('electron'
 var Map = require('./classes/Map'),
     Window = require('./classes/Window'),
     Settings = require('./classes/Settings'),
-     mapObj; // Map data is stored in this object
+    PluginManager = require('./classes/PluginManager'),
+    mapObj; // Map data is stored in this object
 
 // Global variables across windows
 global.globals = {
@@ -17,6 +18,18 @@ global.globals = {
     AppPath: app.getAppPath(),
     isDevelopment: isDev
 };
+
+function applicationBroadcast(eventName, eventData) {
+    Window.Broadcast(eventName, eventData);
+    //PluginManager.Broadcast(eventName, eventData);
+
+    // Run any function that plugins have registered to this event
+    if(app.pluginSystem.listeners[eventName]) {
+        app.pluginSystem.listeners[eventName].forEach((listeningFn) => {
+            listeningFn(eventName, eventData);
+        })
+    }
+}
 
 function OpenProjectWindow() {
     dialog.showOpenDialog({
@@ -228,7 +241,7 @@ function applyPartialObjectUpdate(obj, updates) {
 const EventHandlers = {
     'create-new-project': function(event, data) {
         mapObj = Map.Create(data.name);
-        Window.Broadcast('project-created', mapObj);
+        applicationBroadcast('project-created', mapObj);
         Window.Close('welcome'); // In case this window is still open, close it
     },
     'request-open-project': function() {
@@ -236,7 +249,7 @@ const EventHandlers = {
     },
     'request-save-project': function() {
         Map.Save(mapObj);
-        Window.Broadcast('project-saved', mapObj);
+        applicationBroadcast('project-saved', mapObj);
     },
     'request-compile-project': function() {
         // TODO: note that map compilation is not yet implemented
@@ -247,7 +260,7 @@ const EventHandlers = {
     },
     'load-project': function(event, path) {
         if(LoadProject(path)) {
-            Window.Broadcast('project-loaded', mapObj);
+            applicationBroadcast('project-loaded', mapObj);
 
             // Store the project in recently-loaded settings
             if(Settings.recentMaps.indexOf(path) === -1) {
@@ -271,7 +284,7 @@ const EventHandlers = {
         }
     },
     'response-user-input': function(event, data) {
-        Window.Broadcast('user-input-provided', data);
+        applicationBroadcast('user-input-provided', data);
     },
     'patch-project-object': function(event, data) {
         // TODO: clean this mess up
@@ -307,7 +320,7 @@ const EventHandlers = {
         }];
 
         // Send event to all windows
-        Window.Broadcast('new-custom-object', data);
+        applicationBroadcast('new-custom-object', data);
     },
     'request-id-counter': function(event, data) {
         event.sender.webContents.send('response-id-counter', getNextIdCounter(data.type));
@@ -341,7 +354,7 @@ const EventHandlers = {
         // Create a new trigger in the map
         mapObj.triggers.push(newTrigger)
 
-        Window.Broadcast('new-trigger', newTrigger);
+        applicationBroadcast('new-trigger', newTrigger);
     },
     'update-map-info': function(event, newInfo) {
         // Applies a recursive, partial update to mapObj.info
@@ -374,9 +387,12 @@ const EventHandlers = {
             // This is the only attribute that can be changed
             // since size, name, and type are not modified by user
             if(file.fullPath) importToUpdate.fullPath = file.fullPath;
-            Window.Broadcast('import-updated', importToUpdate);
+            applicationBroadcast('import-updated', importToUpdate);
         }
-    }
+    },
+    'plugin-event': function(event, value) {
+        console.log('app received value from plugin', value);
+    },
 }
 
 // FUTURE:
@@ -384,18 +400,18 @@ const EventHandlers = {
 // for enhanced Taskbar utility. See the `app` documentation for more details
 
 // Auto-Updates
-autoUpdater.on('checking-for-update',   () => { Window.Broadcast('checking-for-update'); })
+autoUpdater.on('checking-for-update',   () => { applicationBroadcast('checking-for-update'); })
 autoUpdater.on('update-available',      (ev, info) => {
     // Open check-for-updates window
     Window.Open('update');
 
-    Window.Broadcast('update-available', info);
+    applicationBroadcast('update-available', info);
 })
-autoUpdater.on('update-not-available',  (ev, info) => { Window.Broadcast('update-not-available', info); })
-autoUpdater.on('error',                 (ev, err) => { Window.Broadcast('update-error', err); })
-autoUpdater.on('download-progress',     (ev, progressObj) => { Window.Broadcast('download-progress', progressObj ); })
+autoUpdater.on('update-not-available',  (ev, info) => { applicationBroadcast('update-not-available', info); })
+autoUpdater.on('error',                 (ev, err) => { applicationBroadcast('update-error', err); })
+autoUpdater.on('download-progress',     (ev, progressObj) => { applicationBroadcast('download-progress', progressObj ); })
 autoUpdater.on('update-downloaded',     (ev, info) => {
-  Window.Broadcast('update-downloaded', info);
+  applicationBroadcast('update-downloaded', info);
 
    // Wait 4 seconds, then quit and install
   setTimeout(function() {
@@ -404,6 +420,13 @@ autoUpdater.on('update-downloaded',     (ev, info) => {
 })
 
 
+// Expose globals for plugins
+app.Events = EventHandlers;
+app.WindowManager = Window;
+app.ipcMain = ipcMain;
+app.pluginSystem = {
+    listeners: {}
+}
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -413,8 +436,17 @@ app.on('ready', () => {
         autoUpdater.logger = require("electron-log")
         autoUpdater.logger.transports.file.level = "info"
     }
-    //autoUpdater.checkForUpdates(); // Use the autoUpdater from electron-updater
+    else {
+        // Only check for updates in production
+        // Otherwise, the development unnecessarily hits the GitHub releases
+        // channel and spams the output log
+        autoUpdater.checkForUpdates();
+    }
+
     app.setName('Ice Sickle'); // From package.json it's icesickle (since npm init required lowercase, no spaces)
+
+    // Load plugins
+    PluginManager.LoadPlugins(module, EventHandlers);
 
     // Create main window
     Window.Open('root');
