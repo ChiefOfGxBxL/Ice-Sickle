@@ -21,7 +21,6 @@ global.globals = {
 
 function applicationBroadcast(eventName, eventData) {
     Window.Broadcast(eventName, eventData);
-    //PluginManager.Broadcast(eventName, eventData);
 
     // Run any function that plugins have registered to this event
     if(app.pluginSystem.listeners[eventName]) {
