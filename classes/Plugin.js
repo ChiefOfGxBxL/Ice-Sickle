@@ -1,23 +1,35 @@
 var Path = require('path'),
+    fs = require('fs-extra'),
     {app} = require('electron');
 
-module.exports = {
-    require: (name) => {
-        return require(Path.resolve('./', name));
-    },
-    event: {
-        on: function(eventName, fn) {
-            console.log('plugin wants to register for event', eventName);
-            //app.ipcMain.on(eventName, fn);
-            app.pluginSystem.listeners[eventName] = app.pluginSystem.listeners[eventName] || [];
-            app.pluginSystem.listeners[eventName].push(fn);
-        },
-        send: (eventName, eventData) => {
-            console.log('plugin is sending app the following event', eventName, eventData);
+module.exports = function(pluginName) {
+    const pluginPath = Path.resolve('plugins', pluginName);
 
-            if(app.Events[eventName]) {
-                app.Events[eventName](eventName, eventData);
+    return {
+        require: (name) => {
+            return require(Path.resolve('./', name));
+        },
+        event: {
+            on: function(eventName, fn) {
+                app.pluginSystem.listeners[eventName] = app.pluginSystem.listeners[eventName] || [];
+                app.pluginSystem.listeners[eventName].push(fn);
+            },
+            send: (eventName, eventData) => {
+                if(app.Events[eventName]) {
+                    app.Events[eventName](eventName, eventData);
+                }
+            }
+        },
+        window: {
+            register: function(manifest) {
+                if(typeof manifest === 'string') {
+                    manifest = fs.readJsonSync(Path.resolve(pluginPath, manifest));
+                }
+
+                // Now we have that manifest is a JSON object
+                manifest.path = Path.resolve(pluginPath, manifest.path);
+                app.Events['register-window'](null, manifest);
             }
         }
-    }
-};
+    };
+}
