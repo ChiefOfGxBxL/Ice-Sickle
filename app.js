@@ -205,8 +205,8 @@ var template = [
 ];
 
 Settings.Load(app.getAppPath());
-if(Settings.recentMaps) {
-    Settings.recentMaps.forEach((recentMap) => {
+if(Settings.GetGlobal('recentMaps')) {
+    Settings.GetGlobal('recentMaps').forEach((recentMap) => {
         var mapName = recentMap.split('\\').reverse()[0];
 
         template[0].submenu.push({
@@ -262,8 +262,10 @@ const EventHandlers = {
             applicationBroadcast('project-loaded', mapObj);
 
             // Store the project in recently-loaded settings
-            if(Settings.recentMaps.indexOf(path) === -1) {
-                Settings.recentMaps.push(path);
+            var recentMaps = Settings.GetGlobal('recentMaps');
+            if(recentMaps.indexOf(path) === -1) {
+                recentMaps.push(path);
+                Settings.SetGlobal('recentMaps', recentMaps);
                 Settings.Save();
             }
         }
@@ -445,7 +447,7 @@ app.on('ready', () => {
 
     app.setName('Ice Sickle'); // From package.json it's icesickle (since npm init required lowercase, no spaces)
 
-    // Load plugins
+    // Load plugins from /plugins directory
     PluginManager.LoadPlugins(module, EventHandlers);
 
     // Create main window
@@ -462,7 +464,7 @@ app.on('ready', () => {
 
     // Open welcome dialog
     Window.Open('welcome', {
-        recent: (Settings.recentMaps) ? Settings.recentMaps.map((dir) => {
+        recent: (Settings.GetGlobal('recentMaps')) ? Settings.GetGlobal('recentMaps').map((dir) => {
             return {
                 name: dir.split('\\').reverse()[0],
                 path: dir.replace(/\\/g, "\\\\")

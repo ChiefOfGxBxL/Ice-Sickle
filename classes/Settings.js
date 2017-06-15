@@ -1,32 +1,37 @@
-var fs = require('fs-extra'),
-    Path = require('path'),
-    currPath; // Stores the path to the settings.json file
+const fs = require('fs-extra'),
+    Path = require('path');
+
+var _settings = { // Private storage of settings
+        global: {},
+        local: {}
+    },
+    _currPath; // Path to the settings.json file
 
 var Settings = {
+
+    GetGlobal: (name) =>        { return _settings.global[name]; },
+    GetLocal: (name) =>         { return _settings.local[name]; },
+    SetGlobal: (name, data) =>  { _settings.global[name] = data; },
+    SetLocal: (name, data) =>   { _settings.local[name] = data; },
+
     Save: function() {
-        fs.ensureFileSync(currPath);
-        fs.writeJsonSync(currPath, Settings);
+        fs.ensureFileSync(_currPath);
+        fs.writeJsonSync(_currPath, _settings);
     },
 
     Load: function(dir) {
         // Load the settings into memory
-        currPath = Path.resolve(dir, 'settings.json');
+        _currPath = Path.resolve(dir, 'settings.json');
 
-        if(!fs.existsSync(currPath)) {
-            // Ensure the settings.json file exists with at least an empty object
-            fs.writeFileSync(currPath, '{}');
+        if(!fs.existsSync(_currPath)) {
+            // Ensure the settings.json file exists with
+            // at least empty `global` and `local` objects
+            fs.writeFileSync(_currPath, '{global: {}, local: {}}');
         }
 
-
-        var data = fs.readJsonSync(currPath);
-
-        // Add them to the Settings object
-        Object.keys(data).forEach((key) => {
-            if(key.toLowerCase() !== 'save' && key.toLowerCase() !== 'load') {
-                Settings[key] = data[key];
-            }
-        });
+        _settings = fs.readJsonSync(_currPath);
     }
+
 }
 
 module.exports = Settings;
