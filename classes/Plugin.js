@@ -30,6 +30,21 @@ module.exports = function(pluginName) {
                 manifest.path = Path.resolve(pluginPath, manifest.path);
                 app.Events['register-window'](null, manifest);
             }
+        },
+        settings: {
+            setGlobal: function(name, data) {
+                app.Events['set-global-setting'](null, {
+                    name: name,
+                    data: data
+                });
+            },
+            setLocal: function(name, data) {
+                app.Events['set-local-setting'](null, {
+                    plugin: pluginName,
+                    name: name,
+                    data: data
+                });
+            }
         }
     };
 }

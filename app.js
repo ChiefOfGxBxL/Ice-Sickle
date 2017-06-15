@@ -394,6 +394,15 @@ const EventHandlers = {
     'register-window': function(event, manifest) {
         // TODO: is the window protected??
         Window.availableWindows[manifest.name] = manifest;
+    },
+    'set-global-setting': function(event, obj) {
+        Settings.SetGlobal(obj.name, obj.data);
+    },
+    'set-local-setting': function(event, obj) {
+        var pluginSettings = Settings.GetLocal(obj.plugin) || {};
+        pluginSettings[obj.name] = obj.data;
+
+        Settings.SetLocal(obj.plugin, pluginSettings);
     }
 }
 
