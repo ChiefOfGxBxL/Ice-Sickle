@@ -31,7 +31,7 @@ function loadPlugin(dir, mod) {
     };
 
     // Execute the plugin's initial script
-    PluginManager.loadedPlugins[pluginManifest.name].module.init();
+    PluginManager.loadedPlugins[pluginManifest.name].module()
 }
 
 module.exports = PluginManager;
