@@ -7,5 +7,8 @@ var remote = require('electron').remote
 /*
  IPC
  */
-// Usage: ipc.send('eventName', {data: 5})
-// var {ipcRenderer} = require('electron');
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait for the page to load.. otherwise some of these
+    // actions may not work
+    const {ipcRenderer} = require('electron');
+})
