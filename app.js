@@ -424,11 +424,7 @@ autoUpdater.on('update-downloaded',     (ev, info) => {
 
 // Expose globals for plugins
 app.Events = EventHandlers;
-app.WindowManager = Window;
-app.ipcMain = ipcMain;
-app.pluginSystem = {
-    listeners: {}
-}
+app.pluginSystem = { listeners: {} };
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
