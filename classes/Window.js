@@ -13,7 +13,9 @@ var Window = {
         if(!window) return false; // A window by the specified name does not exist
 
         // The window.path is relative to the /views directory, but we are not
-        var viewPath = Path.join(__dirname, '..', 'views', window.path);
+        var viewPath = fs.existsSync(window.path) ?
+            window.path :
+            Path.resolve(__dirname, '..', 'views', window.path);
 
         // If the requested view does not exist, exit
         if(!fs.existsSync(viewPath)) {
