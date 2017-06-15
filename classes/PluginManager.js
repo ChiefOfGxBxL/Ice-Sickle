@@ -8,22 +8,15 @@ var PluginManager = {
     loadedPlugins: {},
 
     LoadPlugins: function(mod, appEvents) {
-        var pluginFolders = klaw(
-            Path.resolve(app.getAppPath() + '/plugins'),
-            { nofile: true }
-        );
+        var pluginFolders = fs.readdirSync( Path.resolve(app.getAppPath() + '/plugins') )
 
         pluginFolders.forEach((pluginFolder) => {
-            loadPlugin(pluginFolder.path, mod, appEvents);
-        });
-    },
+            var pluginPath = Path.resolve('plugins', pluginFolder);
 
-    Broadcast: function(eventName, eventData) {
-        Object.values(this.loadedPlugins).forEach((plugin) => {
-            if(plugin.module.events[eventName]) {
-                plugin.module.events[eventName](eventName, eventData);
+            if(fs.statSync(pluginPath).isDirectory()) {
+                loadPlugin(pluginPath, mod, appEvents);
             }
-        })
+        });
     }
 }
 
