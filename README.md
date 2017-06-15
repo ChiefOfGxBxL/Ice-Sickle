@@ -19,7 +19,6 @@
   
 <hr/>
 <p align='center'>
-  <a href="#why"><strong>Why?</strong></a> &middot;
   <a href="#features"><strong>Features</strong></a> &middot;
   <a href="#getting-started"><strong>Getting started</strong></a> &middot;
   <a href="#developers"><strong>Developers</strong></a>
@@ -31,11 +30,17 @@
 ### Features
 |     |     |      |
 |-----|-----|------|
-|![redx](https://user-images.githubusercontent.com/4079034/27198742-6f690f9c-51e1-11e7-8901-cd77b37de662.png)| Plugin API | Create and download plugins which extend the functionality of the editor!
+|![spinner](https://user-images.githubusercontent.com/4079034/27199646-c4d522ba-51e4-11e7-8317-e47c16574aa3.png)| Plugin API | Create and download plugins which extend the functionality of the editor!
 |![redx](https://user-images.githubusercontent.com/4079034/27198742-6f690f9c-51e1-11e7-8901-cd77b37de662.png)| Collaboration | Projects allows collaborators to remotely develop maps with ease, using source-code management tools like GitHub or Bitbucket to track changes
 |![redx](https://user-images.githubusercontent.com/4079034/27198742-6f690f9c-51e1-11e7-8901-cd77b37de662.png)| Resource manager | Drag and drop files into the import manager, or one-click import from the public repository of models, textures, etc.
 |![greencheck](https://user-images.githubusercontent.com/4079034/27198743-6f6c8f1e-51e1-11e7-9223-c4dbb2e776fb.png)| Auto updater | Ice Sickle automatically updates upon launch, keeping you up-to-date with the latest features
 |![redx](https://user-images.githubusercontent.com/4079034/27198742-6f690f9c-51e1-11e7-8901-cd77b37de662.png)| Multi-platform | Works on Windows, Mac, and Linux
+
+<div>
+  <img src='https://user-images.githubusercontent.com/4079034/27198743-6f6c8f1e-51e1-11e7-9223-c4dbb2e776fb.png'/> Completed
+  <img src='https://user-images.githubusercontent.com/4079034/27199646-c4d522ba-51e4-11e7-8317-e47c16574aa3.png'/> In development
+  <img src='https://user-images.githubusercontent.com/4079034/27198742-6f690f9c-51e1-11e7-8901-cd77b37de662.png'/> Not implemented
+</div>
 
 <br/>
 
