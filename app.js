@@ -389,9 +389,10 @@ const EventHandlers = {
             applicationBroadcast('import-updated', importToUpdate);
         }
     },
-    'plugin-event': function(event, value) {
-        console.log('app received value from plugin', value);
-    },
+    'register-window': function(event, manifest) {
+        // TODO: is the window protected??
+        Window.availableWindows[manifest.name] = manifest;
+    }
 }
 
 // FUTURE:
