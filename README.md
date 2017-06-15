@@ -22,7 +22,7 @@
   <a href="#why"><strong>Why?</strong></a> &middot;
   <a href="#features"><strong>Features</strong></a> &middot;
   <a href="#getting-started"><strong>Getting started</strong></a> &middot;
-  <a href="#developers"><strong>Developers</strong></a> &middot;
+  <a href="#developers"><strong>Developers</strong></a>
 </p>
 <hr/>
 
@@ -65,5 +65,8 @@ Overview
  * Contribution guide
  * Issue tracker
  * Working on a feature or bug (assigning, milestones, etc)
+ 
+Resources
+ * [Gitbook](https://chiefofgxbxl.gitbooks.io/ice-sickle/) contains key documentation about our code, classes, object formats, and plugin API
 
 <br/>
