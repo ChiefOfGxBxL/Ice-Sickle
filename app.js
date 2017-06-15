@@ -19,7 +19,7 @@ global.globals = {
     isDevelopment: isDev
 };
 
-function applicationBroadcast(eventName, eventData) {
+function applicationBroadcastEvent(eventName, eventData) {
     Window.Broadcast(eventName, eventData);
 
     // Run any function that plugins have registered to this event
@@ -240,7 +240,7 @@ function applyPartialObjectUpdate(obj, updates) {
 const EventHandlers = {
     'create-new-project': function(event, data) {
         mapObj = Map.Create(data.name);
-        applicationBroadcast('project-created', mapObj);
+        applicationBroadcastEvent('project-created', mapObj);
         Window.Close('welcome'); // In case this window is still open, close it
     },
     'request-open-project': function() {
@@ -248,7 +248,7 @@ const EventHandlers = {
     },
     'request-save-project': function() {
         Map.Save(mapObj);
-        applicationBroadcast('project-saved', mapObj);
+        applicationBroadcastEvent('project-saved', mapObj);
     },
     'request-compile-project': function() {
         // TODO: note that map compilation is not yet implemented
@@ -259,7 +259,7 @@ const EventHandlers = {
     },
     'load-project': function(event, path) {
         if(LoadProject(path)) {
-            applicationBroadcast('project-loaded', mapObj);
+            applicationBroadcastEvent('project-loaded', mapObj);
 
             // Store the project in recently-loaded settings
             var recentMaps = Settings.GetGlobal('recentMaps');
@@ -285,7 +285,7 @@ const EventHandlers = {
         }
     },
     'response-user-input': function(event, data) {
-        applicationBroadcast('user-input-provided', data);
+        applicationBroadcastEvent('user-input-provided', data);
     },
     'patch-project-object': function(event, data) {
         // TODO: clean this mess up
@@ -321,7 +321,7 @@ const EventHandlers = {
         }];
 
         // Send event to all windows
-        applicationBroadcast('new-custom-object', data);
+        applicationBroadcastEvent('new-custom-object', data);
     },
     'request-id-counter': function(event, data) {
         event.sender.webContents.send('response-id-counter', getNextIdCounter(data.type));
@@ -355,7 +355,7 @@ const EventHandlers = {
         // Create a new trigger in the map
         mapObj.triggers.push(newTrigger)
 
-        applicationBroadcast('new-trigger', newTrigger);
+        applicationBroadcastEvent('new-trigger', newTrigger);
     },
     'update-map-info': function(event, newInfo) {
         // Applies a recursive, partial update to mapObj.info
@@ -388,7 +388,7 @@ const EventHandlers = {
             // This is the only attribute that can be changed
             // since size, name, and type are not modified by user
             if(file.fullPath) importToUpdate.fullPath = file.fullPath;
-            applicationBroadcast('import-updated', importToUpdate);
+            applicationBroadcastEvent('import-updated', importToUpdate);
         }
     },
     'register-window': function(event, manifest) {
@@ -402,18 +402,18 @@ const EventHandlers = {
 // for enhanced Taskbar utility. See the `app` documentation for more details
 
 // Auto-Updates
-autoUpdater.on('checking-for-update',   () => { applicationBroadcast('checking-for-update'); })
+autoUpdater.on('checking-for-update',   () => { applicationBroadcastEvent('checking-for-update'); })
 autoUpdater.on('update-available',      (ev, info) => {
     // Open check-for-updates window
     Window.Open('update');
 
-    applicationBroadcast('update-available', info);
+    applicationBroadcastEvent('update-available', info);
 })
-autoUpdater.on('update-not-available',  (ev, info) => { applicationBroadcast('update-not-available', info); })
-autoUpdater.on('error',                 (ev, err) => { applicationBroadcast('update-error', err); })
-autoUpdater.on('download-progress',     (ev, progressObj) => { applicationBroadcast('download-progress', progressObj ); })
+autoUpdater.on('update-not-available',  (ev, info) => { applicationBroadcastEvent('update-not-available', info); })
+autoUpdater.on('error',                 (ev, err) => { applicationBroadcastEvent('update-error', err); })
+autoUpdater.on('download-progress',     (ev, progressObj) => { applicationBroadcastEvent('download-progress', progressObj ); })
 autoUpdater.on('update-downloaded',     (ev, info) => {
-  applicationBroadcast('update-downloaded', info);
+  applicationBroadcastEvent('update-downloaded', info);
 
    // Wait 4 seconds, then quit and install
   setTimeout(function() {
