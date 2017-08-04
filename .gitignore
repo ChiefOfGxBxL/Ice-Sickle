@@ -3,9 +3,6 @@ Notepad++ Session
 .idea
 settings.json
 
-# Test maps which may be in the root directory
-map2
-
 # Plugin system
 plugins
 
