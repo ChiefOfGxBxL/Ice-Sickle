@@ -1169,7 +1169,7 @@
 		"category": "art",
 		"displayName": "WESTRING_UEVAL_UTCO",
 		"sort": "c1a06a",
-		"type": "string",
+		"type": "int",
 		"changeFlags": "m",
 		"importType": "",
 		"stringExt": "0",
