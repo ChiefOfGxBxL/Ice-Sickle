@@ -4,6 +4,7 @@ const {app, BrowserWindow, Menu, dialog, ipcMain, protocol} = require('electron'
     path = require('path'),
     url = require('url'),
     fs = require('fs-extra'),
+    klawSync = require('klaw-sync'),
     Handlebars = require('handlebars');
 
 var Map = require('./classes/Map'),
@@ -18,6 +19,46 @@ global.globals = {
     AppPath: app.getAppPath(),
     isDevelopment: isDev
 };
+
+// Scripting languages, where the key is the extension, including .
+var scriptingLanguages = {};
+function loadScriptingLanguages() {
+    // Each folder in ./scripting/languages houses a single scripting language
+    var filterFn = function(item) {
+        return item.path.indexOf('node_modules') < 0 && item.path.indexOf('.git') < 0 && item.path.split(path.sep).reverse()[1] == 'languages';
+    };
+
+    var directories = klawSync(
+        './scripting/languages',
+        { nofile: true, filter: filterFn, noRecurseOnFailedFilter: true }
+    );
+
+    // Load that language
+    directories.forEach((langDir) => {
+        try {
+            var languageIndex = require(path.join(
+                langDir.path,
+                'index.js'
+            ));
+
+            if(languageIndex.logo) {
+                languageIndex.logo = path.join(langDir.path, languageIndex.logo);
+            }
+
+            if(languageIndex.icon) {
+                languageIndex.icon = path.join(langDir.path, languageIndex.icon);
+            }
+
+            languageIndex.name = langDir.path.split(path.sep).reverse()[0];
+
+            scriptingLanguages[languageIndex.ext] = languageIndex;
+            console.log('Loaded language', languageIndex.ext, languageIndex);
+        }
+        catch(e) {
+            console.error('Error loading scripting language', langDir);
+        }
+    });
+}
 
 function applicationBroadcastEvent(eventName, eventData) {
     Window.Broadcast(eventName, eventData);
@@ -454,6 +495,9 @@ app.on('ready', () => {
 
     // Load plugins from /plugins directory
     PluginManager.LoadPlugins(module, EventHandlers);
+
+    // Register each custom scripting language
+    loadScriptingLanguages();
 
     // Create main window
     Window.Open('root');
