@@ -382,11 +382,11 @@ const EventHandlers = {
     },
     'new-trigger': function(event, data) {
         // TODO: check for conflicting trigger paths
-        var newTriggerFilePath = path.resolve(mapObj.__Dir, 'triggers/', (data.name + '.' + data.type)),
+        var newTriggerFilePath = path.resolve(mapObj.__Dir, 'triggers/', (data.name + '.' + data.language.substr(1))),
             newTrigger = {
                 name: data.name,
                 path: newTriggerFilePath,
-                type: data.type,
+                language: data.language,
                 content: ''
             };
 
