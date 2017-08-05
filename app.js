@@ -398,6 +398,9 @@ const EventHandlers = {
 
         applicationBroadcastEvent('new-trigger', newTrigger);
     },
+    'request-scripting-languages': function(event, data) {
+        event.sender.webContents.send('response-scripting-languages', scriptingLanguages);
+    },
     'update-map-info': function(event, newInfo) {
         // Applies a recursive, partial update to mapObj.info
         applyPartialObjectUpdate(mapObj.info, newInfo);
