@@ -11,13 +11,45 @@
     <script>
         var {ipcRenderer} = require('electron');
 
+        function onLanguageSelected(ele) {
+            var languageExt = ele.value,
+                languageIcon = ele.getAttribute('data-icon');
+
+            document.getElementById('languageIcon').src = languageIcon;
+        }
+
+        ipcRenderer.send('request-scripting-languages');
+        ipcRenderer.on('response-scripting-languages', (_, languages) => {
+            Object.keys(languages).forEach((languageExt) => {
+
+                var language = languages[languageExt],
+                    triggerTypeSelect = document.getElementById('triggerLanguage'),
+                    triggerOption = document.createElement('option');
+
+                triggerOption.innerText = language.name + ' (' + language.ext + ')';
+                triggerOption.value = language.ext;
+                triggerOption.setAttribute('data-icon', language.icon);
+                triggerOption.addEventListener('selected', onLanguageSelected);
+
+                triggerTypeSelect.appendChild(triggerOption);
+            });
+        });
+
+        window.addEventListener('load', () => {
+            // When the page is ready, select the first element of the language dropdown
+            var triggerTypeSelect = document.getElementById('triggerLanguage');
+
+            triggerTypeSelect.children[0].setAttribute('selected', 'selected');
+            onLanguageSelected(triggerTypeSelect.children[0]);
+        });
+
         function submitForm() {
             var name = document.getElementById('triggerName').value,
-                type = document.getElementById('triggerType').value;
+                language = document.getElementById('triggerLanguage').value;
 
             ipcRenderer.send('new-trigger', {
               name: name,
-              type: type
+              language: language
             });
 
             window.close();
@@ -27,18 +59,16 @@
   <body>
     <form>
         <fieldset>
-            <legend>New Trigger</legend>
-
             <label>
-                Name:
+                Name
                 <input id='triggerName' type='text' value='' focus/>
             </label>
 
             <label>
-                Type:
-                <select id='triggerType'>
-                  <option value='jass' selected>Regular JASS (.jass)</option>
-                  <option value='nova'>Nova (.nova)</option>
+                Language
+                <img id='languageIcon' width='16' height='16' />
+
+                <select id='triggerLanguage'>
                 </select>
             </label>
 
