@@ -1,6 +1,7 @@
 var Path = require('path'),
     fs = require('fs-extra'),
-    klaw = require('klaw-sync');
+    klaw = require('klaw-sync'),
+    Translator = require('wc3maptranslator');
 
 function setNewMap(name) {
     Map.info = {
@@ -239,9 +240,23 @@ var Map = {
         return this;
     },
 
-    Compile: function() {
-        // NOT IMPLEMENTED
-        return false;
+    Compile: function(baseDir, mapObj, cleanup) {
+        // Partially implemented...
+
+        //
+        // Setup: start with a fresh .compile folder in the baseDir
+        //
+        var outputPath = Path.join(baseDir, '.output');
+        fs.emptyDirSync(outputPath); // ensures empty .output, and ensures this folder exists
+
+        //
+        // Translate object editor entities
+        //
+        var unitTranslator = Translator.Objects('units', mapObj.objects.units);
+        unitTranslator.write(outputPath);
+
+
+        return true;
     }
 }
 

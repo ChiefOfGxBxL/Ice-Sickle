@@ -292,8 +292,10 @@ const EventHandlers = {
         applicationBroadcastEvent('project-saved', mapObj);
     },
     'request-compile-project': function() {
-        // TODO: note that map compilation is not yet implemented
-        Map.Compile(mapObj);
+        var result = Map.Compile(mapObj.__Dir, mapObj, false);
+        console.log('Map compiled:', result);
+
+        applicationBroadcastEvent('map-compiled', result);
     },
     'request-open-project-map': function(event, dir) {
         mapObj = Map.Load(dir);
@@ -447,7 +449,7 @@ const EventHandlers = {
         pluginSettings[obj.name] = obj.data;
 
         Settings.SetLocal(obj.plugin, pluginSettings);
-    }
+    },
 }
 
 // FUTURE:
