@@ -258,13 +258,14 @@
                             entryId,
                             function(data) {
                                 // Change the value in the ListView
+                                console.log('updating', objEntityType, data.id, data.value);
                                 objEntityFieldListView[objEntityType].UpdateItem(data.id, data.value);
                                 objEntityFieldListView[objEntityType].Refresh();
 
                                 // Modify the original or custom unit field
                                 var isCustomObj = data.entryId.indexOf(':') >= 0;
                                 ipcRenderer.send('patch-project-object', {
-                                    specType: 'units',
+                                    specType: mapObjectDataName,
                                     table: isCustomObj ? 'custom' : 'original',
                                     entryId: data.entryId,
                                     modification: {
