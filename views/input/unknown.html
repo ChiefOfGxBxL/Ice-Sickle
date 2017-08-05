@@ -16,6 +16,7 @@
                 id: '{{id}}',
                 entryId: '{{entryId}}',
                 type: 'string',
+                inputType: 'unknown',
                 value: document.getElementById('userData').value
             });
 
@@ -26,7 +27,7 @@
   <body>
     <form>
         <fieldset>
-            <legend>Edit Value{{#if fieldName}} - {{fieldName}}{{/if}} ({{type}})</legend>
+            <legend>Edit Value{{#if fieldName}} - {{fieldName}}{{/if}} ({{editorType}} / {{type}})</legend>
 
             <label>
                 Value:

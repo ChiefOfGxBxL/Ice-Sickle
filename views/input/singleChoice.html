@@ -15,7 +15,8 @@
             ipcRenderer.send('response-user-input', {
                 id: '{{id}}',
                 entryId: '{{entryId}}',
-                type: 'singleChoice',
+                type: document.getElementById('fieldType').value,
+                inputType: 'singleChoice',
                 value: document.getElementById('choice').selectedOptions[0].value
             });
 
@@ -27,6 +28,8 @@
     <form>
         <fieldset>
             <legend>Edit Value{{#if fieldName}} - {{fieldName}}{{/if}}</legend>
+
+            <input type='hidden' id='fieldType' value='{{type}}' />
 
             <label>
                 Value:
