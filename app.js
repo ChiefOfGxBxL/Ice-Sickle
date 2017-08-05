@@ -292,10 +292,15 @@ const EventHandlers = {
         applicationBroadcastEvent('project-saved', mapObj);
     },
     'request-compile-project': function() {
-        var result = Map.Compile(mapObj.__Dir, mapObj, false);
-        console.log('Map compiled:', result);
+        Window.Open('compile');
 
-        applicationBroadcastEvent('map-compiled', result);
+        setTimeout(() => {
+            var result = Map.Compile(mapObj.__Dir, mapObj, false);
+            console.log('Map compiled:', result);
+
+            applicationBroadcastEvent('map-compiled', result);
+        }, 2000)
+
     },
     'request-open-project-map': function(event, dir) {
         mapObj = Map.Load(dir);

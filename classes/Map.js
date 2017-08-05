@@ -255,7 +255,6 @@ var Map = {
         var unitTranslator = Translator.Objects('units', mapObj.objects.units);
         unitTranslator.write(outputPath);
 
-
         return true;
     }
 }

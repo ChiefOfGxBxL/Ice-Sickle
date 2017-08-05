@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Compiling...</title>
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/mini-default.min.css">
+    <style>
+        html,body {text-align: center;}
+        h1,.header {
+            background-color: #666;
+            padding: 10px;
+            margin: 0 0 15px 0;
+            color: #fff;
+            text-shadow: 1px 1px 1px #000;
+        }
+
+        .bg-success { background-color: #689F38; }
+        .bg-error { background-color: #E53935 }
+
+        h1 > small { margin: 0 !important; font-style: italic; font-size: 0.6em; }
+        p {margin: 0 10%;}
+
+        .hidden { display: none; }
+
+        li.supported { color: #689F38; }
+        li { color: #666; list-style-type: none; margin-left: -20px; }
+    </style>
+
+    <script>
+        var header,
+            donut,
+            statusBar,
+            successBox,
+            errorBox;
+
+        const {ipcRenderer} = require('electron');
+
+        ipcRenderer.on('map-compiled', (_, result) => {
+            donut.classList.add('hidden');
+
+            if(result === true) {
+                // Successful!
+                successBox.classList.remove('hidden');
+                header.classList.add('bg-success');
+                statusBar.innerText = 'Map compiled!';
+            }
+            else {
+                // Error generating map
+                errorBox.classList.remove('hidden');
+                header.classList.add('bg-error');
+                statusBar.innerText = 'Error - unable to compile map';
+
+                // TODO: display error messages
+                // result is an array of error messages
+            }
+        });
+
+        window.addEventListener('load', () => {
+            header = document.getElementById('header');
+            donut = document.getElementById('donut');
+            statusBar = document.getElementById('statusBar');
+            successBox = document.getElementById('success');
+            errorBox = document.getElementById('error');
+        });
+    </script>
+  </head>
+  <body>
+
+    <h1 id='header'>
+        <div id='donut' class='spinner-donut primary'></div>
+        <span id='statusBar'>Compiling...</span>
+    </h1>
+
+    <div style='text-align:left;margin:0 10%;'>
+         <div class='row'>
+             <div class='col-sm-4'>
+                 <b>Objects</b>
+                 <ul>
+                     <li class='supported'>Units</li>
+                     <li>Items</li>
+                     <li>Destructables</li>
+                     <li>Doodads</li>
+                     <li>Abilities</li>
+                     <li>Buffs/Effects</li>
+                     <li>Upgrades</li>
+                 </ul>
+             </div>
+             <div class='col-sm-4'>
+                 <b>Entities</b>
+                 <ul>
+                     <li>Units</li>
+                     <li>Doodads</li>
+                     <li>Terrain</li>
+                     <li>Regions</li>
+                     <li>Cameras</li>
+                     <li>Sounds</li>
+                 </ul>
+             </div>
+             <div class='col-sm-4'>
+                 <b>Other</b>
+                 <ul>
+                     <li>Triggers</li>
+                     <ul>
+                         <li>Generate</li>
+                         <li>Translate</li>
+                         <li>Merge</li>
+                     </ul>
+
+                     <li>Imports</li>
+                     <li>Strings</li>
+                     <li>Interface</li>
+                     <li>Gameplay Constants</li>
+                 </ul>
+             </div>
+         </div>
+    </div>
+
+    <br/><br/>
+
+    <div id='success' class='hidden'>
+        <span>The map was generated successfully!</span>
+
+        <br/>
+
+        <a class='button' onclick='window.close()'>Close</a>
+        <a class='button primary' onclick=''>Launch map</a>
+    </div>
+
+    <div id='error' class='hidden'>
+        <mark class='secondary'>Error</mark>
+
+        <br/>
+
+        <a class='button' onclick='window.close()'>Close</a>
+    </div>
+
+  </body>
+</html>
