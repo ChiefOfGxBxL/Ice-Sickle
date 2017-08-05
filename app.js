@@ -295,7 +295,7 @@ const EventHandlers = {
         Window.Open('compile');
 
         setTimeout(() => {
-            var result = Map.Compile(mapObj.__Dir, mapObj, false);
+            var result = Map.Compile(mapObj.__Dir, mapObj, scriptingLanguages, false);
             console.log('Map compiled:', result);
 
             applicationBroadcastEvent('map-compiled', result);

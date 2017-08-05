@@ -181,7 +181,7 @@ var Map = {
           mapObj.triggers.push({
             name: fileName[0],
             path: triggerFile.path,
-            type: fileName[1],
+            type: '.' + fileName[1],
             content: fs.readFileSync(triggerFile.path, {encoding: 'utf8'}).replace('\r\n', '\n')
           });
         });
@@ -240,20 +240,43 @@ var Map = {
         return this;
     },
 
-    Compile: function(baseDir, mapObj, cleanup) {
+    Compile: function(baseDir, mapObj, languages, cleanup) {
         // Partially implemented...
 
         //
         // Setup: start with a fresh .compile folder in the baseDir
         //
         var outputPath = Path.join(baseDir, '.output');
+            triggerPath = Path.join(baseDir, '.output', 'triggers');
         fs.emptyDirSync(outputPath); // ensures empty .output, and ensures this folder exists
+        fs.emptyDirSync(triggerPath);
 
         //
         // Translate object editor entities
         //
-        var unitTranslator = Translator.Objects('units', mapObj.objects.units);
+        var unitTranslator = Translator.Objects('units', mapObj.objects.units),
+            itemTranslator = Translator.Objects('items', mapObj.objects.items);
+
         unitTranslator.write(outputPath);
+        itemTranslator.write(outputPath);
+
+        //
+        // Transpile each trigger according to its language
+        //
+        mapObj.triggers.forEach((trigger) => {
+            // TODO: run the 'verify' function on the code first to validate syntax / logic
+            languages[trigger.type].transpiler(trigger.content, function(err, jassCode) {
+                if(err) {
+
+                }
+                else {
+                    fs.writeFileSync(
+                        Path.join(triggerPath, trigger.name + trigger.type),
+                        jassCode
+                    );
+                }
+            });
+        })
 
         return true;
     }
