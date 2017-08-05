@@ -2,7 +2,7 @@ const
     fs = require('fs-extra'),
     Path = require('path'),
     Url = require('url'),
-    {BrowserWindow} = require('electron');
+    {BrowserWindow, app} = require('electron');
 
 var Window = {
     openWindows: {}, // Keeps track of all open BrowserWindow's
@@ -15,7 +15,7 @@ var Window = {
         // The window.path is relative to the /views directory, but we are not
         var viewPath = fs.existsSync(window.path) ?
             window.path :
-            Path.resolve(__dirname, '..', 'views', window.path);
+            Path.resolve(app.getAppPath(), 'views', window.path);
 
         // If the requested view does not exist, exit
         if(!fs.existsSync(viewPath)) {
@@ -117,7 +117,7 @@ function loadDefaultInputWindows() {
         var inputName = 'input' + (type[0].toUpperCase()) + type.substr(1);
         Window.availableWindows[inputName] = {
             "name": inputName,
-            "path": "/input/" + type + ".html",
+            "path": Path.resolve(app.getAppPath(), "views/input/" + type + ".html"),
             "description": "",
             "width": 400,
             "height": 300,
