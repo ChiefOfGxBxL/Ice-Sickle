@@ -242,13 +242,15 @@
                 var events = {
                     onDblClick: function(e, item) {
                         var fieldType = e.target.getAttribute('data-type'),
+                            fieldEditorType = e.target.getAttribute('data-editortype'),
                             fieldId = e.target.getAttribute('data-fieldId'),
                             entryId = e.target.getAttribute('data-id');
 
                         requestUserInput(
-                            fieldType,
+                            fieldEditorType,
                             {
                                 type: fieldType,
+                                editorType: fieldEditorType,
                                 id: fieldId,
                                 tooltip: ObjectEditor.Fields[objectEditorDataName][fieldId].editorHelp,
                                 currentValue: item.value
@@ -268,6 +270,7 @@
                                     modification: {
                                         id: data.id,
                                         type: data.type,
+                                        editorType: data.editorType,
                                         value: data.value
                                     }
                                 });
@@ -313,7 +316,8 @@
                                 fieldId: fieldKey,
                                 isCustom: isCustomEntity,
                                 default: value || '',
-                                type: ObjectEditor.Fields[objectEditorDataName][fieldKey].type
+                                type: ObjectEditor.Fields[objectEditorDataName][fieldKey].type,
+                                editorType: ObjectEditor.Fields[objectEditorDataName][fieldKey].editorType
                             }
                         };
 
