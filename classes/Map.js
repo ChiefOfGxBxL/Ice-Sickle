@@ -254,10 +254,10 @@ var Map = {
         //
         // Translate object editor entities
         //
-        var unitTranslator = Translator.Objects('units', mapObj.objects.units),
-            itemTranslator = Translator.Objects('items', mapObj.objects.items);
-
+        var unitTranslator = new Translator.Objects('units', mapObj.objects.units);
         unitTranslator.write(outputPath);
+
+        var itemTranslator = new Translator.Objects('items', mapObj.objects.items);
         itemTranslator.write(outputPath);
 
         //
