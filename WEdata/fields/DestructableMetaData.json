@@ -18,6 +18,7 @@
 		"maxVal": "TTName",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Name",
 		"editorType": "string"
 	},
 	"bsuf": {
@@ -39,6 +40,7 @@
 		"maxVal": "TTName",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Editor Suffix",
 		"editorType": "string"
 	},
 	"bcat": {
@@ -60,6 +62,7 @@
 		"maxVal": "",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Category",
 		"editorType": "destructableCategory"
 	},
 	"btil": {
@@ -81,6 +84,7 @@
 		"maxVal": "TTDesc",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Tilesets",
 		"editorType": "tilesetList"
 	},
 	"btsp": {
@@ -102,6 +106,7 @@
 		"maxVal": "",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Has Tileset Specific Data",
 		"editorType": "bool"
 	},
 	"bfil": {
@@ -123,6 +128,7 @@
 		"maxVal": "TTDesc",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Model File",
 		"editorType": "model"
 	},
 	"blit": {
@@ -144,6 +150,7 @@
 		"maxVal": "",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Model File - Has Lightweight Model",
 		"editorType": "bool"
 	},
 	"bflo": {
@@ -165,6 +172,7 @@
 		"maxVal": "",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Fat Line of Sight",
 		"editorType": "bool"
 	},
 	"btxi": {
@@ -186,6 +194,7 @@
 		"maxVal": "1000",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Replaceable Texture ID",
 		"editorType": "int"
 	},
 	"btxf": {
@@ -207,6 +216,7 @@
 		"maxVal": "TTDesc",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Replaceable Texture File",
 		"editorType": "texture"
 	},
 	"buch": {
@@ -228,6 +238,7 @@
 		"maxVal": "",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Show Helper Object for Selection",
 		"editorType": "bool"
 	},
 	"bonc": {
@@ -249,6 +260,7 @@
 		"maxVal": "",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Placeable on Cliffs",
 		"editorType": "bool"
 	},
 	"bonw": {
@@ -270,6 +282,7 @@
 		"maxVal": "",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Placeable on Water",
 		"editorType": "bool"
 	},
 	"bcpd": {
@@ -291,6 +304,7 @@
 		"maxVal": "",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Show Dead Version in Palette",
 		"editorType": "bool"
 	},
 	"bwal": {
@@ -312,6 +326,7 @@
 		"maxVal": "",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Is Walkable",
 		"editorType": "bool"
 	},
 	"bclh": {
@@ -333,6 +348,7 @@
 		"maxVal": "50",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Cliff Height",
 		"editorType": "int"
 	},
 	"btar": {
@@ -354,6 +370,7 @@
 		"maxVal": "TTDesc",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Targeted As",
 		"editorType": "targetList"
 	},
 	"barm": {
@@ -375,6 +392,7 @@
 		"maxVal": "TTDesc",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Armor Type",
 		"editorType": "armorType"
 	},
 	"bvar": {
@@ -396,6 +414,7 @@
 		"maxVal": "10",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Model File - Variations",
 		"editorType": "int"
 	},
 	"bhps": {
@@ -417,6 +436,7 @@
 		"maxVal": "99999",
 		"forceNonNeg": "1",
 		"version": "1",
+        "editorName": "Hit Points",
 		"editorType": "unreal"
 	},
 	"boch": {
@@ -438,6 +458,7 @@
 		"maxVal": "99999",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Occlusion Height",
 		"editorType": "unreal"
 	},
 	"bflh": {
@@ -459,6 +480,7 @@
 		"maxVal": "99999",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Fly-Over Height",
 		"editorType": "unreal"
 	},
 	"bfxr": {
@@ -480,6 +502,7 @@
 		"maxVal": "360",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Fixed Rotation",
 		"editorType": "unreal"
 	},
 	"bsel": {
@@ -501,6 +524,7 @@
 		"maxVal": "99999",
 		"forceNonNeg": "1",
 		"version": "1",
+        "editorName": "Selection Size - Editor",
 		"editorType": "unreal"
 	},
 	"bmis": {
@@ -522,6 +546,7 @@
 		"maxVal": "10",
 		"forceNonNeg": "1",
 		"version": "1",
+        "editorName": "Minimum Scale",
 		"editorType": "unreal"
 	},
 	"bmas": {
@@ -543,6 +568,7 @@
 		"maxVal": "10",
 		"forceNonNeg": "1",
 		"version": "1",
+        "editorName": "Maximum Scale",
 		"editorType": "unreal"
 	},
 	"bcpr": {
@@ -564,6 +590,7 @@
 		"maxVal": "",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Can Place Random Scale",
 		"editorType": "bool"
 	},
 	"bmap": {
@@ -585,6 +612,7 @@
 		"maxVal": "99999",
 		"forceNonNeg": "1",
 		"version": "1",
+        "editorName": "Maximum Pitch Angle (degrees)",
 		"editorType": "unreal"
 	},
 	"bmar": {
@@ -606,6 +634,7 @@
 		"maxVal": "99999",
 		"forceNonNeg": "1",
 		"version": "1",
+        "editorName": "Max Roll Angle (degrees)",
 		"editorType": "unreal"
 	},
 	"brad": {
@@ -627,6 +656,7 @@
 		"maxVal": "99999",
 		"forceNonNeg": "1",
 		"version": "1",
+        "editorName": "Elevation Sample Radius",
 		"editorType": "unreal"
 	},
 	"bfra": {
@@ -648,6 +678,7 @@
 		"maxVal": "99999",
 		"forceNonNeg": "1",
 		"version": "1",
+        "editorName": "Fog Radius",
 		"editorType": "unreal"
 	},
 	"bfvi": {
@@ -669,6 +700,7 @@
 		"maxVal": "",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Fog Visibility",
 		"editorType": "bool"
 	},
 	"bptx": {
@@ -690,6 +722,7 @@
 		"maxVal": "TTDesc",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Pathing Texture",
 		"editorType": "pathingTexture"
 	},
 	"bptd": {
@@ -711,6 +744,7 @@
 		"maxVal": "TTDesc",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Pathing Texture (Dead)",
 		"editorType": "pathingTexture"
 	},
 	"bdsn": {
@@ -732,6 +766,7 @@
 		"maxVal": "TTDesc",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Death Sound",
 		"editorType": "soundLabel"
 	},
 	"bshd": {
@@ -753,6 +788,7 @@
 		"maxVal": "TTDesc",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Shadow",
 		"editorType": "shadowTexture"
 	},
 	"bsmm": {
@@ -774,6 +810,7 @@
 		"maxVal": "",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Minimap - Show",
 		"editorType": "bool"
 	},
 	"bmmr": {
@@ -795,6 +832,7 @@
 		"maxVal": "255",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Minimap Color 1 (Red)",
 		"editorType": "int"
 	},
 	"bmmg": {
@@ -816,6 +854,7 @@
 		"maxVal": "255",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Minimap Color 2 (Green)",
 		"editorType": "int"
 	},
 	"bmmb": {
@@ -837,6 +876,7 @@
 		"maxVal": "255",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Minimap Color 3 (Blue)",
 		"editorType": "int"
 	},
 	"bumm": {
@@ -858,6 +898,7 @@
 		"maxVal": "",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Minimap - Use Custom Color",
 		"editorType": "bool"
 	},
 	"bbut": {
@@ -879,6 +920,7 @@
 		"maxVal": "298",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Build Time",
 		"editorType": "int"
 	},
 	"bret": {
@@ -900,6 +942,7 @@
 		"maxVal": "10000",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Repair Time",
 		"editorType": "int"
 	},
 	"breg": {
@@ -921,6 +964,7 @@
 		"maxVal": "100000",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Repair Gold Cost",
 		"editorType": "int"
 	},
 	"brel": {
@@ -942,6 +986,7 @@
 		"maxVal": "100000",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Repair Lumber Cost",
 		"editorType": "int"
 	},
 	"busr": {
@@ -963,6 +1008,7 @@
 		"maxVal": "",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "On User-Specified List",
 		"editorType": "bool"
 	},
 	"bvcr": {
@@ -984,6 +1030,7 @@
 		"maxVal": "255",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Tinting Color 1 (Red)",
 		"editorType": "int"
 	},
 	"bvcg": {
@@ -1005,6 +1052,7 @@
 		"maxVal": "255",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Tinting Color 2 (Green)",
 		"editorType": "int"
 	},
 	"bvcb": {
@@ -1026,6 +1074,7 @@
 		"maxVal": "255",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Tinting Color 3 (Blue)",
 		"editorType": "int"
 	},
 	"bgse": {
@@ -1047,6 +1096,7 @@
 		"maxVal": "",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Selectable In Game",
 		"editorType": "bool"
 	},
 	"bgsc": {
@@ -1068,6 +1118,7 @@
 		"maxVal": "99999",
 		"forceNonNeg": "1",
 		"version": "1",
+        "editorName": "Selection Size - Game",
 		"editorType": "real"
 	},
 	"bgpm": {
@@ -1089,6 +1140,7 @@
 		"maxVal": "",
 		"forceNonNeg": "0",
 		"version": "1",
+        "editorName": "Model File - Portrait",
 		"editorType": "model"
 	}
 }
