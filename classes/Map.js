@@ -260,6 +260,9 @@ var Map = {
         var itemTranslator = new Translator.Objects('items', mapObj.objects.items);
         itemTranslator.write(outputPath);
 
+        var destTranslator = new Translator.Objects('destructables', mapObj.objects.destructables);
+        destTranslator.write(outputPath);
+
         //
         // Transpile each trigger according to its language
         //
