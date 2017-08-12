@@ -1,7 +1,8 @@
 var Path = require('path'),
     fs = require('fs-extra'),
     klaw = require('klaw-sync'),
-    Translator = require('wc3maptranslator');
+    Translator = require('wc3maptranslator'),
+    {app} = require('electron');
 
 function setNewMap(name) {
     Map.info = {
@@ -280,6 +281,16 @@ var Map = {
                 }
             });
         })
+
+        //
+        // Generate the commonJASS file
+        //
+        // Note: this is a temporary implementation. The code
+        // in this file will actually have to be generated
+        fs.copySync(
+            Path.join(app.getAppPath(), '/scripting/war3map.j'),
+            Path.join(triggerPath, 'war3map.jass')
+        );
 
         return true;
     }
