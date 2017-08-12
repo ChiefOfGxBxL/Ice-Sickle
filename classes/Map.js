@@ -289,7 +289,22 @@ var Map = {
         // in this file will actually have to be generated
         fs.copySync(
             Path.join(app.getAppPath(), '/scripting/war3map.j'),
-            Path.join(triggerPath, 'war3map.jass')
+            Path.join(triggerPath, '_map.jass') // TODO: reserve this as a trigger name
+        );
+
+        //
+        // Merge all the .jass files
+        //
+        const
+            JASS = require('../scripting/languages/JASS/index.js'),
+            triggerFragments = klaw(triggerPath).map((pathObj) => { return pathObj.path; });
+
+        JASS.merge(
+            // Array of file paths to each .jass file
+            triggerFragments,
+
+            // war3map.j file is placed in base .compile dir, not trigger fragment dir
+            Path.join(outputPath, 'war3map.j')
         );
 
         return true;
