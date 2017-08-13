@@ -1,74 +1,77 @@
 <p align='center'>
-  <b>Ice Sickle</b>
-  <i>(Alpha)</i>
-</p>
-<p align='center'>
+  <b>Ice Sickle</b><br/>
   Next-generation WC3 world editor built on Electron.<br/><br/>
+  <a href='https://github.com/ChiefOfGxBxL/Ice-Sickle/releases/latest'>Install latest version</a>
 </p>
 
-<b>Progress so far...</b><br/>
-<i>Note that Ice Sickle is still in development</i>
 <table>
   <tr>
-    <td><img src='https://user-images.githubusercontent.com/4079034/27198349-cee5f068-51df-11e7-9457-f1cf3467ee10.PNG' width='200' height='200'/></td>
-    <td><img src='https://user-images.githubusercontent.com/4079034/27198352-cef3f758-51df-11e7-871d-1805c681cbfa.PNG' width='200' height='200'/></td>
-    <td><img src='https://user-images.githubusercontent.com/4079034/27198351-ceec9472-51df-11e7-99d7-0ad96216407a.PNG' width='200' height='200'/></td>
-    <td><img src='https://user-images.githubusercontent.com/4079034/27198350-ceea71ec-51df-11e7-8abf-35b6185478ca.PNG' width='200' height='200'/></td>
+    <td><img src='https://user-images.githubusercontent.com/4079034/27198349-cee5f068-51df-11e7-9457-f1cf3467ee10.PNG' width='250' height='250'/></td>
+    <td><img src='https://user-images.githubusercontent.com/4079034/29254022-8a6123a4-8051-11e7-8e34-404ec6df9094.png' width='250' height='250'/></td>
+    <td><img src='https://user-images.githubusercontent.com/4079034/29254033-e9bce1d0-8051-11e7-9887-a6c323688d9d.png' width='250' height='250'/></td>
+    <td><img src='https://user-images.githubusercontent.com/4079034/27198350-ceea71ec-51df-11e7-8abf-35b6185478ca.PNG' width='250' height='250'/></td>
   </tr>
 </table>
   
 <hr/>
 <p align='center'>
+  <a href="#why"><strong>Why?</strong></a> &middot;
   <a href="#features"><strong>Features</strong></a> &middot;
-  <a href="#getting-started"><strong>Getting started</strong></a> &middot;
-  <a href="#developers"><strong>Developers</strong></a>
+  <a href="#install"><strong>Install</strong></a> &middot;
+  <a href="#milestones"><strong>Milestones</strong></a> &middot;
+  <a href="#contribute"><strong>Contribute</strong></a>
 </p>
 <hr/>
 
 <br/>
 
+### Why?
+WarCraft III continues to be a timeless game adored by many. And its editor, World Editor, has been a powerful tool. However, as the standards for what experience a map should deliver have increased, the editor is beginning to lack certain features. With no direct way to add functionality, some have resorted to injecting code into the program. This, though, is hacky and spotty. We need a new tool to give us enhanced map-making abilities, and that tool is Ice Sickle.
+
+Ice Sickle is the **next-generation World Editor** built on a modern framework, Electron. The overall **design goal is to allow the editor to be as moddable as possible through the plugin system**. With an event-driven model, **virtually any action can be listened to and responded to by plugins**, and the map may be modified using a typeless yet simple data format. We're unlocking the future of map editing with Ice Sickle, and we're happy to see you here!
+
+<br/>
+
 ### Features
-|     |     |      |
-|-----|-----|------|
-|![spinner](https://user-images.githubusercontent.com/4079034/27199646-c4d522ba-51e4-11e7-8317-e47c16574aa3.png)| Plugin API | Create and download plugins which extend the functionality of the editor!
-|![redx](https://user-images.githubusercontent.com/4079034/27198742-6f690f9c-51e1-11e7-8901-cd77b37de662.png)| Collaboration | Projects allows collaborators to remotely develop maps with ease, using source-code management tools like GitHub or Bitbucket to track changes
-|![redx](https://user-images.githubusercontent.com/4079034/27198742-6f690f9c-51e1-11e7-8901-cd77b37de662.png)| Resource manager | Drag and drop files into the import manager, or one-click import from the public repository of models, textures, etc.
-|![greencheck](https://user-images.githubusercontent.com/4079034/27198743-6f6c8f1e-51e1-11e7-9223-c4dbb2e776fb.png)| Auto updater | Ice Sickle automatically updates upon launch, keeping you up-to-date with the latest features
-|![redx](https://user-images.githubusercontent.com/4079034/27198742-6f690f9c-51e1-11e7-8901-cd77b37de662.png)| Multi-platform | Works on Windows, Mac, and Linux
-
-<div>
-  <img src='https://user-images.githubusercontent.com/4079034/27198743-6f6c8f1e-51e1-11e7-9223-c4dbb2e776fb.png'/> Completed
-  <img src='https://user-images.githubusercontent.com/4079034/27199646-c4d522ba-51e4-11e7-8317-e47c16574aa3.png'/> In development
-  <img src='https://user-images.githubusercontent.com/4079034/27198742-6f690f9c-51e1-11e7-8901-cd77b37de662.png'/> Not implemented
-</div>
+**Plugin API** - Create and install plugins which extend the functionality of the editor!  
+**Collaboration** - Collaborate remotely with ease, using source-code management tools like GitHub or Bitbucket  
+**Resource manager** - Drag & drop files into the import manager, or one-click download from Hive Workshop  
+**Auto updater** - Automatically installs updates when they are released, giving you the latest features  
+**Multi-platform** - Works on Windows, Mac, and Linux  
 
 <br/>
 
-### Getting started
-**I want to install this application!**
+### Install
  * Visit our [Releases page](https://github.com/ChiefOfGxBxL/Ice-Sickle/releases/latest) to download the latest version installer
- * If you already have the application installed, updates are automatically installed for you
-
-**I want to help develop**  
-Awesome! We welcome contributions from the WC3 community. There are many ways you can help us, so figure out what works for you! See the Developers section below for more details.
+ * If you already have the application installed, *updates are automatically installed for you*
 
 <br/>
 
-### Developers
-**Overview**
- * Code of conduct
- * Contribution guide
- * Issue tracker
- * Working on a feature or bug (assigning, milestones, etc)
+### Milestones
+Whenever possible, Ice Sickle will follow [Semantic Versioning](http://semver.org/). This may not be possible initially as the software is undergoing rapid development. Up until v1 is released, the versioning is not guaranteed to follow the Semantic Versioning guidelines.
+
+**v1.0** - All core functionality of original World Editor is implemented. Making a map in Ice Sickle is possible, from objects and triggers to imports and terrain, but may not be user-friendly. Essentially, v1.0 is a "copy" of the original editor and it marks the point from which future changes are really the improvements the WC3 modding community wishes to see in the program.
+
+**v2.0** - Major development and implementation of (1) plugin system, (2) scripting, and (3) resource manager. Trigger editor includes line numbering, code folding, syntax highlighting, and perhaps Intellisense. UI is greatly improved via [DHTMLX](https://dhtmlx.com/docs/products/dhtmlxSuite/) or a powerful CSS framework. Plugin manager eases the installation of plugins. *Stable API*.
+
+From here it is unclear what some version 3 would look like, since with a powerful plugin system most functionality should be able to be developed independently of the core. Subsequent improvements to v2 will occur to extend the plugin API.
+
+ > We are currently sub-v1, meaning that core features from the original World Editor are still being implemented. The toughest remaining parts at this part are the WebGL World Viewer, and finishing up the Object Editor.
+
+<br/>
+
+### Contribute
+**I want to help develop**  
+Awesome! We welcome contributions from the WC3 community. There are many ways you can help us, so figure out what works for you!
  
 **How can I help?**
- * Coding - If you're good with JavaScript and web development, we build Ice Sickle on top of Electron. Follow the instructions below to get the source code and get to work!
- * Plugins - You can add new functionality to the editor without modifying the core code. This is done through our plugin API.
+ * Coding - If you're good with JavaScript and web development, we build Ice Sickle on top of Electron. You can work on new windows and menus, adding and improving core functionality.
+ * Plugins - Develop features and tools to help map developers improve their workflow and build awesome maps!
  * Identify and squash bugs - Find something that's broken or could use improvement? Submit an issue.
- * Documentation - A very important part of developing this project, our documentation covers concepts core to the repository, but also includes tutorials and walkthroughs for using the editor and making plugins. 
- * Art / design - Have artistic ability? We could use your help creating awesome banner images to help brand the app, and our app needs an icon!
+ * Documentation - Our documentation covers concepts core to the repository, but also includes tutorials and walkthroughs for using the editor and making plugins.
+ * Other - Got artistic ability? Good at designing things? Improving the UI and branding will be a big help!
  
 **Resources**
- * [Gitbook](https://chiefofgxbxl.gitbooks.io/ice-sickle/) contains key documentation about our code, classes, object formats, and plugin API
+ * [Gitbook](https://chiefofgxbxl.gitbooks.io/ice-sickle/) contains key documentation about our code, classes, object formats, and plugin API (Note: this Gitbook will be migrated to our GitHub Wiki for better organization)
 
 <br/>
