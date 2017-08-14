@@ -1,7 +1,7 @@
 <p align='center'>
   <b>Ice Sickle</b><br/>
-  Next-generation WC3 world editor built on Electron.<br/><br/>
-  <a href='https://github.com/ChiefOfGxBxL/Ice-Sickle/releases/latest'>Install latest version</a>
+  Next-generation WC3 world editor built on Electron.<br/>
+  <a href='https://github.com/ChiefOfGxBxL/Ice-Sickle/releases/latest'><img src='https://img.shields.io/badge/Install-Latest%20version-brightgreen.svg?style=flat-square'/></a>
 </p>
 
 <table>
