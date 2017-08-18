@@ -136,6 +136,7 @@ function loadWindowsFromDir() {
 
     windowManifests.forEach((manifestPath) => {
         var manifest = fs.readJsonSync(Path.resolve(windowsPath, manifestPath));
+        manifest.icon = Path.resolve(app.getAppPath(), 'build', 'icon.ico')
         Window.availableWindows[manifest.name] = manifest;
     });
 }
