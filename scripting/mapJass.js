@@ -148,7 +148,11 @@ function generatePlayers() {
     ].join('\r\n');
 }
 
-function generateMain() {
+function generateMain(initTriggerArray) {
+    var initTriggerCalls = initTriggerArray.map((trigName) => {
+        return '    call ' + trigName + '(  )';
+    });
+
     return [
         '//***************************************************************************',
         '//*',
@@ -169,6 +173,9 @@ function generateMain() {
         '    call InitGlobals(  )',
         '    call InitCustomTriggers(  )',
         '    call RunInitializationTriggers(  )',
+        '',
+        '    // User-defined init triggers',
+        ...initTriggerCalls,
         '',
         'endfunction'
     ].join('\r\n');
@@ -208,7 +215,7 @@ module.exports = function(mapObj, declarations) {
     output += generateUnitCreationBlock() + NL + NL;
     output += generateTriggerBlock(declarations.functions) + NL + NL;
     output += generatePlayers() + NL + NL;
-    output += generateMain() + NL + NL;
+    output += generateMain(declarations.initFunctions) + NL + NL;
     output += generateConfig() + NL + NL;
 
     return output;
