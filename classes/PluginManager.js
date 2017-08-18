@@ -11,9 +11,10 @@ var PluginManager = {
         var pluginFolders = fs.readdirSync( Path.resolve(app.getAppPath() + '/plugins') )
 
         pluginFolders.forEach((pluginFolder) => {
-            var pluginPath = Path.resolve('plugins', pluginFolder);
+            var pluginPath = Path.resolve('plugins', pluginFolder),
+                stat = fs.statSync(pluginPath);
 
-            if(fs.statSync(pluginPath).isDirectory()) {
+            if(stat && stat.isDirectory()) {
                 loadPlugin(pluginPath, mod, appEvents);
             }
         });
@@ -32,6 +33,7 @@ function loadPlugin(dir, mod) {
 
     // Execute the plugin's initial script
     PluginManager.loadedPlugins[pluginManifest.name].module()
+    console.log('Plugin:', pluginManifest.name, 'loaded');
 }
 
 module.exports = PluginManager;
