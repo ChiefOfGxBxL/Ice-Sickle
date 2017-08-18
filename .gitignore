@@ -8,3 +8,4 @@ plugins
 
 # Builds and distributions
 dist
+.build
