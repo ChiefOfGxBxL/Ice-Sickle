@@ -269,13 +269,13 @@ var Map = {
         //
         mapObj.triggers.forEach((trigger) => {
             // TODO: run the 'verify' function on the code first to validate syntax / logic
-            languages[trigger.type].transpiler(trigger.content, function(err, jassCode) {
+            languages[trigger.language].transpiler(trigger.content, function(err, jassCode) {
                 if(err) {
 
                 }
                 else {
                     fs.writeFileSync(
-                        Path.join(triggerPath, trigger.name + trigger.type),
+                        Path.join(triggerPath, trigger.name + trigger.language),
                         jassCode
                     );
                 }
