@@ -182,7 +182,7 @@ var Map = {
           mapObj.triggers.push({
             name: fileName[0],
             path: triggerFile.path,
-            type: '.' + fileName[1],
+            language: '.' + fileName[1],
             content: fs.readFileSync(triggerFile.path, {encoding: 'utf8'}).replace('\r\n', '\n')
           });
         });

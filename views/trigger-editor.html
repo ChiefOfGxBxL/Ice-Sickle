@@ -77,12 +77,12 @@
           triggers.forEach((trigger) => {
             // Populate list view of triggers
             triggerListViewData.push({
-              label: trigger.name + ' (' + trigger.type + ')',
+              label: trigger.name + ' (' + trigger.language + ')',
               value: '',
               data: {
                 name: trigger.name,
                 path: trigger.path,
-                type: trigger.type
+                language: trigger.language
               }
             })
           })
@@ -105,12 +105,12 @@
           selectTriggerByName(trigger.name);
 
           triggerListView.Add({
-            label: trigger.name + ' (' + trigger.type + ')',
+            label: trigger.name + ' (' + trigger.language + ')',
             value: '',
             data: {
               name: trigger.name,
               path: trigger.path,
-              type: trigger.type
+              language: trigger.language
             }
           })
         })
