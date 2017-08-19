@@ -6,6 +6,8 @@
 
     <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="../assets/css/mini-default.min.css">
+    <link rel="stylesheet" href='../assets/css/ribbon.css'>
+
     <style>
       select,textarea {width: 100%;min-height:400px;}
       #triggerText {font-family: monospace;font-size: 0.8em;}
@@ -118,8 +120,10 @@
     </script>
   </head>
   <body>
-    <div>
-      <a href='#' onclick='openNewTriggerWindow()' class='button small'>New Trigger</a>
+    <div class='ribbon'>
+        <span class='group'>
+            <a onclick='openNewTriggerWindow()'><img src='../assets/img/ui/new-code.png' title='New Trigger' /></a>
+        </span>
     </div>
     <div id='triggerLeft' style='float:left;width:20%;margin-right:10px;'>
 

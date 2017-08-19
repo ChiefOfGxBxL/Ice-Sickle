@@ -1,0 +1,4 @@
+.ribbon { background-color:#ddd; padding: 4px 8px; padding-bottom: 0; }
+.ribbon .group { display: inline-block; border-right: 1px SOLID #bbb; padding-right: 6px; height: 34px; }
+.ribbon img { width: 32px; height: 32px; }
+.ribbon a {  }
