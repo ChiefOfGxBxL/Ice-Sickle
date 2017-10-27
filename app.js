@@ -531,6 +531,13 @@ app.on('ready', () => {
         }) : []
     })
 
+    // DEBUG:
+    // do some MPQ testing
+    var mpq = require('./mpqedit/MPQEditorQueue')();
+    mpq.New('newMap.w3x');
+    mpq.Add('newMap.w3x', './settings.json', 'settings.json');
+    mpq.Execute();
+
     // The hbs:// protocol is used to render handlebars files
     // See http://stackoverflow.com/a/41368514 for more details
     protocol.registerBufferProtocol('hbs', function (req, callback) {
