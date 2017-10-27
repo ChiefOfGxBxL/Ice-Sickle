@@ -9,3 +9,5 @@ plugins
 # Builds and distributions
 dist
 .build
+
+!mpqedit/MPQEditor.exe
