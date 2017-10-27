@@ -16,9 +16,9 @@
                 name = document.getElementById('customObjName').value,
                 base = document.getElementById('customObjBase').value;
 
-            ipcRenderer.send('request-id-counter', { type: objType });
-            ipcRenderer.on('response-id-counter', function(_, customId) {
-                ipcRenderer.send('new-custom-object', {
+            ipcRenderer.send('requestIdCounter', { type: objType });
+            ipcRenderer.on('responseIdCounter', function(_, customId) {
+                ipcRenderer.send('newCustomObject', {
                     type: objType,
                     name: name,
                     base: base,

@@ -79,7 +79,7 @@ function OpenProjectWindow() {
     }, function(projects) {
         if(projects) {
             // Load and store the Map here in the app
-            EventHandlers['load-project'](null, projects[0]);
+            EventHandlers['loadProject'](null, projects[0]);
         }
     });
 }
@@ -118,7 +118,7 @@ var template = [
         sublabel: 'Saves the current project',
         role: 'save',
         click () {
-            EventHandlers['request-save-project']();
+            EventHandlers['requestSaveProject']();
         }
       },
       { type: 'separator' },
@@ -204,7 +204,7 @@ var template = [
               label: 'Compile',
               sublabel: 'Generates the .w3x file',
               click () {
-                  EventHandlers['request-compile-project']();
+                  EventHandlers['requestCompileProject']();
               }
           }
       ]
@@ -279,35 +279,35 @@ function applyPartialObjectUpdate(obj, updates) {
 }
 
 const EventHandlers = {
-    'create-new-project': function(event, data) {
+    'createNewProject': function(event, data) {
         mapObj = Map.Create(data.name);
-        applicationBroadcastEvent('project-created', mapObj);
+        applicationBroadcastEvent('projectCreated', mapObj);
         Window.Close('welcome'); // In case this window is still open, close it
     },
-    'request-open-project': function() {
+    'requestOpenProject': function() {
         OpenProjectWindow();
     },
-    'request-save-project': function() {
+    'requestSaveProject': function() {
         Map.Save(mapObj);
-        applicationBroadcastEvent('project-saved', mapObj);
+        applicationBroadcastEvent('projectSaved', mapObj);
     },
-    'request-compile-project': function() {
+    'requestCompileProject': function() {
         Window.Open('compile');
 
         setTimeout(() => {
             var result = Map.Compile(mapObj.__Dir, mapObj, scriptingLanguages, false);
             console.log('Map compiled:', result);
 
-            applicationBroadcastEvent('map-compiled', result);
+            applicationBroadcastEvent('mapCompiled', result);
         }, 2000)
 
     },
-    'request-open-project-map': function(event, dir) {
+    'requestOpenProjectMap': function(event, dir) {
         mapObj = Map.Load(dir);
     },
-    'load-project': function(event, path) {
+    'loadProject': function(event, path) {
         if(LoadProject(path)) {
-            applicationBroadcastEvent('project-loaded', mapObj);
+            applicationBroadcastEvent('projectLoaded', mapObj);
 
             // Store the project in recently-loaded settings
             var recentMaps = Settings.GetGlobal('recentMaps');
@@ -318,11 +318,11 @@ const EventHandlers = {
             }
         }
     },
-    'request-project': function(event, data) {
+    'requestProject': function(event, data) {
         // Send the Map back to the requesting window
-        event.sender.webContents.send('response-project', mapObj);
+        event.sender.webContents.send('responseProject', mapObj);
     },
-    'request-user-input': function(event, data) {
+    'requestUserInput': function(event, data) {
         var inputWindowName = 'input' + data.type[0].toUpperCase() + data.type.substr(1); // e.g. inputInt
 
         if(Window.availableWindows[inputWindowName]) {
@@ -332,10 +332,10 @@ const EventHandlers = {
             Window.Open('inputUnknown', data.context);
         }
     },
-    'response-user-input': function(event, data) {
-        applicationBroadcastEvent('user-input-provided', data);
+    'responseUserInput': function(event, data) {
+        applicationBroadcastEvent('userInputProvided', data);
     },
-    'patch-project-object': function(event, data) {
+    'patchProjectObject': function(event, data) {
         // TODO: clean this mess up
         mapObj.objects[data.specType] = mapObj.objects[data.specType] || {};
         mapObj.objects[data.specType][data.table] = mapObj.objects[data.specType][data.table] || {};
@@ -354,12 +354,12 @@ const EventHandlers = {
             mapObj.objects[data.specType][data.table][data.entryId].push(data.modification);
         }
     },
-    'request-open-window': function(event, data) {
+    'requestOpenWindow': function(event, data) {
         if(!data || !data.windowName) return false;
 
         Window.Open(data.windowName, data.template);
     },
-    'new-custom-object': function(event, data) {
+    'newCustomObject': function(event, data) {
         // Add new object to mapObj, with custom name specified
         var mapObjName = data.type + 's'; // e.g. units, doodads, etc.
         mapObj.objects[mapObjName].custom[data.id] = [{
@@ -369,15 +369,15 @@ const EventHandlers = {
         }];
 
         // Send event to all windows
-        applicationBroadcastEvent('new-custom-object', data);
+        applicationBroadcastEvent('newCustomObject', data);
     },
-    'request-id-counter': function(event, data) {
-        event.sender.webContents.send('response-id-counter', getNextIdCounter(data.type));
+    'requestIdCounter': function(event, data) {
+        event.sender.webContents.send('responseIdCounter', getNextIdCounter(data.type));
     },
-    'request-triggers': function(event, data) {
-        event.sender.webContents.send('response-triggers', mapObj.triggers);
+    'requestTriggers': function(event, data) {
+        event.sender.webContents.send('responseTriggers', mapObj.triggers);
     },
-    'update-trigger': function(event, data) {
+    'updateTrigger': function(event, data) {
         // Update a specified trigger's contents
         var triggerToUpdate = mapObj.triggers.find((t) => {
           return t.name === data.name;
@@ -387,7 +387,7 @@ const EventHandlers = {
           triggerToUpdate.content = data.content;
         }
     },
-    'new-trigger': function(event, data) {
+    'newTrigger': function(event, data) {
         // TODO: check for conflicting trigger paths
         var newTriggerFilePath = path.resolve(mapObj.__Dir, 'triggers/', (data.name + '.' + data.language.substr(1))),
             newTrigger = {
@@ -403,19 +403,19 @@ const EventHandlers = {
         // Create a new trigger in the map
         mapObj.triggers.push(newTrigger)
 
-        applicationBroadcastEvent('new-trigger', newTrigger);
+        applicationBroadcastEvent('newTrigger', newTrigger);
     },
-    'request-scripting-languages': function(event, data) {
-        event.sender.webContents.send('response-scripting-languages', scriptingLanguages);
+    'requestScriptingLanguages': function(event, data) {
+        event.sender.webContents.send('responseScriptingLanguages', scriptingLanguages);
     },
-    'update-map-info': function(event, newInfo) {
+    'updateMapInfo': function(event, newInfo) {
         // Applies a recursive, partial update to mapObj.info
         applyPartialObjectUpdate(mapObj.info, newInfo);
     },
-    'request-import-list': function(event, data) {
-        event.sender.webContents.send('response-import-list', mapObj.imports);
+    'requestImportList': function(event, data) {
+        event.sender.webContents.send('responseImportList', mapObj.imports);
     },
-    'import-file': function(event, file) {
+    'importFile': function(event, file) {
         // First we copy the file into the project's /import folder
         const destinationPath = path.resolve(mapObj.__Dir, 'imports', file.name);
         fs.copySync(file.path, destinationPath, { overwrite: true });
@@ -430,7 +430,7 @@ const EventHandlers = {
             type: file.type
         });
     },
-    'update-import': function(event, file) {
+    'updateImport': function(event, file) {
         var importToUpdate = mapObj.imports.find(
             (imp) => { return imp.name == file.name; }
         );
@@ -439,17 +439,17 @@ const EventHandlers = {
             // This is the only attribute that can be changed
             // since size, name, and type are not modified by user
             if(file.fullPath) importToUpdate.fullPath = file.fullPath;
-            applicationBroadcastEvent('import-updated', importToUpdate);
+            applicationBroadcastEvent('importUpdated', importToUpdate);
         }
     },
-    'register-window': function(event, manifest) {
+    'registerWindow': function(event, manifest) {
         // TODO: is the window protected??
         Window.availableWindows[manifest.name] = manifest;
     },
-    'set-global-setting': function(event, obj) {
+    'setGlobalSetting': function(event, obj) {
         Settings.SetGlobal(obj.name, obj.data);
     },
-    'set-local-setting': function(event, obj) {
+    'setLocalSetting': function(event, obj) {
         var pluginSettings = Settings.GetLocal(obj.plugin) || {};
         pluginSettings[obj.name] = obj.data;
 
@@ -462,18 +462,18 @@ const EventHandlers = {
 // for enhanced Taskbar utility. See the `app` documentation for more details
 
 // Auto-Updates
-autoUpdater.on('checking-for-update',   () => { applicationBroadcastEvent('checking-for-update'); })
+autoUpdater.on('checking-for-update',   () => { applicationBroadcastEvent('checkingForUpdate'); })
 autoUpdater.on('update-available',      (ev, info) => {
     // Open check-for-updates window
     Window.Open('update');
 
-    applicationBroadcastEvent('update-available', info);
+    applicationBroadcastEvent('updateAvailable', info);
 })
-autoUpdater.on('update-not-available',  (ev, info) => { applicationBroadcastEvent('update-not-available', info); })
-autoUpdater.on('error',                 (ev, err) => { applicationBroadcastEvent('update-error', err); })
-autoUpdater.on('download-progress',     (ev, progressObj) => { applicationBroadcastEvent('download-progress', progressObj ); })
+autoUpdater.on('update-not-available',  (ev, info) => { applicationBroadcastEvent('updateNotAvailable', info); })
+autoUpdater.on('error',                 (ev, err) => { applicationBroadcastEvent('updateError', err); })
+autoUpdater.on('download-progress',     (ev, progressObj) => { applicationBroadcastEvent('downloadProgress', progressObj ); })
 autoUpdater.on('update-downloaded',     (ev, info) => {
-  applicationBroadcastEvent('update-downloaded', info);
+  applicationBroadcastEvent('updateDownloaded', info);
 
    // Wait 4 seconds, then quit and install
   setTimeout(function() {

@@ -19,7 +19,7 @@
     </script>
     <script>
         function importedItemDblClick(e, item) {
-            ipcRenderer.send('request-open-window', {
+            ipcRenderer.send('requestOpenWindow', {
                 windowName: 'editImport',
                 template: item
             })
@@ -32,8 +32,8 @@
             importListView.HTMLElement.style.height = window.innerHeight - 150 + 'px';
 
             // List all of our imports here
-            ipcRenderer.send('request-import-list');
-            ipcRenderer.on('response-import-list', (event, imports) => {
+            ipcRenderer.send('requestImportList');
+            ipcRenderer.on('responseImportList', (event, imports) => {
                 // Create a row in the table for each import
                 imports.forEach((importItem) => {
                     importListView.Add({
@@ -46,7 +46,7 @@
             });
 
             // Respond to updated imports
-            ipcRenderer.on('import-updated', (_, importItem) => {
+            ipcRenderer.on('importUpdated', (_, importItem) => {
                 importListView.UpdateItem(importItem.name, importItem.fullPath);
                 importListView.Refresh();
             })
@@ -68,7 +68,7 @@
             e.preventDefault()
 
             for (let f of e.dataTransfer.files) {
-              ipcRenderer.send('import-file', {
+              ipcRenderer.send('importFile', {
                   name: f.name,
                   fullPath: 'war3mapImported\\' + f.name,
                   path: f.path,

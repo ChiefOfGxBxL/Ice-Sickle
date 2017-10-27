@@ -40,21 +40,21 @@
     <script>
         const {ipcRenderer} = require('electron');
 
-        ipcRenderer.on('project-loaded', () => {
+        ipcRenderer.on('projectLoaded', () => {
             // We've loaded a project so we can close the Getting Started menu
             window.close();
         });
 
         function createNewProject() {
-            ipcRenderer.send('request-open-window', { windowName: 'newProject' });
+            ipcRenderer.send('requestOpenWindow', { windowName: 'newProject' });
         }
 
         function openProject() {
-            ipcRenderer.send('request-open-project', {});
+            ipcRenderer.send('requestOpenProject', {});
         }
 
         function loadProject(path) {
-            ipcRenderer.send('load-project', path);
+            ipcRenderer.send('loadProject', path);
         }
     </script>
   </head>

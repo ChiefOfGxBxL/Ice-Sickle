@@ -22,7 +22,7 @@
             var userDataInputElem = document.getElementById('userData'),
                 userInputType = '' || 'string';
 
-            ipcRenderer.send('response-user-input', {
+            ipcRenderer.send('responseUserInput', {
                 type: userInputType,
                 value: userDataInputElem.value // TODO: this needs to be improved to support several data formats
             });

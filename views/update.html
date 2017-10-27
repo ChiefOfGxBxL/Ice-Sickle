@@ -20,34 +20,34 @@
     <script>
         var {ipcRenderer} = require('electron');
 
-        // ipcRenderer.on('checking-for-update', () => {
+        // ipcRenderer.on('checkingForUpdate', () => {
         //     document.getElementById('checking').style.display = 'block';
         // })
 
-        // ipcRenderer.on('update-available', () => {
+        // ipcRenderer.on('updateAvailable', () => {
         //     // document.getElementById('checking').style.display = 'none';
         //     document.getElementById('updating').style.display = 'block';
         // })
 
-        // ipcRenderer.on('update-not-available', () => {
+        // ipcRenderer.on('updateNotAvailable', () => {
         //     // No updates are available, so close this window
         //     window.close();
         // })
 
-        ipcRenderer.on('download-progress', (ev, progressObj) => {
+        ipcRenderer.on('downloadProgress', (ev, progressObj) => {
             if(progressObj && progressObj.percent) {
                 document.getElementById('download-progress').value = progressObj.percent * 10; // mini.css requires progress to be out of 1000, when here it is only out of 100
             }
         })
 
-        ipcRenderer.on('update-downloaded', () => {
+        ipcRenderer.on('updateDownloaded', () => {
             // Restart application
             // Note that app.js is also listening and is responsible for restarting
             document.getElementById('download-text').innerText = 'Download complete!';
             document.getElementById('restarting').style.display = 'block';
         })
 
-        ipcRenderer.on('update-error', () => {
+        ipcRenderer.on('updateError', () => {
             // TODO: notify user of error
             window.close(); // For now, just close the window
         })

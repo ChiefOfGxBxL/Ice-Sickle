@@ -18,8 +18,8 @@
             document.getElementById('languageIcon').src = languageIcon;
         }
 
-        ipcRenderer.send('request-scripting-languages');
-        ipcRenderer.on('response-scripting-languages', (_, languages) => {
+        ipcRenderer.send('requestScriptingLanguages');
+        ipcRenderer.on('responseScriptingLanguages', (_, languages) => {
             Object.keys(languages).forEach((languageExt) => {
 
                 var language = languages[languageExt],
@@ -47,7 +47,7 @@
             var name = document.getElementById('triggerName').value,
                 language = document.getElementById('triggerLanguage').value;
 
-            ipcRenderer.send('new-trigger', {
+            ipcRenderer.send('newTrigger', {
               name: name,
               language: language
             });

@@ -12,7 +12,7 @@
         function submitUserDataForm() {
             var {ipcRenderer} = require('electron');
 
-            ipcRenderer.send('response-user-input', {
+            ipcRenderer.send('responseUserInput', {
                 id: '{{id}}',
                 entryId: '{{entryId}}',
                 type: 'int',

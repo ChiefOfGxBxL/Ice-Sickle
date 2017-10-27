@@ -36,7 +36,7 @@
 
         const {ipcRenderer} = require('electron');
 
-        ipcRenderer.on('map-compiled', (_, result) => {
+        ipcRenderer.on('mapCompiled', (_, result) => {
             donut.classList.add('hidden');
 
             if(result === true) {

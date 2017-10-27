@@ -29,7 +29,7 @@
             triggers = [];
 
         function openNewTriggerWindow() {
-          ipcRenderer.send('request-open-window', { windowName: 'newTrigger' });
+          ipcRenderer.send('requestOpenWindow', { windowName: 'newTrigger' });
         }
 
         function selectTriggerByName(name) {
@@ -64,7 +64,7 @@
             selectedTrigger.content = e.target.value;
 
             // Send updated trigger content to app.js
-            ipcRenderer.send('update-trigger', {
+            ipcRenderer.send('updateTrigger', {
               name: selectedTrigger.name,
               content: e.target.value
             })
@@ -72,8 +72,8 @@
         })
 
         // Read all triggers in the map
-        ipcRenderer.send('request-triggers');
-        ipcRenderer.on('response-triggers', (_, _triggers) => {
+        ipcRenderer.send('requestTriggers');
+        ipcRenderer.on('responseTriggers', (_, _triggers) => {
           triggers = _triggers;
 
           triggers.forEach((trigger) => {
@@ -101,7 +101,7 @@
         });
 
         // Handle new triggers being created
-        ipcRenderer.on('new-trigger', (_, trigger) => {
+        ipcRenderer.on('newTrigger', (_, trigger) => {
           triggers.push(trigger);
 
           selectTriggerByName(trigger.name);

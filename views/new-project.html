@@ -17,7 +17,7 @@
         function createNewMap() {
             var projectName = document.getElementById('name').value
 
-            ipcRenderer.send('create-new-project', {
+            ipcRenderer.send('createNewProject', {
                 name: projectName
                 // author: document.getElementById('author').value,
                 // description: document.getElementById('description').value

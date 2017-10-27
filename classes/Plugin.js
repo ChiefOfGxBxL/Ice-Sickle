@@ -28,18 +28,18 @@ module.exports = function(pluginName) {
 
                 // Now we have that manifest is a JSON object
                 manifest.path = Path.resolve(pluginPath, manifest.path);
-                app.Events['register-window'](null, manifest);
+                app.Events['registerWindow'](null, manifest);
             }
         },
         settings: {
             setGlobal: function(name, data) {
-                app.Events['set-global-setting'](null, {
+                app.Events['setGlobalSetting'](null, {
                     name: name,
                     data: data
                 });
             },
             setLocal: function(name, data) {
-                app.Events['set-local-setting'](null, {
+                app.Events['setLocalSetting'](null, {
                     plugin: pluginName,
                     name: name,
                     data: data

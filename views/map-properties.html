@@ -65,7 +65,7 @@
                 water: document.getElementById('waterTintingColor').value // TODO: triplet array RGB
             };
 
-            ipcRenderer.send('update-map-info', updatedInfo);
+            ipcRenderer.send('updateMapInfo', updatedInfo);
 
             window.close();
         }
