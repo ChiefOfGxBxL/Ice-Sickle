@@ -4,6 +4,31 @@ var Path = require('path'),
     Translator = require('wc3maptranslator'),
     {app} = require('electron');
 
+function generateEmptyMapTiles(width, height) {
+    var mapTiles = [];
+
+    for(var i = 0; i < height; i++) {
+        var tileRow = [];
+
+        for(var j = 0; j < width; j++) {
+            // Create a single tile and add it to row
+            tileRow.push([
+                8192, // height
+                6000, // water height
+                0, // default flags
+                Math.floor(Math.random()*6), // tile (index of tilepalette array)
+                0, // texture
+                0, // cliff tile
+                Math.random() < 0.05 ? (Math.random() < 0.02 ? 2 : 1) : 0 // layer
+            ])
+        }
+
+        mapTiles.push(tileRow);
+    }
+
+    return mapTiles;
+}
+
 function setNewMap(name) {
     Map.info = {
       saves: 0,
@@ -14,26 +39,26 @@ function setNewMap(name) {
         description: 'Just Another WarCraft III Map',
         recommendedPlayers: 'Any',
         playableArea: {
-          width: 0,
-          height: 0
+          width: 52,
+          height: 52
         },
         flags: {
           hideMinimapInPreview: false,
           modifyAllyPriorities: false,
           isMeleeMap: false,
-          maskedPartiallyVisible: false,
+          maskedPartiallyVisible: true,
           fixedPlayerSetting: false,
           useCustomForces: false,
           useCustomTechtree: false,
           useCustomAbilities: false,
           useCustomUpgrades: false,
-          waterWavesOnCliffShores: false,
-          waterWavesOnRollingShores: false
+          waterWavesOnCliffShores: true,
+          waterWavesOnRollingShores: true
         },
         mainTileType: 'L', // char: tileset id
       },
       loadingScreen: {
-        background: 0,
+        background: -1,
         path: '',
         text: '',
         title: '',
@@ -47,23 +72,47 @@ function setNewMap(name) {
       },
       fog: {
         type: 0,
-        startHeight: 3000.00,
-        endHeight: 5000.00,
-        density: 5,
+        startHeight: 3000,
+        endHeight: 5000,
+        density: 0.5,
         color: [0, 0, 0]
       },
-      globalWeather: '0000', // char[4]
+      globalWeather: 'NONE',
       customSoundEnvironment: '', // string
       customLightEnv: '', // char - tileset id
       water: [0, 0, 0],
       camera: {
-        bounds: [0, 0, 0, 0, 0, 0, 0, 0],
-        complements: [0, 0, 0, 0, 0, 0, 0, 0]
-      }
+        bounds: [-2816, -3328, 2816, 2816, -2816, 2816, 2816, -3328],
+        complements: [6, 6, 4, 8]
+      },
+      players: [{
+          playerNum: 0,
+          name: 'Player 1',
+          type: 1,
+          race: 1,
+          startingPos: { x: 2368, y: 256 }
+      }],
+      forces: [{
+          name: 'Force 1',
+          flags: {
+              allied: false,
+              alliedVictory: false,
+              shareVision: false,
+              shareUnitControl: false,
+              shareAdvUnitControl: false
+          }
+      }]
     };
     Map.units = [];
     Map.doodads = [];
-    Map.terrain = {};
+    Map.terrain = {
+        tileset: 'L',
+        customtileset: false,
+        tilepalette: ['Ldrt', 'Ldro', 'Ldrg', 'Lrok', 'Lgrs', 'Lgrd'],
+        clifftilepalette: ['CLdi', 'CLgr'],
+        map: { width: 64, height: 64 },
+        tiles: generateEmptyMapTiles(64, 64)
+    };
     Map.regions = [];
     Map.cameras = [];
     Map.sounds = [];
@@ -255,6 +304,15 @@ var Map = {
         fs.emptyDirSync(triggerPath);
 
         //
+        // Translate main map files
+        //
+        var infoTranslator = new Translator.Info(mapObj.info);
+        infoTranslator.write(outputPath);
+
+        var terrainTranslator = new Translator.Terrain(mapObj.terrain);
+        terrainTranslator.write(outputPath);
+
+        //
         // Translate object editor entities
         //
         var unitTranslator = new Translator.Objects('units', mapObj.objects.units);
@@ -307,10 +365,17 @@ var Map = {
         //
         var mpq = require('../mpqedit/MPQEditorQueue')(w3xPath);
         mpq.New();
+
+        // Primary map files
         mpq.Add(Path.join(outputPath, 'war3map.j'),     'war3map.j');
+        mpq.Add(Path.join(outputPath, 'war3map.w3i'), 'war3map.w3i');
+        mpq.Add(Path.join(outputPath, 'war3map.w3e'), 'war3map.w3e');
+
+        // Object editor files
         mpq.Add(Path.join(outputPath, 'war3map.w3b'), 'war3map.w3b');
         mpq.Add(Path.join(outputPath, 'war3map.w3t'), 'war3map.w3t');
         mpq.Add(Path.join(outputPath, 'war3map.w3u'), 'war3map.w3u');
+
         mpq.Flush();
         mpq.Execute();
 
