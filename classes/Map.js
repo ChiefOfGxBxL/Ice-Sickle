@@ -248,7 +248,9 @@ var Map = {
         // Setup: start with a fresh .compile folder in the baseDir
         //
         var outputPath = Path.join(baseDir, '.output');
-            triggerPath = Path.join(baseDir, '.output', 'triggers');
+            triggerPath = Path.join(baseDir, '.output', 'triggers'),
+            w3xPath = Path.join(outputPath, 'map.w3x');
+
         fs.emptyDirSync(outputPath); // ensures empty .output, and ensures this folder exists
         fs.emptyDirSync(triggerPath);
 
@@ -299,6 +301,18 @@ var Map = {
             Path.join(outputPath, 'war3map.j'),
             mapJass(mapObj, declarations)
         );
+
+        //
+        // Create and populate the .w3x archive
+        //
+        var mpq = require('../mpqedit/MPQEditorQueue')(w3xPath);
+        mpq.New();
+        mpq.Add(Path.join(outputPath, 'war3map.j'),     'war3map.j');
+        mpq.Add(Path.join(outputPath, 'war3map.w3b'), 'war3map.w3b');
+        mpq.Add(Path.join(outputPath, 'war3map.w3t'), 'war3map.w3t');
+        mpq.Add(Path.join(outputPath, 'war3map.w3u'), 'war3map.w3u');
+        mpq.Flush();
+        mpq.Execute();
 
         return true;
     }
