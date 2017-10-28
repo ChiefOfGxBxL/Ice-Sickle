@@ -13,24 +13,26 @@ var MPQEditorExePath = Path.join(__dirname, 'MPQEditor.exe');
 var commands = [];
 const joinSequence = ' && '; // See: https://superuser.com/a/62854
 
-module.exports = function MPQEditorQueue() {
+module.exports = function MPQEditorQueue(mpqFilePath) {
+    const mpqFile = mpqFilePath;
+
     return {
-        New: function(mpqFile) {
+        New: function() {
             commands.push(`new "${mpqFile}"`);
         },
-        Add: function(mpqFile, sourceFile, targetFile) {
+        Add: function(sourceFile, targetFile) {
             commands.push(`add "${mpqFile}" "${sourceFile}" "${targetFile}"`);
         },
-        Rename: function(mpqFile, oldFileName, newFileName) {
+        Rename: function(oldFileName, newFileName) {
             commands.push(`rename "${mpqFile}" "${oldFileName}" "${newFileName}"`);
         },
-        Move: function(mpqFile, fileName, newDirectory) {
+        Move: function(fileName, newDirectory) {
             commands.push(`move "${mpqFile}" "${fileName}" "${newDirectory}"`);
         },
-        Delete: function(mpqFile, fileName) {
+        Delete: function(fileName) {
             commands.push(`delete "${mpqFile}" "${fileName}"`);
         },
-        Flush: function(mpqFile) {
+        Flush: function() {
             commands.push(`flush "${mpqFile}"`);
         },
 
@@ -42,6 +44,7 @@ module.exports = function MPQEditorQueue() {
             }).join(joinSequence);
 
             // Execute the commands
+            console.log('.w3x Archive:', commandString);
             proc.execSync(commandString);
         }
         //Open: function(mpqFile) {},
