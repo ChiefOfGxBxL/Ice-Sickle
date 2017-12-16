@@ -32,7 +32,7 @@ var Settings = {
         if(!fs.existsSync(_currPath)) {
             // Ensure the settings.json file exists with
             // at least empty `global` and `local` objects
-            fs.writeFileSync(_currPath, '{global: {}, local: {}}');
+            fs.writeFileSync(_currPath, '{"global": {}, "local": {}}');
         }
 
         _settings = fs.readJsonSync(_currPath);
