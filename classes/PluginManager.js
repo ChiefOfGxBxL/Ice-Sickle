@@ -8,7 +8,9 @@ var PluginManager = {
     loadedPlugins: {},
 
     LoadPlugins: function(mod, appEvents) {
-        var pluginFolders = fs.readdirSync( Path.resolve(app.getAppPath() + '/plugins') )
+        const appPath = Path.resolve(app.getAppPath() + '/plugins');
+        var pluginFolders = fs.readdirSync( appPath )
+        console.log('Loading ' + pluginFolders.length + ' plugins from ' + appPath)
 
         pluginFolders.forEach((pluginFolder) => {
             var pluginPath = Path.resolve('plugins', pluginFolder),
