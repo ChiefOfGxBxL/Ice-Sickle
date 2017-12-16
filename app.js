@@ -93,7 +93,7 @@ function LoadProject(projectPath) {
     }
 }
 
-var template = [
+var appMenuTemplate = [
   {
     label: 'File',
     submenu: [
@@ -250,7 +250,7 @@ if(Settings.GetGlobal('recentMaps')) {
     Settings.GetGlobal('recentMaps').forEach((recentMap) => {
         var mapName = recentMap.split('\\').reverse()[0];
 
-        template[0].submenu.push({
+        appMenuTemplate[0].submenu.push({
             label: mapName,
             sublabel: recentMap,
             click(entry) {
@@ -522,8 +522,8 @@ app.on('ready', () => {
         ipcMain.on(eventKey, EventHandlers[eventKey]);
     });
 
-    // Create the main menu from the template
-    const menu = Menu.buildFromTemplate(template);
+    // Create the main menu from the menu template
+    const menu = Menu.buildFromTemplate(appMenuTemplate);
     Menu.setApplicationMenu(menu);
 
     // Open welcome dialog
