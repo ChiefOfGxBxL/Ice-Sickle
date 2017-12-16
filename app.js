@@ -311,6 +311,11 @@ const EventHandlers = {
 
             // Store the project in recently-loaded settings
             var recentMaps = Settings.GetGlobal('recentMaps');
+            
+            // If a new settings.json file exists, this data will be missing
+            if(!recentMaps) recentMaps = [];
+            
+            // When user opens a map not listed in recent maps, add it to the list and save
             if(recentMaps.indexOf(path) === -1) {
                 recentMaps.push(path);
                 Settings.SetGlobal('recentMaps', recentMaps);
