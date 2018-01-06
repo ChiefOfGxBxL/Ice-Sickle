@@ -4,7 +4,7 @@
     "description": "",
 
     "width": 480,
-    "height": 330,
+    "height": 360,
 
     "parent": "root",
     "modal": true,

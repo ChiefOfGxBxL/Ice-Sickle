@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="../assets/css/mini-default.min.css">
     <style>
-        html,body {text-align: center;}
+        html,body { text-align: center; font-size: 0.8em; }
         h1,.title {
             background-color: rgb(2,119,189);
             padding: 10px;
@@ -15,8 +15,14 @@
             text-shadow: 1px 1px 1px #000;
         }
         h1 > small { margin: 0 !important; font-style: italic; font-size: 0.6em; }
-        p {margin: 0 10%;}
+        p {margin: 0 5%;}
+
+        .smallText { font-size: 0.4em !important; background-color: #eee; padding: 5px; border-radius: 2px; }
+        .smallText p { text-align: left; }
     </style>
+    <script>
+        // TODO: get app path and display it in `appPath`
+    </script>
   </head>
   <body>
 
@@ -32,6 +38,12 @@
     <p>Ice Sickle is an open-source WarCraft III world editor written in Electron. It's core design principle is to be as extendable as possible through its plugin system.</p>
 
     <br/>
+
+    <div class='smallText'>
+        <h4>Developer information</h4>
+        <p><strong>App path</strong> <code>{{appPath}}</code></p>
+        <p><strong>Plugin path</strong> <code>{{pluginPath}}</code></p>
+    </div>
 
     <a class='button'>v{{appVersion}}</a>
     <a class='button primary' onclick='window.close()'>Close</a>
