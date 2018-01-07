@@ -1,4 +1,4 @@
-const {app, BrowserWindow, Menu, dialog, ipcMain, protocol} = require('electron'),
+const {app, BrowserWindow, Menu, MenuItem, dialog, ipcMain, protocol} = require('electron'),
     autoUpdater = require("electron-updater").autoUpdater,
     isDev = require('electron-is-dev'),
     path = require('path'),
@@ -12,6 +12,8 @@ var Map = require('./classes/Map'),
     Settings = require('./classes/Settings'),
     PluginManager = require('./classes/PluginManager'),
     mapObj; // Map data is stored in this object
+
+var appMenu; // used to store the Menu() for the application
 
 // Global variables across windows
 global.globals = {
@@ -205,6 +207,19 @@ var appMenuTemplate = [
               sublabel: 'Generates the .w3x file',
               click () {
                   EventHandlers['requestCompileProject']();
+              }
+          }
+      ]
+  },
+  {
+      label: 'Extensions',
+      submenu: [
+          { type: 'separator' },
+          {
+              label: 'Extension Manager',
+              sublabel: '',
+              click() {
+                  //Window.Open('importManager');
               }
           }
       ]
@@ -508,10 +523,26 @@ app.on('ready', () => {
         autoUpdater.checkForUpdates();
     }
 
+    // Create the main menu from the menu template
+    menu = Menu.buildFromTemplate(appMenuTemplate);
+    Menu.setApplicationMenu(menu);
+
     app.setName('Ice Sickle'); // From package.json it's icesickle (since npm init required lowercase, no spaces)
 
     // Load plugins from /plugins directory
     PluginManager.LoadPlugins(module, EventHandlers);
+
+    // Add plugins to the extension menu list, if allowed
+    Object.keys(PluginManager.loadedPlugins).forEach((pluginName) => {
+        var pluginObj = PluginManager.loadedPlugins[pluginName];
+
+        if(pluginObj.module.onMenuClick) {
+            menu.items[6].submenu.insert(0, new MenuItem({
+                click: pluginObj.module.onMenuClick,
+                label: pluginObj.manifest.title
+            }));
+        }
+    });
 
     // Register each custom scripting language
     loadScriptingLanguages();
@@ -523,10 +554,6 @@ app.on('ready', () => {
     Object.keys(EventHandlers).forEach((eventKey) => {
         ipcMain.on(eventKey, EventHandlers[eventKey]);
     });
-
-    // Create the main menu from the menu template
-    const menu = Menu.buildFromTemplate(appMenuTemplate);
-    Menu.setApplicationMenu(menu);
 
     // Open welcome dialog
     Window.Open('welcome', {
