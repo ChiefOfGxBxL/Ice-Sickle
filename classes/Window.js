@@ -45,7 +45,7 @@ var Window = {
         windowOptions.webPreferences = {
             // Set preload on all windows to run the global-script
             // so globals are available to every window via `globals` variable
-            preload: Path.join(__dirname, '../preload.js')
+            preload: Path.join(__dirname, '../assets/js/preload.js')
         }
 
         var newWindow = new BrowserWindow(windowOptions); // Create a new window
