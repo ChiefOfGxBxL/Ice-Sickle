@@ -25,14 +25,14 @@
 
 <br/>
 
-### Why?
+# Why?
 WarCraft III continues to be a timeless game adored by many. And its editor, World Editor, has been a powerful tool. However, as the standards for what experience a map should deliver have increased, the editor is beginning to lack certain features. With no direct way to add functionality, some have resorted to injecting code into the program. This, though, is hacky and spotty. We need a new tool to give us enhanced map-making abilities, and that tool is Ice Sickle.
 
 Ice Sickle is the **next-generation World Editor** built on a modern framework, Electron. The overall **design goal is to allow the editor to be as moddable as possible through the plugin system**. With an event-driven model, **virtually any action can be listened to and responded to by plugins**, and the map may be modified using a typeless yet simple data format. We're unlocking the future of map editing with Ice Sickle, and we're happy to see you here!
 
 <br/>
 
-### Features
+# Features
 **Plugin API** - Create and install plugins which extend the functionality of the editor!  
 **Collaboration** - Collaborate remotely with ease, using source-code management tools like GitHub or Bitbucket  
 **Resource manager** - Drag & drop files into the import manager, or one-click download from Hive Workshop  
@@ -41,13 +41,13 @@ Ice Sickle is the **next-generation World Editor** built on a modern framework, 
 
 <br/>
 
-### Install
- * Visit our [Releases page](https://github.com/ChiefOfGxBxL/Ice-Sickle/releases/latest) to download the latest version installer
- * If you already have the application installed, *updates are automatically installed for you*
+# Install
+ * **I don't have Ice Sickle installed** - Visit our [Releases page](https://github.com/ChiefOfGxBxL/Ice-Sickle/releases/latest) to download the latest version installer
+ * **I have it installed and want updates** - Updates are automatically installed for you*. When you open the application, updates are detected and installed, re-launching the application when completed!
 
 <br/>
 
-### Milestones
+# Milestones
 Whenever possible, Ice Sickle will follow [Semantic Versioning](http://semver.org/). This may not be possible initially as the software is undergoing rapid development. Up until v1 is released, the versioning is not guaranteed to follow the Semantic Versioning guidelines.
 
 **v1.0** - All core functionality of original World Editor is implemented. Making a map in Ice Sickle is possible, from objects and triggers to imports and terrain, but may not be user-friendly. Essentially, v1.0 is a "copy" of the original editor and it marks the point from which future changes are really the improvements the WC3 modding community wishes to see in the program.
@@ -60,16 +60,16 @@ From here it is unclear what some version 3 would look like, since with a powerf
 
 <br/>
 
-### Contribute
+# Contribute
 **I want to help develop**  
 Awesome! We welcome contributions from the WC3 community. There are many ways you can help us, so figure out what works for you!
  
 **How can I help?**
  * Coding - If you're good with JavaScript and web development, we build Ice Sickle on top of Electron. You can work on new windows and menus, adding and improving core functionality.
- * Plugins - Develop features and tools to help map developers improve their workflow and build awesome maps!
+ * Extensions - Develop stand-alone features and tools to help map developers improve their workflow and build awesome maps!
  * Identify and squash bugs - Find something that's broken or could use improvement? Submit an issue.
- * Documentation - Our documentation covers concepts core to the repository, but also includes tutorials and walkthroughs for using the editor and making plugins.
- * Other - Got artistic ability? Good at designing things? Improving the UI and branding will be a big help!
+ * Documentation - Our documentation covers concepts core to the repository, but also includes tutorials and walkthroughs for using the editor and making extensions.
+ * Other - Got artistic ability? Good at designing things? Improving the UI will be a big help, and we could use some branding (e.g. logo, promotional artwork, etc.)
  
 **Resources**
  * [Gitbook](https://chiefofgxbxl.gitbooks.io/ice-sickle/) contains key documentation about our code, classes, object formats, and plugin API (Note: this Gitbook will be migrated to our GitHub Wiki for better organization)
