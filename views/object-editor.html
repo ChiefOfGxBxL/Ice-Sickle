@@ -349,14 +349,24 @@
             }
 
             // Init
-            populateObjectEntityList(ObjectEntityType.Unit);
-            populateObjectEntityFieldList(ObjectEntityType.Unit);
+            function init() {
+                if(Map.__Dir) { // check if Map has been loaded, if so continue logic
+                    populateObjectEntityList(ObjectEntityType.Unit);
+                    populateObjectEntityFieldList(ObjectEntityType.Unit);
 
-            populateObjectEntityList(ObjectEntityType.Item);
-            populateObjectEntityFieldList(ObjectEntityType.Item);
+                    populateObjectEntityList(ObjectEntityType.Item);
+                    populateObjectEntityFieldList(ObjectEntityType.Item);
 
-            populateObjectEntityList(ObjectEntityType.Destructable);
-            populateObjectEntityFieldList(ObjectEntityType.Destructable);
+                    populateObjectEntityList(ObjectEntityType.Destructable);
+                    populateObjectEntityFieldList(ObjectEntityType.Destructable);
+                }
+                else {
+                    // Try again in 250ms
+                    window.setTimeout(init, 250);
+                }
+            };
+
+            init();
         });
     </script>
   </head>
