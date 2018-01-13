@@ -29,7 +29,7 @@
             triggers = [];
 
         function openNewTriggerWindow() {
-          ipcRenderer.send('requestOpenWindow', { windowName: 'newTrigger' });
+          ipcRenderer.send('openWindow', { windowName: 'newTrigger' });
         }
 
         function selectTriggerByName(name) {
@@ -64,7 +64,7 @@
             selectedTrigger.content = e.target.value;
 
             // Send updated trigger content to app.js
-            ipcRenderer.send('updateTrigger', {
+            ipcRenderer.send('editTrigger', {
               name: selectedTrigger.name,
               content: e.target.value
             })

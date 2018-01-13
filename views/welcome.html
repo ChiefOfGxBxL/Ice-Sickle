@@ -46,12 +46,12 @@
         });
 
         function createNewProject() {
-            ipcRenderer.send('requestOpenWindow', { windowName: 'newProject' });
+            ipcRenderer.send('openWindow', { windowName: 'newProject' });
         }
 
-        function openProject() {
-            ipcRenderer.send('requestOpenProject', {});
-        }
+        // function openProject() {
+        //     ipcRenderer.send('requestOpenProject', {});
+        // }
 
         function loadProject(path) {
             ipcRenderer.send('loadProject', path);
@@ -70,10 +70,10 @@
             <span class='fa fa-circle-o'></span>
             Create a new project
         </a>
-        <a href='#' class='btn' onclick='openProject()'>
+        <!-- <a href='#' class='btn' onclick='openProject()'>
             <span class='fa fa-folder-open'></span>
             Open a project
-        </a>
+        </a> -->
         <a href='#' class='btn disabled'>
             <span class='fa fa-puzzle-piece'></span>
             Install plugins

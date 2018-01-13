@@ -15,7 +15,7 @@
             var name = '{{data.name}}',
                 fullPath = document.getElementById('fullPath').value;
 
-            ipcRenderer.send('updateImport', {
+            ipcRenderer.send('editImport', {
               name: name,
               fullPath: fullPath
             });

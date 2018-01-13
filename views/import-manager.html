@@ -19,7 +19,7 @@
     </script>
     <script>
         function importedItemDblClick(e, item) {
-            ipcRenderer.send('requestOpenWindow', {
+            ipcRenderer.send('openWindow', {
                 windowName: 'editImport',
                 template: item
             })
@@ -68,7 +68,7 @@
             e.preventDefault()
 
             for (let f of e.dataTransfer.files) {
-              ipcRenderer.send('importFile', {
+              ipcRenderer.send('newImport', {
                   name: f.name,
                   fullPath: 'war3mapImported\\' + f.name,
                   path: f.path,
