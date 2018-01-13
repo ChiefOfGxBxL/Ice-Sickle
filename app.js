@@ -296,6 +296,10 @@ function applyPartialObjectUpdate(obj, updates) {
 }
 
 const EventHandlers = {
+
+    /*
+     * Project
+     */
     'createNewProject': function(event, data) {
         mapObj = Map.Create(data.name);
         applicationBroadcastEvent('projectCreated', mapObj);
@@ -344,19 +348,15 @@ const EventHandlers = {
         // Send the Map back to the requesting window
         event.sender.webContents.send('responseProject', mapObj);
     },
-    'requestUserInput': function(event, data) {
-        var inputWindowName = 'input' + data.type[0].toUpperCase() + data.type.substr(1); // e.g. inputInt
+    'updateMapInfo': function(event, newInfo) {
+        // Applies a recursive, partial update to mapObj.info
+        applyPartialObjectUpdate(mapObj.info, newInfo);
+    },
 
-        if(Window.availableWindows[inputWindowName]) {
-            Window.Open(inputWindowName, data.context);
-        }
-        else {
-            Window.Open('inputUnknown', data.context);
-        }
-    },
-    'responseUserInput': function(event, data) {
-        applicationBroadcastEvent('userInputProvided', data);
-    },
+
+    /*
+     * Object Editor
+     */
     'patchProjectObject': function(event, data) {
         // TODO: clean this mess up
         mapObj.objects[data.specType] = mapObj.objects[data.specType] || {};
@@ -376,11 +376,6 @@ const EventHandlers = {
             mapObj.objects[data.specType][data.table][data.entryId].push(data.modification);
         }
     },
-    'requestOpenWindow': function(event, data) {
-        if(!data || !data.windowName) return false;
-
-        Window.Open(data.windowName, data.template);
-    },
     'newCustomObject': function(event, data) {
         // Add new object to mapObj, with custom name specified
         var mapObjName = data.type + 's'; // e.g. units, doodads, etc.
@@ -396,77 +391,111 @@ const EventHandlers = {
     'requestIdCounter': function(event, data) {
         event.sender.webContents.send('responseIdCounter', getNextIdCounter(data.type));
     },
+
+
+    /*
+     * Triggers
+     */
     'requestTriggers': function(event, data) {
-        event.sender.webContents.send('responseTriggers', mapObj.triggers);
-    },
+         event.sender.webContents.send('responseTriggers', mapObj.triggers);
+     },
     'updateTrigger': function(event, data) {
-        // Update a specified trigger's contents
-        var triggerToUpdate = mapObj.triggers.find((t) => {
-          return t.name === data.name;
-        });
+         // Update a specified trigger's contents
+         var triggerToUpdate = mapObj.triggers.find((t) => {
+           return t.name === data.name;
+         });
 
-        if(triggerToUpdate) {
-          triggerToUpdate.content = data.content;
-        }
-    },
+         if(triggerToUpdate) {
+           triggerToUpdate.content = data.content;
+         }
+     },
     'newTrigger': function(event, data) {
-        // TODO: check for conflicting trigger paths
-        var newTriggerFilePath = path.resolve(mapObj.__Dir, 'triggers/', (data.name + '.' + data.language.substr(1))),
-            newTrigger = {
-                name: data.name,
-                path: newTriggerFilePath,
-                language: data.language,
-                content: ''
-            };
+         // TODO: check for conflicting trigger paths
+         var newTriggerFilePath = path.resolve(mapObj.__Dir, 'triggers/', (data.name + '.' + data.language.substr(1))),
+             newTrigger = {
+                 name: data.name,
+                 path: newTriggerFilePath,
+                 language: data.language,
+                 content: ''
+             };
 
-        // Create a new file in the project
-        fs.ensureFileSync(newTriggerFilePath);
+         // Create a new file in the project
+         fs.ensureFileSync(newTriggerFilePath);
 
-        // Create a new trigger in the map
-        mapObj.triggers.push(newTrigger)
+         // Create a new trigger in the map
+         mapObj.triggers.push(newTrigger)
 
-        applicationBroadcastEvent('newTrigger', newTrigger);
-    },
+         applicationBroadcastEvent('newTrigger', newTrigger);
+     },
     'requestScriptingLanguages': function(event, data) {
-        event.sender.webContents.send('responseScriptingLanguages', scriptingLanguages);
-    },
-    'updateMapInfo': function(event, newInfo) {
-        // Applies a recursive, partial update to mapObj.info
-        applyPartialObjectUpdate(mapObj.info, newInfo);
-    },
-    'requestImportList': function(event, data) {
-        event.sender.webContents.send('responseImportList', mapObj.imports);
-    },
-    'importFile': function(event, file) {
-        // First we copy the file into the project's /import folder
-        const destinationPath = path.resolve(mapObj.__Dir, 'imports', file.name);
-        fs.copySync(file.path, destinationPath, { overwrite: true });
-        // TODO: alert user of path conflict, giving the option to overwrite
+         event.sender.webContents.send('responseScriptingLanguages', scriptingLanguages);
+     },
 
-        // Then we add a record to the map object
-        mapObj.imports.push({
-            name: file.name,
-            fullPath: 'war3mapImported\\' + file.name,
-            path: file.path,
-            size: file.size,
-            type: file.type
-        });
-    },
-    'updateImport': function(event, file) {
-        var importToUpdate = mapObj.imports.find(
-            (imp) => { return imp.name == file.name; }
-        );
 
-        if(importToUpdate) {
-            // This is the only attribute that can be changed
-            // since size, name, and type are not modified by user
-            if(file.fullPath) importToUpdate.fullPath = file.fullPath;
-            applicationBroadcastEvent('importUpdated', importToUpdate);
-        }
+    /*
+     * Windows
+     */
+    'requestOpenWindow': function(event, data) {
+        if(!data || !data.windowName) return false;
+
+        Window.Open(data.windowName, data.template);
     },
     'registerWindow': function(event, manifest) {
         // TODO: is the window protected??
         Window.availableWindows[manifest.name] = manifest;
+    },
+
+
+    /*
+     * Imports
+     */
+    'requestImportList': function(event, data) {
+         event.sender.webContents.send('responseImportList', mapObj.imports);
+     },
+    'importFile': function(event, file) {
+         // First we copy the file into the project's /import folder
+         const destinationPath = path.resolve(mapObj.__Dir, 'imports', file.name);
+         fs.copySync(file.path, destinationPath, { overwrite: true });
+         // TODO: alert user of path conflict, giving the option to overwrite
+
+         // Then we add a record to the map object
+         mapObj.imports.push({
+             name: file.name,
+             fullPath: 'war3mapImported\\' + file.name,
+             path: file.path,
+             size: file.size,
+             type: file.type
+         });
+     },
+    'updateImport': function(event, file) {
+         var importToUpdate = mapObj.imports.find(
+             (imp) => { return imp.name == file.name; }
+         );
+
+         if(importToUpdate) {
+             // This is the only attribute that can be changed
+             // since size, name, and type are not modified by user
+             if(file.fullPath) importToUpdate.fullPath = file.fullPath;
+             applicationBroadcastEvent('importUpdated', importToUpdate);
+         }
+     },
+
+
+    /*
+     * Misc
+     */
+    'requestUserInput': function(event, data) {
+        var inputWindowName = 'input' + data.type[0].toUpperCase() + data.type.substr(1); // e.g. inputInt
+
+        if(Window.availableWindows[inputWindowName]) {
+            Window.Open(inputWindowName, data.context);
+        }
+        else {
+            Window.Open('inputUnknown', data.context);
+        }
+    },
+    'responseUserInput': function(event, data) {
+        applicationBroadcastEvent('userInputProvided', data);
     },
     'setGlobalSetting': function(event, obj) {
         Settings.SetGlobal(obj.name, obj.data);
