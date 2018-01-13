@@ -592,6 +592,16 @@ app.on('ready', () => {
         }) : []
     })
 
+    // Add the 'exit' menu item to File
+    menu.items[0].submenu.append(new MenuItem({
+        type: 'separator'
+    }));
+    menu.items[0].submenu.append(new MenuItem({
+        label: 'Exit',
+        sublabel: 'Quits the application',
+        role: 'quit'
+    }));
+
     // The hbs:// protocol is used to render handlebars files
     // See http://stackoverflow.com/a/41368514 for more details
     protocol.registerBufferProtocol('hbs', function (req, callback) {
