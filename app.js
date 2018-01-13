@@ -120,7 +120,7 @@ var appMenuTemplate = [
         sublabel: 'Saves the current project',
         role: 'save',
         click () {
-            EventHandlers['requestSaveProject']();
+            EventHandlers['saveProject']();
         }
       },
       { type: 'separator' },
@@ -206,7 +206,7 @@ var appMenuTemplate = [
               label: 'Compile',
               sublabel: 'Generates the .w3x file',
               click () {
-                  EventHandlers['requestCompileProject']();
+                  EventHandlers['compileProject']();
               }
           }
       ]
@@ -300,31 +300,10 @@ const EventHandlers = {
     /*
      * Project
      */
-    'createNewProject': function(event, data) {
+    'newProject': function(event, data) {
         mapObj = Map.Create(data.name);
         applicationBroadcastEvent('projectCreated', mapObj);
         Window.Close('welcome'); // In case this window is still open, close it
-    },
-    'requestOpenProject': function() {
-        OpenProjectWindow();
-    },
-    'requestSaveProject': function() {
-        Map.Save(mapObj);
-        applicationBroadcastEvent('projectSaved', mapObj);
-    },
-    'requestCompileProject': function() {
-        Window.Open('compile');
-
-        setTimeout(() => {
-            var result = Map.Compile(mapObj.__Dir, mapObj, scriptingLanguages, false);
-            console.log('Map compiled:', result);
-
-            applicationBroadcastEvent('mapCompiled', result);
-        }, 2000)
-
-    },
-    'requestOpenProjectMap': function(event, dir) {
-        mapObj = Map.Load(dir);
     },
     'loadProject': function(event, path) {
         if(LoadProject(path)) {
@@ -344,20 +323,49 @@ const EventHandlers = {
             }
         }
     },
-    'requestProject': function(event, data) {
-        // Send the Map back to the requesting window
-        event.sender.webContents.send('responseProject', mapObj);
+    'saveProject': function() {
+        Map.Save(mapObj);
+        applicationBroadcastEvent('projectSaved', mapObj);
     },
+    'compileProject': function() {
+        Window.Open('compile');
+
+        setTimeout(() => {
+            var result = Map.Compile(mapObj.__Dir, mapObj, scriptingLanguages, false);
+            console.log('Map compiled:', result);
+
+            applicationBroadcastEvent('mapCompiled', result);
+        }, 2000)
+
+    },
+
     'updateMapInfo': function(event, newInfo) {
         // Applies a recursive, partial update to mapObj.info
         applyPartialObjectUpdate(mapObj.info, newInfo);
+    },
+
+    'requestProject': function(event, data) {
+        // Send the Map back to the requesting window
+        event.sender.webContents.send('responseProject', mapObj);
     },
 
 
     /*
      * Object Editor
      */
-    'patchProjectObject': function(event, data) {
+    'newObject': function(event, data) {
+        // Add new object to mapObj, with custom name specified
+        var mapObjName = data.type + 's'; // e.g. units, doodads, etc.
+        mapObj.objects[mapObjName].custom[data.id] = [{
+            id: 'unam', // TODO: unam, inam, etc.
+            type: 'string',
+            value: data.name
+        }];
+
+        // Send event to all windows
+        applicationBroadcastEvent('newCustomObject', data);
+    },
+    'editObject': function(event, data) {
         // TODO: clean this mess up
         mapObj.objects[data.specType] = mapObj.objects[data.specType] || {};
         mapObj.objects[data.specType][data.table] = mapObj.objects[data.specType][data.table] || {};
@@ -376,18 +384,7 @@ const EventHandlers = {
             mapObj.objects[data.specType][data.table][data.entryId].push(data.modification);
         }
     },
-    'newCustomObject': function(event, data) {
-        // Add new object to mapObj, with custom name specified
-        var mapObjName = data.type + 's'; // e.g. units, doodads, etc.
-        mapObj.objects[mapObjName].custom[data.id] = [{
-            id: 'unam', // TODO: unam, inam, etc.
-            type: 'string',
-            value: data.name
-        }];
 
-        // Send event to all windows
-        applicationBroadcastEvent('newCustomObject', data);
-    },
     'requestIdCounter': function(event, data) {
         event.sender.webContents.send('responseIdCounter', getNextIdCounter(data.type));
     },
@@ -396,36 +393,37 @@ const EventHandlers = {
     /*
      * Triggers
      */
-    'requestTriggers': function(event, data) {
-         event.sender.webContents.send('responseTriggers', mapObj.triggers);
-     },
-    'updateTrigger': function(event, data) {
-         // Update a specified trigger's contents
-         var triggerToUpdate = mapObj.triggers.find((t) => {
-           return t.name === data.name;
-         });
-
-         if(triggerToUpdate) {
-           triggerToUpdate.content = data.content;
-         }
-     },
     'newTrigger': function(event, data) {
-         // TODO: check for conflicting trigger paths
-         var newTriggerFilePath = path.resolve(mapObj.__Dir, 'triggers/', (data.name + '.' + data.language.substr(1))),
-             newTrigger = {
-                 name: data.name,
-                 path: newTriggerFilePath,
-                 language: data.language,
-                 content: ''
-             };
+        // TODO: check for conflicting trigger paths
+        var newTriggerFilePath = path.resolve(mapObj.__Dir, 'triggers/', (data.name + '.' + data.language.substr(1))),
+            newTrigger = {
+                name: data.name,
+                path: newTriggerFilePath,
+                language: data.language,
+                content: ''
+            };
 
          // Create a new file in the project
-         fs.ensureFileSync(newTriggerFilePath);
+        fs.ensureFileSync(newTriggerFilePath);
 
          // Create a new trigger in the map
-         mapObj.triggers.push(newTrigger)
+        mapObj.triggers.push(newTrigger)
 
-         applicationBroadcastEvent('newTrigger', newTrigger);
+        applicationBroadcastEvent('newTrigger', newTrigger);
+    },
+    'editTrigger': function(event, data) {
+        // Update a specified trigger's contents
+        var triggerToUpdate = mapObj.triggers.find((t) => {
+            return t.name === data.name;
+        });
+
+        if(triggerToUpdate) {
+            triggerToUpdate.content = data.content;
+        }
+    },
+
+    'requestTriggers': function(event, data) {
+         event.sender.webContents.send('responseTriggers', mapObj.triggers);
      },
     'requestScriptingLanguages': function(event, data) {
          event.sender.webContents.send('responseScriptingLanguages', scriptingLanguages);
@@ -435,7 +433,7 @@ const EventHandlers = {
     /*
      * Windows
      */
-    'requestOpenWindow': function(event, data) {
+    'openWindow': function(event, data) {
         if(!data || !data.windowName) return false;
 
         Window.Open(data.windowName, data.template);
@@ -449,36 +447,37 @@ const EventHandlers = {
     /*
      * Imports
      */
-    'requestImportList': function(event, data) {
-         event.sender.webContents.send('responseImportList', mapObj.imports);
-     },
-    'importFile': function(event, file) {
-         // First we copy the file into the project's /import folder
-         const destinationPath = path.resolve(mapObj.__Dir, 'imports', file.name);
-         fs.copySync(file.path, destinationPath, { overwrite: true });
-         // TODO: alert user of path conflict, giving the option to overwrite
+    'newImport': function(event, file) {
+        // First we copy the file into the project's /import folder
+        const destinationPath = path.resolve(mapObj.__Dir, 'imports', file.name);
+        fs.copySync(file.path, destinationPath, { overwrite: true });
+        // TODO: alert user of path conflict, giving the option to overwrite
 
-         // Then we add a record to the map object
-         mapObj.imports.push({
-             name: file.name,
-             fullPath: 'war3mapImported\\' + file.name,
-             path: file.path,
-             size: file.size,
-             type: file.type
-         });
-     },
-    'updateImport': function(event, file) {
-         var importToUpdate = mapObj.imports.find(
+        // Then we add a record to the map object
+        mapObj.imports.push({
+            name: file.name,
+            fullPath: 'war3mapImported\\' + file.name,
+            path: file.path,
+            size: file.size,
+            type: file.type
+        });
+    },
+    'editImport': function(event, file) {
+        var importToUpdate = mapObj.imports.find(
              (imp) => { return imp.name == file.name; }
-         );
+        );
 
-         if(importToUpdate) {
-             // This is the only attribute that can be changed
-             // since size, name, and type are not modified by user
-             if(file.fullPath) importToUpdate.fullPath = file.fullPath;
-             applicationBroadcastEvent('importUpdated', importToUpdate);
-         }
-     },
+        if(importToUpdate) {
+            // This is the only attribute that can be changed
+            // since size, name, and type are not modified by user
+            if(file.fullPath) importToUpdate.fullPath = file.fullPath;
+            applicationBroadcastEvent('importUpdated', importToUpdate);
+        }
+    },
+
+    'requestImportList': function(event, data) {
+        event.sender.webContents.send('responseImportList', mapObj.imports);
+    },
 
 
     /*
