@@ -575,7 +575,12 @@ app.on('ready', () => {
     loadScriptingLanguages();
 
     // Create main window
-    Window.Open('root');
+    Window.Open('root', null, {
+        // When the root window closes, close the entire application
+        close: function() {
+            app.quit();
+        }
+    });
 
     // Register IPC events
     Object.keys(EventHandlers).forEach((eventKey) => {
