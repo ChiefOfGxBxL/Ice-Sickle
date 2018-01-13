@@ -5,7 +5,7 @@ var Path = require('path'),
 module.exports = function(pluginName) {
     const pluginPath = Path.resolve('plugins', pluginName);
 
-    return {
+    var plugin = {
         require: (name) => {
             return require(Path.resolve('./', name));
         },
@@ -45,6 +45,19 @@ module.exports = function(pluginName) {
                     data: data
                 });
             }
-        }
+        },
+        enums: {}
     };
+
+    // Load all enums in the ./enum directory and set plugin.enums
+    const enumFiles = fs.readdirSync( './enum' );
+    enumFiles.forEach((enumFile) => {
+        const enumFileNameWithoutExt = enumFile.split('.js')[0];
+
+        plugin.enums[enumFileNameWithoutExt] = require(
+            Path.join(app.getAppPath(), 'enum', enumFile)
+        );
+    });
+
+    return plugin
 }
