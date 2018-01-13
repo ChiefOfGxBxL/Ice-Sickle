@@ -296,16 +296,15 @@ function applyPartialObjectUpdate(obj, updates) {
 }
 
 const EventHandlers = {
-
     /*
      * Project
      */
-    'newProject': function(event, data) {
+    newProject: function(event, data) {
         mapObj = Map.Create(data.name);
         applicationBroadcastEvent('projectCreated', mapObj);
         Window.Close('welcome'); // In case this window is still open, close it
     },
-    'loadProject': function(event, path) {
+    loadProject: function(event, path) {
         if(LoadProject(path)) {
             applicationBroadcastEvent('projectLoaded', mapObj);
 
@@ -323,11 +322,11 @@ const EventHandlers = {
             }
         }
     },
-    'saveProject': function() {
+    saveProject: function() {
         Map.Save(mapObj);
         applicationBroadcastEvent('projectSaved', mapObj);
     },
-    'compileProject': function() {
+    compileProject: function() {
         Window.Open('compile');
 
         setTimeout(() => {
@@ -339,12 +338,12 @@ const EventHandlers = {
 
     },
 
-    'updateMapInfo': function(event, newInfo) {
+    updateMapInfo: function(event, newInfo) {
         // Applies a recursive, partial update to mapObj.info
         applyPartialObjectUpdate(mapObj.info, newInfo);
     },
 
-    'requestProject': function(event, data) {
+    requestProject: function(event, data) {
         // Send the Map back to the requesting window
         event.sender.webContents.send('responseProject', mapObj);
     },
@@ -353,7 +352,7 @@ const EventHandlers = {
     /*
      * Object Editor
      */
-    'newObject': function(event, data) {
+    newObject: function(event, data) {
         // Add new object to mapObj, with custom name specified
         var mapObjName = data.type + 's'; // e.g. units, doodads, etc.
         mapObj.objects[mapObjName].custom[data.id] = [{
@@ -365,7 +364,7 @@ const EventHandlers = {
         // Send event to all windows
         applicationBroadcastEvent('newCustomObject', data);
     },
-    'editObject': function(event, data) {
+    editObject: function(event, data) {
         // TODO: clean this mess up
         mapObj.objects[data.specType] = mapObj.objects[data.specType] || {};
         mapObj.objects[data.specType][data.table] = mapObj.objects[data.specType][data.table] || {};
@@ -385,7 +384,7 @@ const EventHandlers = {
         }
     },
 
-    'requestIdCounter': function(event, data) {
+    requestIdCounter: function(event, data) {
         event.sender.webContents.send('responseIdCounter', getNextIdCounter(data.type));
     },
 
@@ -393,7 +392,7 @@ const EventHandlers = {
     /*
      * Triggers
      */
-    'newTrigger': function(event, data) {
+    newTrigger: function(event, data) {
         // TODO: check for conflicting trigger paths
         var newTriggerFilePath = path.resolve(mapObj.__Dir, 'triggers/', (data.name + '.' + data.language.substr(1))),
             newTrigger = {
@@ -411,7 +410,7 @@ const EventHandlers = {
 
         applicationBroadcastEvent('newTrigger', newTrigger);
     },
-    'editTrigger': function(event, data) {
+    editTrigger: function(event, data) {
         // Update a specified trigger's contents
         var triggerToUpdate = mapObj.triggers.find((t) => {
             return t.name === data.name;
@@ -422,10 +421,10 @@ const EventHandlers = {
         }
     },
 
-    'requestTriggers': function(event, data) {
+    requestTriggers: function(event, data) {
          event.sender.webContents.send('responseTriggers', mapObj.triggers);
      },
-    'requestScriptingLanguages': function(event, data) {
+    requestScriptingLanguages: function(event, data) {
          event.sender.webContents.send('responseScriptingLanguages', scriptingLanguages);
      },
 
@@ -433,12 +432,12 @@ const EventHandlers = {
     /*
      * Windows
      */
-    'openWindow': function(event, data) {
+    openWindow: function(event, data) {
         if(!data || !data.windowName) return false;
 
         Window.Open(data.windowName, data.template);
     },
-    'registerWindow': function(event, manifest) {
+    registerWindow: function(event, manifest) {
         // TODO: is the window protected??
         Window.availableWindows[manifest.name] = manifest;
     },
@@ -447,7 +446,7 @@ const EventHandlers = {
     /*
      * Imports
      */
-    'newImport': function(event, file) {
+    newImport: function(event, file) {
         // First we copy the file into the project's /import folder
         const destinationPath = path.resolve(mapObj.__Dir, 'imports', file.name);
         fs.copySync(file.path, destinationPath, { overwrite: true });
@@ -462,7 +461,7 @@ const EventHandlers = {
             type: file.type
         });
     },
-    'editImport': function(event, file) {
+    editImport: function(event, file) {
         var importToUpdate = mapObj.imports.find(
              (imp) => { return imp.name == file.name; }
         );
@@ -475,7 +474,7 @@ const EventHandlers = {
         }
     },
 
-    'requestImportList': function(event, data) {
+    requestImportList: function(event, data) {
         event.sender.webContents.send('responseImportList', mapObj.imports);
     },
 
@@ -483,7 +482,7 @@ const EventHandlers = {
     /*
      * Misc
      */
-    'requestUserInput': function(event, data) {
+    requestUserInput: function(event, data) {
         var inputWindowName = 'input' + data.type[0].toUpperCase() + data.type.substr(1); // e.g. inputInt
 
         if(Window.availableWindows[inputWindowName]) {
@@ -493,13 +492,13 @@ const EventHandlers = {
             Window.Open('inputUnknown', data.context);
         }
     },
-    'responseUserInput': function(event, data) {
+    responseUserInput: function(event, data) {
         applicationBroadcastEvent('userInputProvided', data);
     },
-    'setGlobalSetting': function(event, obj) {
+    setGlobalSetting: function(event, obj) {
         Settings.SetGlobal(obj.name, obj.data);
     },
-    'setLocalSetting': function(event, obj) {
+    setLocalSetting: function(event, obj) {
         var pluginSettings = Settings.GetLocal(obj.plugin) || {};
         pluginSettings[obj.name] = obj.data;
 
