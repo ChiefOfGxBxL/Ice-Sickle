@@ -27,10 +27,12 @@ function loadPlugin(dir, mod) {
     const pluginManifestPath = Path.resolve(dir, 'package.json');
 
     // Register the plugin
-    var pluginManifest = fs.readJsonSync(pluginManifestPath);
+    var pluginManifest = fs.readJsonSync(pluginManifestPath),
+        PluginClass = new require('./Plugin.js')(pluginManifest.name);
+
     PluginManager.loadedPlugins[pluginManifest.name] = {
         manifest: pluginManifest,
-        module: mod.require(dir)
+        module: mod.require(dir)(PluginClass)
     };
 
     // Execute the plugin's initial script
