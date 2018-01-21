@@ -18,7 +18,8 @@ var appMenu; // used to store the Menu() for the application
 // Global variables across windows
 global.globals = {
     AppName: 'Ice-Sickle',
-    AppPath: app.getAppPath(),
+    AppPath: app.getPath('userData'),
+    PluginPath: path.join(app.getPath('userData'), 'plugins'),
     isDevelopment: isDev
 };
 
@@ -254,7 +255,7 @@ var appMenuTemplate = [
                 appName: app.getName(),
                 appVersion: app.getVersion(),
                 appPath: global.globals.AppPath,
-                pluginPath: path.resolve(app.getAppPath() + '/plugins')
+                pluginPath: global.globals.PluginPath
             });
         }
       }
