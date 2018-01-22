@@ -19,7 +19,8 @@ var appMenu; // used to store the Menu() for the application
 global.globals = {
     AppName: 'Ice-Sickle',
     AppPath: app.getPath('userData'),
-    PluginPath: path.join(app.getPath('userData'), 'plugins'),
+    AppDataPath: path.join(app.getPath('documents'), 'icesickle'),
+    PluginPath: path.join(app.getPath('documents'), 'icesickle', 'plugins'),
     isDevelopment: isDev
 };
 
@@ -32,7 +33,7 @@ function loadScriptingLanguages() {
     };
 
     var directories = klawSync(
-        './scripting/languages',
+        path.join(global.globals.AppDataPath, 'scripting', 'languages'),
         { nofile: true, filter: filterFn, noRecurseOnFailedFilter: true }
     );
 
@@ -254,7 +255,7 @@ var appMenuTemplate = [
             Window.Open('about', {
                 appName: app.getName(),
                 appVersion: app.getVersion(),
-                appPath: global.globals.AppPath,
+                appDataPath: global.globals.AppDataPath,
                 pluginPath: global.globals.PluginPath
             });
         }
@@ -263,7 +264,7 @@ var appMenuTemplate = [
   }
 ];
 
-Settings.Load(app.getAppPath());
+Settings.Load(global.globals.AppDataPath);
 if(Settings.GetGlobal('recentMaps')) {
     Settings.GetGlobal('recentMaps').forEach((recentMap) => {
         var mapName = recentMap.split('\\').reverse()[0];
@@ -554,6 +555,9 @@ app.on('ready', () => {
     // Create the main menu from the menu template
     menu = Menu.buildFromTemplate(appMenuTemplate);
     Menu.setApplicationMenu(menu);
+
+    console.log('App Path', global.globals.AppDataPath)
+    console.log('Plugin Path', global.globals.PluginPath)
 
     app.setName('Ice Sickle'); // From package.json it's icesickle (since npm init required lowercase, no spaces)
 

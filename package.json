@@ -14,7 +14,6 @@
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "pack": "build --dir",
-    "dist": "build",
     "release": "build"
   },
   "build": {
@@ -28,7 +27,19 @@
     "target": {
       "arch": "x64",
       "target": "win"
-    }
+    },
+    "files": [
+        "*.js",
+        "enum",
+        "assets",
+        "WEdata",
+        "windows",
+        "views",
+        "mpqedit",
+        "classes",
+        "build",
+        "node_modules"
+    ]
   },
   "dependencies": {
     "electron-is-dev": "^0.1.2",

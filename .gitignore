@@ -3,9 +3,6 @@ Notepad++ Session
 .idea
 settings.json
 
-# Plugin system
-plugins
-
 # Builds and distributions
 dist
 .build

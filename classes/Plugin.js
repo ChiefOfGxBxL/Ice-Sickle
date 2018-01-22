@@ -1,9 +1,13 @@
 var Path = require('path'),
     fs = require('fs-extra'),
-    {app} = require('electron');
+    {app} = require('electron'),
+    isDev = require('electron-is-dev');
+
+const appPath = app.getPath('userData');
+const appDataPath = Path.join(app.getPath('documents'), 'icesickle');
 
 module.exports = function(pluginName) {
-    const pluginPath = Path.resolve('plugins', pluginName);
+    const pluginPath = Path.join(appDataPath, 'plugins', pluginName);
 
     var plugin = {
         require: (name) => {
@@ -21,14 +25,14 @@ module.exports = function(pluginName) {
             }
         },
         window: {
-            register: function(manifest) {
-                if(typeof manifest === 'string') {
-                    manifest = fs.readJsonSync(Path.resolve(pluginPath, manifest));
+            register: function(windowManifest) {
+                if(typeof windowManifest === 'string') {
+                    windowManifest = fs.readJsonSync(Path.resolve(pluginPath, windowManifest));
                 }
 
                 // Now we have that manifest is a JSON object
-                manifest.path = Path.resolve(pluginPath, manifest.path);
-                app.Events['registerWindow'](null, manifest);
+                windowManifest.path = Path.resolve(pluginPath, windowManifest.path);
+                app.Events['registerWindow'](null, windowManifest);
             }
         },
         settings: {
@@ -49,13 +53,17 @@ module.exports = function(pluginName) {
         enums: {}
     };
 
-    // Load all enums in the ./enum directory and set plugin.enums
-    const enumFiles = fs.readdirSync( './enum' );
+    //Load all enums in the ./enum directory and set plugin.enums
+    const enumFolderPath = isDev ?
+        Path.join(app.getAppPath(), 'enum') :
+        Path.join(appPath, 'enum');
+
+    const enumFiles = fs.readdirSync(enumFolderPath);
     enumFiles.forEach((enumFile) => {
         const enumFileNameWithoutExt = enumFile.split('.js')[0];
 
         plugin.enums[enumFileNameWithoutExt] = require(
-            Path.join(app.getAppPath(), 'enum', enumFile)
+            Path.join(enumFolderPath, enumFile)
         );
     });
 

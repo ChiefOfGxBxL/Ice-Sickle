@@ -8,12 +8,12 @@ var PluginManager = {
     loadedPlugins: {},
 
     LoadPlugins: function(mod, appEvents) {
-        const appPath = Path.resolve(app.getAppPath() + '/plugins');
+        const appPath = Path.join(app.getPath('documents'), 'icesickle', 'plugins');
         var pluginFolders = fs.readdirSync( appPath )
         console.log('Loading ' + pluginFolders.length + ' plugins from ' + appPath)
 
         pluginFolders.forEach((pluginFolder) => {
-            var pluginPath = Path.resolve('plugins', pluginFolder),
+            var pluginPath = Path.join(appPath, pluginFolder),
                 stat = fs.statSync(pluginPath);
 
             if(stat && stat.isDirectory()) {

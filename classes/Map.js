@@ -346,8 +346,10 @@ var Map = {
         // Merge all the .jass files
         //
         const
-            JASS = require('../scripting/languages/JASS/index.js'),
-            mapJass = require(Path.join(app.getAppPath(), '/scripting/mapJass.js')),
+            scriptingPath = Path.join(app.getPath('documents'), 'icesickle', 'scripting'),
+            scriptingJASSPath = Path.join(scriptingPath, 'languages', 'JASS'),
+            JASS = require(scriptingJASSPath),
+            mapJass = require('../assets/js/mapJass.js'),
             triggerFragments = klaw(triggerPath).map((pathObj) => { return pathObj.path; }),
             declarations = JASS.merge(
                 // Array of file paths to each .jass file
