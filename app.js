@@ -13,7 +13,8 @@ var Map = require('./classes/Map'),
     PluginManager = require('./classes/PluginManager'),
     mapObj; // Map data is stored in this object
 
-var appMenu; // used to store the Menu() for the application
+var appMenu, // used to store the Menu() for the application
+    log = []; // used to store log message objects (as a queue)
 
 // Global variables across windows
 global.globals = {
@@ -484,6 +485,21 @@ const EventHandlers = {
     /*
      * Misc
      */
+    log: function(event, data) {
+        const logRecord = {
+            type: data.type,
+            message: data.message,
+            timestamp: new Date() - 0
+        };
+
+        log.push(logRecord);
+        applicationBroadcastEvent('logAdded', logRecord);
+    },
+    clearLog: function() {
+        log = [];
+        applicationBroadcastEvent('logCleared', null);
+    },
+
     requestUserInput: function(event, data) {
         var inputWindowName = 'input' + data.type[0].toUpperCase() + data.type.substr(1); // e.g. inputInt
 
