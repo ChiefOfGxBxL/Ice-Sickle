@@ -571,7 +571,7 @@ app.on('ready', () => {
         if(pluginObj.module.onMenuClick) {
             menu.items[6].submenu.insert(0, new MenuItem({
                 click: pluginObj.module.onMenuClick,
-                label: pluginObj.manifest.title
+                label: pluginObj.manifest.icesickle.title
             }));
         }
     });
