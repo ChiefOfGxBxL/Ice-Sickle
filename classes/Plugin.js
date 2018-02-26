@@ -9,6 +9,13 @@ const appDataPath = Path.join(app.getPath('documents'), 'icesickle');
 module.exports = function(pluginName) {
     const pluginPath = Path.join(appDataPath, 'plugins', pluginName);
 
+    const pluginLogFn = (type, msg) => {
+        plugin.event.send('log', {
+            type: type,
+            msg: msg
+        });
+    };
+
     var plugin = {
         require: (name) => {
             return require(Path.resolve('./', name));
@@ -50,7 +57,8 @@ module.exports = function(pluginName) {
                 });
             }
         },
-        enums: {}
+        enums: {},
+        log: pluginLogFn
     };
 
     //Load all enums in the ./enum directory and set plugin.enums
