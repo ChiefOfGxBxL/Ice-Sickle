@@ -9,13 +9,13 @@ var _settings = { // Private storage of settings
 
 var Settings = {
 
-    GetGlobal: (name) => { 
+    GetGlobal: (name) => {
+        if(!_settings.global) _settings.global = {};
         return _settings.global[name] || null;
-        //return _settings.global[name];
     },
-    GetLocal: (name) =>         {
+    GetLocal: (name) => {
+        if(!_settings.local) _settings.local = {};
         return _settings.local[name] || null;
-        //return _settings.local[name];
     },
     SetGlobal: (name, data) =>  { _settings.global[name] = data; },
     SetLocal: (name, data) =>   { _settings.local[name] = data; },
