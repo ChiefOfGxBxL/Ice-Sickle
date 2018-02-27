@@ -495,6 +495,9 @@ const EventHandlers = {
         log.push(logRecord);
         applicationBroadcastEvent('logAdded', logRecord);
     },
+    getLog: function(event, data) {
+        applicationBroadcastEvent('responseLog', log);
+    },
     clearLog: function() {
         log = [];
         applicationBroadcastEvent('logCleared', null);
