@@ -516,6 +516,7 @@ const EventHandlers = {
     responseUserInput: function(event, data) {
         applicationBroadcastEvent('userInputProvided', data);
     },
+
     setGlobalSetting: function(event, obj) {
         Settings.SetGlobal(obj.name, obj.data);
     },
