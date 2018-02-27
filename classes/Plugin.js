@@ -12,7 +12,7 @@ module.exports = function(pluginName) {
     const pluginLogFn = (type, msg) => {
         plugin.event.send('log', {
             type: type,
-            msg: msg
+            message: msg
         });
     };
 
