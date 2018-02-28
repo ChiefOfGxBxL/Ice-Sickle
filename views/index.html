@@ -8,15 +8,24 @@
     <link rel="stylesheet" href="../assets/css/mini-default.min.css">
   </head>
 
+  <script>
+    const {ipcRenderer} = require('electron');
+    ipcRenderer.on('projectLoaded', (ev, project) => {
+        document.getElementById('projectName').innerText = project.__Dir.split('\\').reverse()[0];
+    });
+  </script>
+
   <body>
 
       <div class='container'>
-        <div style='text-align:center;background-color:#f9f9f9;border:1px solid #ddd;border-radius:4px;padding:20px;width:40%;margin:10% auto;font-size:0.9em;line-height:110%;'>
+        <div style='text-align:center;background-color:#fff;border:1px solid #ddd;border-radius:4px;padding:20px;width:40%;margin:10% auto;font-size:0.9em;line-height:110%;'>
             <img src='../assets/img/icon.png' />
             <h1>
                 Ice Sickle
                 <small>Next-Generation WC3 Editor</small>
             </h1>
+
+            Current project: <code id='projectName'>(None)</code>
 
             <br/>
 
