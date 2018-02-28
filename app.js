@@ -274,7 +274,7 @@ if(Settings.GetGlobal('recentMaps')) {
             label: mapName,
             sublabel: recentMap,
             click(entry) {
-                LoadProject(entry.sublabel);
+                EventHandlers.loadProject(null, entry.sublabel);
             }
         });
     })
