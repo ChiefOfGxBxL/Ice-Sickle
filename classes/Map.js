@@ -165,9 +165,9 @@ var Map = {
         fs.ensureDirSync(Map.__Dir); // Creates the path if it doesn't exist
 
         // Other subfolders
-        fs.ensureDirSync(Path.resolve(Map.__Dir), 'imports');
-        fs.ensureDirSync(Path.resolve(Map.__Dir), 'objects');
-        fs.ensureDirSync(Path.resolve(Map.__Dir), 'triggers');
+        fs.ensureDirSync(Path.join(Map.__Dir, 'imports'));
+        fs.ensureDirSync(Path.join(Map.__Dir, 'objects'));
+        fs.ensureDirSync(Path.join(Map.__Dir, 'triggers'));
 
         // Set new Map object
         setNewMap(name);
