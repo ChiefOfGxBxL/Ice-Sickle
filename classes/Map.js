@@ -156,11 +156,11 @@ var Map = {
     // imports: [],
     // strings: {},
 
-    Create: function(name) {
+    Create: function(projectPath, name) {
         // TODO: if the __Dirty is set, notify the user before continuing
         // since we don't want to overwrite changes
 
-        Map.__Dir = Path.resolve('./' + name); // TODO: let user choose path with file chooser
+        Map.__Dir = projectPath; // TODO: let user choose path with file chooser
 
         fs.ensureDirSync(Map.__Dir); // Creates the path if it doesn't exist
 

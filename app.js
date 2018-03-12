@@ -21,6 +21,7 @@ global.globals = {
     AppName: 'Ice-Sickle',
     AppPath: app.getPath('userData'),
     AppDataPath: path.join(app.getPath('documents'), 'icesickle'),
+    ProjectsPath: path.join(app.getPath('documents'), 'icesickle', 'projects'),
     PluginPath: path.join(app.getPath('documents'), 'icesickle', 'plugins'),
     isDevelopment: isDev
 };
@@ -303,7 +304,9 @@ const EventHandlers = {
      * Project
      */
     newProject: function(event, data) {
-        mapObj = Map.Create(data.name);
+        const newProjectPath = path.join(global.globals.ProjectsPath, data.name);
+
+        mapObj = Map.Create(newProjectPath, data.name);
         applicationBroadcastEvent('projectCreated', mapObj);
         Window.Close('welcome'); // In case this window is still open, close it
     },
