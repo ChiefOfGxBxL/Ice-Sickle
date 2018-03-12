@@ -2,7 +2,9 @@ const fs = require('fs-extra'),
     Path = require('path');
 
 var _settings = { // Private storage of settings
-        global: {},
+        global: {
+            recentMaps: []
+        },
         local: {}
     },
     _currPath; // Path to the settings.json file
@@ -32,7 +34,8 @@ var Settings = {
         if(!fs.existsSync(_currPath)) {
             // Ensure the settings.json file exists with
             // at least empty `global` and `local` objects
-            fs.writeFileSync(_currPath, '{"global": {}, "local": {}}');
+            console.log('Settings.json file is missing; writing & using default empty file', _settings);
+            fs.writeJsonSync(_currPath, _settings);
         }
 
         _settings = fs.readJsonSync(_currPath);
