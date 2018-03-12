@@ -309,6 +309,13 @@ const EventHandlers = {
         mapObj = Map.Create(newProjectPath, data.name);
         applicationBroadcastEvent('projectCreated', mapObj);
         Window.Close('welcome'); // In case this window is still open, close it
+
+        // Add new project to 'Recent projects' list
+        var recentMaps = Settings.GetGlobal('recentMaps');
+
+        recentMaps.push(newProjectPath);
+        Settings.SetGlobal('recentMaps', recentMaps);
+        Settings.Save();
     },
     loadProject: function(event, path) {
         if(LoadProject(path)) {
