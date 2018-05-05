@@ -48,13 +48,13 @@
   },
   "dependencies": {
     "electron-is-dev": "^0.1.2",
-    "electron-updater": "^2.21.0",
+    "electron-updater": "^2.21.10",
     "fs-extra": "^2.0.0",
     "handlebars": "^4.0.11",
     "klaw-sync": "^2.1.0",
     "mime": "^1.6.0",
     "mini.css": "^2.3.7",
-    "wc3maptranslator": "^0.5.4"
+    "wc3maptranslator": "^0.5.5"
   },
   "devDependencies": {
     "electron": "1.6.16",
