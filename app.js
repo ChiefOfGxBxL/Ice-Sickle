@@ -308,6 +308,12 @@ const EventHandlers = {
         const newProjectPath = path.join(global.globals.ProjectsPath, data.name);
 
         mapObj = Map.Create(newProjectPath, data.name);
+
+        // Save the map right away to create the files
+        // Trigger any project-loaded events
+        Map.Save(mapObj);
+        EventHandlers.loadProject(null, newProjectPath);
+
         applicationBroadcastEvent('projectCreated', mapObj);
         Window.Close('welcome'); // In case this window is still open, close it
 
