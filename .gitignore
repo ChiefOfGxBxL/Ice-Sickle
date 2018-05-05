@@ -1,7 +1,6 @@
 node_modules
 Notepad++ Session
 .idea
-settings.json
 
 # Builds and distributions
 dist
