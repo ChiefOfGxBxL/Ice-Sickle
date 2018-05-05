@@ -37,8 +37,13 @@
       "views",
       "mpqedit",
       "classes",
-      "build",
-      "node_modules"
+      ".build/icon.*",
+      "node_modules",
+      "**/node_modules/**/*",
+      "bootstrap"
+    ],
+    "extraResources": [
+      "node_modules/wc3-jass"
     ]
   },
   "dependencies": {
@@ -54,7 +59,8 @@
   "devDependencies": {
     "electron": "1.6.16",
     "electron-builder": "^18.8.1",
-    "electron-log": "^2.2.14"
+    "electron-log": "^2.2.14",
+    "wc3-jass": "0.0.3"
   },
   "license": "MIT",
   "repository": {

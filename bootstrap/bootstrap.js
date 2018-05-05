@@ -8,7 +8,6 @@ const
     fs = require('fs-extra'),
     Path = require('path'),
     {app} = require('electron'),
-    isDev = require('electron-is-dev'),
     cp = require('child_process'),
 
     IceSickleDirectory = Path.join(app.getPath('documents'), 'icesickle'),
@@ -55,32 +54,38 @@ function ensureJASSScript() {
     catch(e) {
         // JASS language could not be loaded, so download it
         console.info('JASS scripting language is missing');
-        installJASS(isDev);
+        installJASS();
     }
 }
 
-function installJASS(isDev) {
-    console.info('Installing JASS language', '[dev]', isDev);
-    if(isDev) {
-        cp.exec('npm install wc3-jass', function(err, stdout, stderr) {
-            if(err) {
-                throw "Error: unable to install wc3-jass language";
-            }
-            else {
-                // Now that the package is installed, it should
-                // be copied to the scripting directory
-                console.info('Downloaded wc3-jass');
-                fs.copySync(
-                    './node_modules/wc3-jass',
-                    Path.join(ScriptingLanguagesDirectory, 'JASS')
-                );
-            }
-        });
-    }
-    else {
+function installJASS() {
+    console.info('Installing JASS language');
+
+    try {
+        // Development environment
+        // wc3-jass is installed as a devDependency, so we can copy out of
+        // node_modules; be sure to `npm install` to ensure success
         fs.copySync(
             './node_modules/wc3-jass',
             Path.join(ScriptingLanguagesDirectory, 'JASS')
         );
     }
+    catch(e) {
+        // Pack or dist environment
+        // When the application is distributed, the wc3-jass package will
+        // be bundled into the resources directory next to the .asar file
+        // based on the node-builder configuration's `extraResources`
+        fs.copySync(
+            './resources/node_modules/wc3-jass',
+            Path.join(ScriptingLanguagesDirectory, 'JASS')
+        );
+    }
+
+    // Perform an `npm install` under the wc3-jass module
+    // to install its dependencies
+    cp.exec('npm install', { cwd: JASSDirectory }, function(err, stdout, stderr) {
+        if(err) {
+            throw "Error: Unable to install wc3-jass dependencies";
+        }
+    })
 }

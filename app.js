@@ -5,7 +5,8 @@ const {app, BrowserWindow, Menu, MenuItem, dialog, ipcMain, protocol} = require(
     url = require('url'),
     fs = require('fs-extra'),
     klawSync = require('klaw-sync'),
-    Handlebars = require('handlebars');
+    Handlebars = require('handlebars'),
+    bootstrap = require('./bootstrap/bootstrap.js')();
 
 var Map = require('./classes/Map'),
     Window = require('./classes/Window'),
