@@ -630,13 +630,21 @@ app.on('ready', () => {
     });
 
     // Open welcome dialog
+    function iceProjectFilterFn(fileObj) {
+        var filePathParts = fileObj.path.split('\\');
+        filePathParts = filePathParts.slice(filePathParts.indexOf('icesickle'));
+
+        if(filePathParts.length === 3) return true;
+        return false;
+    };
+    var iceProjects = klawSync(global.globals.ProjectsPath, { nofile: true, filter: iceProjectFilterFn }).map((entry) => {
+        return {
+            name: entry.path.split('\\').reverse()[0],
+            path: entry.path.replace(/\\/g, "\\\\")
+        };
+    });
     Window.Open('welcome', {
-        recent: (Settings.GetGlobal('recentMaps')) ? Settings.GetGlobal('recentMaps').map((dir) => {
-            return {
-                name: dir.split('\\').reverse()[0],
-                path: dir.replace(/\\/g, "\\\\")
-            }
-        }) : []
+        recent: iceProjects
     })
 
     // Add the 'exit' menu item to File
