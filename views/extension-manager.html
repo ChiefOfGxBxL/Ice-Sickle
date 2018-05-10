@@ -1,0 +1,163 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Extension Manager</title>
+
+        <script src="https://unpkg.com/vue/dist/vue.js"></script>
+        <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+        <link rel='stylesheet' type='text/css' href='https://unpkg.com/element-ui/lib/theme-chalk/index.css' />
+
+        <script>
+        const {ipcRenderer} = require('electron');
+
+        ipcRenderer.on('extensionInstalled', function(event, extension) {
+            console.log('installed', extension);
+        });
+
+        var extensionManager = null;
+        window.addEventListener('load', function() {
+            extensionManager = new Vue({
+                el: '#app',
+                data: {
+                    tabPosition: 'top',
+                    installed: [],
+                    available: [],
+                    searchValue: '',
+                    searchResults: []
+                },
+                methods: {
+                    querySearch(queryString) {
+                        var results = queryString ? this.available.filter(this.searchFilter(queryString)) : [];
+                        this.searchResults = results.splice(0, 5);
+                    },
+                    searchFilter(queryString) {
+                        return (extension) => {
+                            // TODO: Implement valid logic here
+                            //  * Search through name, description, tags
+                            //  * Use the registrySearchURL instead of my own implementation
+                            //  * Exclude results that are already installed
+                            return true;
+                        }
+                    },
+                    installExtension(extensionName, extensionVersion) {
+                        console.log(extensionName, extensionVersion);
+                        ipcRenderer.send(
+                            'installExtension',
+                            { name: extensionName, version: extensionVersion }
+                        );
+                    }
+                }
+            })
+        })
+        </script>
+
+        <script>
+            var allIceExtensions = [];
+            var installedExtensions = [];
+
+            ipcRenderer.on('installedExtensions', function(eventName, data) {
+                installedExtensions = Object.values(data).map((ext) => { return ext.manifest });
+                extensionManager.installed = installedExtensions;
+            });
+            ipcRenderer.send('getInstalledExtensions');
+
+            function getListOfAllExtensions() {
+                //const registrySearchURL = 'https://registry.npmjs.org/-/v1/search?text=keywords:icesickle&size=250';
+                const registrySearchURL = 'https://api.npms.io/v2/search?q=keywords:icesickle';
+                fetch(registrySearchURL)
+                    .then(function(response) { return response.json(); })
+                    .then(function(responseJson)  {
+                        allIceExtensions = responseJson.results.map((item) => { return item.package; } );
+                        console.log('allIceExtensions', allIceExtensions);
+                        extensionManager.available = allIceExtensions;
+                    });
+            };
+
+            getListOfAllExtensions();
+        </script>
+    </head>
+    <body>
+        <div id="app">
+          <el-tabs :tab-position="tabPosition" style="height: 200px;">
+            <el-tab-pane label="Installed">
+                <div v-for="install in installed">
+                  <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+
+                      <el-row :gutter="20">
+                        <el-col :span="16">
+                          <div class="grid-content bg-purple">
+                              <strong style='font-size:1.1em'>{{install.icesickle.title}}</strong><br/>
+                              <em>{{install.name}}</em>
+                          </div>
+                        </el-col>
+                        <el-col :span="8">
+                          <div class="grid-content bg-purple">
+                            <el-row style='float:right;'>
+                              <!-- <el-button type="primary" icon="el-icon-refresh" plain size='mini' circle></el-button> -->
+                              <el-button type="danger" icon="el-icon-delete" plain size='mini' circle></el-button>
+                            </el-row>
+                          </div>
+                        </el-col>
+                      </el-row>
+
+                      <p>{{install.description}}</p>
+                    </div>
+                    <div class="text item">
+                        <small>
+                            {{ install.author }}
+                            <span style='float:right;'>v{{install.version}}</span>
+                        </small>
+                    </div>
+                  </el-card>
+                  <br/>
+                </div>
+            </el-tab-pane>
+            <el-tab-pane label="Search">
+
+                <el-row :gutter="20">
+                  <el-col :span="20">
+                      <el-input
+                        placeholder="Search for extensions"
+                        v-model="searchValue"
+                      ></el-input>
+                  </el-col>
+                  <el-col :span="4">
+                      <el-button icon="el-icon-search" @click="querySearch"></el-button>
+                  </el-col>
+                </el-row>
+
+                <br />
+
+                <div v-for="extension in searchResults">
+                  <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+
+                      <strong style='font-size:1.1em'>{{extension.name}}</strong><br/>
+                      <p>{{extension.description}}</p>
+
+                    </div>
+                    <div class="text item">
+                        <div style='float:right;'>
+                            <!-- <a href={{extension.links.npm}}>
+                                <el-button type="info" icon="el-icon-tickets" plain size='mini'>README</el-button>
+                            </a> -->
+                            <el-button
+                              type="success"
+                              icon="el-icon-download"
+                              plain
+                              size='mini'
+                              @click="installExtension(extension.name, extension.version)"
+                            >Install</el-button>
+                        </div>
+                        <br style='clear:both;' />
+                    </div>
+                  </el-card>
+                  <br/>
+                </div>
+
+            </el-tab-pane>
+          </el-tabs>
+        </div>
+    </body>
+</html>

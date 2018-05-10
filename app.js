@@ -222,9 +222,9 @@ var appMenuTemplate = [
           { type: 'separator' },
           {
               label: 'Extension Manager',
-              sublabel: '',
+              sublabel: 'Install, update, and remove extensions',
               click() {
-                  //Window.Open('importManager');
+                  Window.Open('extensionManager');
               }
           }
       ]
@@ -301,6 +301,24 @@ function applyPartialObjectUpdate(obj, updates) {
 }
 
 const EventHandlers = {
+    /*
+     * Application
+     */
+    getInstalledExtensions: function(event, data) {
+        event.sender.webContents.send('installedExtensions', PluginManager.loadedPlugins);
+    },
+
+    installExtension: function(event, data) {
+        PluginManager.Install(data.name, data.version, function(err, result) {
+            if(err) {
+                console.error(err);
+            }
+            else {
+                applicationBroadcastEvent('extensionInstalled', result);
+            }
+        });
+    },
+
     /*
      * Project
      */

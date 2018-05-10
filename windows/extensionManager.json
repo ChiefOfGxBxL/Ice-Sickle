@@ -1,0 +1,15 @@
+{
+    "name": "extensionManager",
+    "path": "extension-manager.html",
+    "description": "",
+
+    "width": 480,
+    "height": 600,
+
+    "parent": "root",
+    "modal": false,
+    "frame": true,
+    "resizable": true,
+    "allowMultiple": false,
+    "requiresTemplate": false
+}
