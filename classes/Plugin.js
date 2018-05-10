@@ -7,7 +7,7 @@ const appPath = app.getPath('userData');
 const appDataPath = Path.join(app.getPath('documents'), 'icesickle');
 
 module.exports = function(pluginName) {
-    const pluginPath = Path.join(appDataPath, 'plugins', pluginName);
+    const pluginPath = Path.join(appDataPath, 'extensions', pluginName);
 
     const pluginLogFn = (type, msg) => {
         plugin.event.send('log', {

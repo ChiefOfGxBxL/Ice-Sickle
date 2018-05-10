@@ -11,7 +11,7 @@ const
     cp = require('child_process'),
 
     IceSickleDirectory = Path.join(app.getPath('documents'), 'icesickle'),
-    PluginsDirectory = Path.join(IceSickleDirectory, 'plugins'),
+    PluginsDirectory = Path.join(IceSickleDirectory, 'extensions'),
     ProjectsDirectory = Path.join(IceSickleDirectory, 'projects'),
     ScriptingDirectory = Path.join(IceSickleDirectory, 'scripting'),
     ScriptingLanguagesDirectory = Path.join(ScriptingDirectory, 'languages'),

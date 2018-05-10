@@ -23,7 +23,7 @@ global.globals = {
     AppPath: app.getPath('userData'),
     AppDataPath: path.join(app.getPath('documents'), 'icesickle'),
     ProjectsPath: path.join(app.getPath('documents'), 'icesickle', 'projects'),
-    PluginPath: path.join(app.getPath('documents'), 'icesickle', 'plugins'),
+    PluginPath: path.join(app.getPath('documents'), 'icesickle', 'extensions'),
     isDevelopment: isDev
 };
 
