@@ -17,11 +17,17 @@ var PluginManager = {
         console.log('Loading ' + pluginFolders.length + ' plugins from ' + appPath)
 
         pluginFolders.forEach((pluginFolder) => {
-            var pluginPath = Path.join(appPath, pluginFolder),
-                stat = fs.statSync(pluginPath);
+            try {
+                var pluginPath = Path.join(appPath, pluginFolder),
+                    stat = fs.statSync(pluginPath);
 
-            if(stat && stat.isDirectory()) {
-                loadPlugin(pluginPath, mod, appEvents);
+                if(stat && stat.isDirectory()) {
+                    loadPlugin(pluginPath, mod, appEvents);
+                }
+            }
+            catch(e) {
+                // E.g. if fs.statSync fails above
+                console.error('Error:', 'Unable to load extension', pluginFolder);
             }
         });
     },
