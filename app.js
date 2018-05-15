@@ -334,6 +334,17 @@ const EventHandlers = {
             }
         });
     },
+    uninstallExtension: function(event, data) {
+        PluginManager.Uninstall(data.name, function(err, result) {
+            if(err) {
+                console.error(err);
+            }
+            else {
+                console.log('uninstalled', data.name);
+                applicationBroadcastEvent('extensionUninstalled', result);
+            }
+        })
+    },
 
     /*
      * Project

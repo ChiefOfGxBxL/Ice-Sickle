@@ -45,6 +45,12 @@
                             'installExtension',
                             { name: extensionName, version: extensionVersion }
                         );
+                    },
+                    uninstallExtension(extensionName) {
+                        ipcRenderer.send(
+                            'uninstallExtension',
+                            { name: extensionName }
+                        )
                     }
                 }
             })
@@ -95,7 +101,14 @@
                           <div class="grid-content bg-purple">
                             <el-row style='float:right;'>
                               <!-- <el-button type="primary" icon="el-icon-refresh" plain size='mini' circle></el-button> -->
-                              <el-button type="danger" icon="el-icon-delete" plain size='mini' circle></el-button>
+                              <el-button
+                                type="danger"
+                                icon="el-icon-delete"
+                                plain
+                                size='mini'
+                                circle
+                                @click="uninstallExtension(install.name)"
+                              ></el-button>
                             </el-row>
                           </div>
                         </el-col>
