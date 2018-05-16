@@ -11,7 +11,21 @@
         const {ipcRenderer} = require('electron');
 
         ipcRenderer.on('extensionInstalled', function(event, extension) {
-            console.log('installed', extension);
+            // Add to list of installed extensions
+            extensionManager.installed.push(extension);
+
+            // Remove from search results
+            const indexOfSearchedExtension = extensionManager.searchResults.findIndex(
+                (ext) => { return ext.name === extension.name }
+            );
+            extensionManager.searchResults.splice(indexOfSearchedExtension, 1);
+        });
+
+        ipcRenderer.on('extensionUninstalled', function(event, extension) {
+            const indexOfInstalledExtension = extensionManager.installed.findIndex(
+                (ext) => { return ext.name === extension.name }
+            );
+            extensionManager.installed.splice(indexOfInstalledExtension, 1);
         });
 
         var extensionManager = null;
