@@ -32,7 +32,7 @@ var PluginManager = {
         });
     },
 
-    Install: function(name, version) {
+    Install: function(name, version, cb) {
         const tarURL = `https://registry.npmjs.org/${name}/-/${name}-${version}.tgz`;
         const localTarDir = Path.join(appPath, name);
         const tarFile = Path.join(localTarDir, 'ext.tgz');
@@ -61,7 +61,7 @@ var PluginManager = {
                         cp.execSync('npm install', { cwd: localTarDir });
 
                         // Load the newly-installed extension
-                        loadPlugin(localTarDir, module);
+                        loadPlugin(localTarDir, module, cb);
                     }
                 });
             }
@@ -83,7 +83,7 @@ var PluginManager = {
     }
 }
 
-function loadPlugin(dir, mod) {
+function loadPlugin(dir, mod, cb) {
     const pluginManifestPath = Path.resolve(dir, 'package.json');
 
     // Register the plugin
@@ -99,10 +99,14 @@ function loadPlugin(dir, mod) {
         // Execute the plugin's initial script
         PluginManager.loadedPlugins[pluginManifest.name].module.onLoad();
         console.log('Plugin:', pluginManifest.name, 'loaded');
+
+        // Callback, if one is provided
+        if (cb) cb(false, pluginManifest);
     }
     catch(e) {
         // E.g. if package.json file is missing or index file cannot be loaded
         console.error('Error:', 'Unable to load extension', dir);
+        if(cb) cb(true, 'Unable to load extension');
     }
 }
 
