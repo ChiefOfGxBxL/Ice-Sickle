@@ -73,13 +73,17 @@ var PluginManager = {
 
         // Unregister event listeners :: TODO
 
-        // Remove from list of loaded plugins
-        delete PluginManager.loadedPlugins[name];
-
         // Delete extension from file system
         fs.remove(extensionDirPath, function(err, result) {
-            return cb(err, null);
+            const extensionManifest = PluginManager.loadedPlugins[name].manifest;
+
+            // Remove from list of loaded plugins
+            delete PluginManager.loadedPlugins[name];
+
+            return cb(err, extensionManifest);
         });
+
+
     }
 }
 
