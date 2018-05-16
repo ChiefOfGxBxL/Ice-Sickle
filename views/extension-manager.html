@@ -35,12 +35,16 @@
                             // TODO: Implement valid logic here
                             //  * Search through name, description, tags
                             //  * Use the registrySearchURL instead of my own implementation
-                            //  * Exclude results that are already installed
+
+                            // Exclude results that are already installed
+                            if(extensionManager.installed.findIndex(function(ext) {
+                                return ext.name === extension.name;
+                            }) !== -1) return false;
+
                             return true;
                         }
                     },
                     installExtension(extensionName, extensionVersion) {
-                        console.log(extensionName, extensionVersion);
                         ipcRenderer.send(
                             'installExtension',
                             { name: extensionName, version: extensionVersion }
