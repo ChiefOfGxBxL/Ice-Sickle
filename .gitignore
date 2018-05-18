@@ -3,6 +3,7 @@ Notepad++ Session
 .idea
 
 # Builds and distributions
+# including Typescript
 dist
 .build
 

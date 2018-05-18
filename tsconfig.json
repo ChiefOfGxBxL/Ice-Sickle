@@ -1,0 +1,24 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "outDir": "./.build",
+        "allowJs": true,
+        "target": "es5",
+        "removeComments": false,
+        "declaration": false
+    },
+    "include": [
+        "app.ts",
+        "test.ts",
+        "./assets/*",
+        "./bootstrap/*",
+        "./classes/*",
+        "./enum/*",
+        "./mpqedit/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
