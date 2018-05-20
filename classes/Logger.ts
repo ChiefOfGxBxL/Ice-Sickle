@@ -25,7 +25,7 @@ export abstract class Logger {
     private static entries: LogEntry[] = [];
 
     private static SquareBracketText(text: string, color: string): string {
-        return '[' + colors[color](text) + ']';
+        return colors[color]('[' + text + ']');
     }
 
     private static GetCurrentTimestamp(): number {
