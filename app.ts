@@ -8,22 +8,28 @@ const {app, BrowserWindow, Menu, MenuItem, dialog, ipcMain, protocol} = require(
     Handlebars = require('handlebars'),
     bootstrap = require('./bootstrap/bootstrap.js')();
 
-var Map = require('./classes/Map'),
-    Window = require('./classes/Window'),
-    Settings = require('./classes/Settings'),
-    PluginManager = require('./classes/PluginManager'),
-    mapObj; // Map data is stored in this object
 
-var appMenu, // used to store the Menu() for the application
-    log = []; // used to store log message objects (as a queue)
+import { ViewMgr } from './classes/ViewMgr';
+import { Settings } from './classes/Settings';
+import { ExtensionMgr } from './classes/ExtensionMgr';
+import { EventMgr } from './classes/EventMgr';
+import { EventType } from './classes/EventType';
+
+
+var Map = require('./classes/Map');
+var PluginManager = require('./classes/PluginManager');
+var mapObj; // Map data is stored in this object
+
+var appMenu; // used to store the Menu() for the application
 
 // Global variables across windows
-global.globals = {
+const globals = {
     AppName: 'Ice-Sickle',
     AppPath: app.getPath('userData'),
     AppDataPath: path.join(app.getPath('documents'), 'icesickle'),
+    SettingsJson: path.join(app.getPath('documents'), 'icesickle', 'settings.json'),
     ProjectsPath: path.join(app.getPath('documents'), 'icesickle', 'projects'),
-    PluginPath: path.join(app.getPath('documents'), 'icesickle', 'extensions'),
+    ExtensionsPath: path.join(app.getPath('documents'), 'icesickle', 'extensions'),
     isDevelopment: isDev
 };
 
@@ -36,46 +42,35 @@ function loadScriptingLanguages() {
     };
 
     var directories = klawSync(
-        path.join(global.globals.AppDataPath, 'scripting', 'languages'),
+        path.join(globals.AppDataPath, 'scripting', 'languages'),
         { nofile: true, filter: filterFn, noRecurseOnFailedFilter: true }
     );
 
     // Load that language
     directories.forEach((langDir) => {
-        try {
-            var languageIndex = require(path.join(
-                langDir.path,
-                'index.js'
-            ));
-
-            if(languageIndex.logo) {
-                languageIndex.logo = path.join(langDir.path, languageIndex.logo);
-            }
-
-            if(languageIndex.icon) {
-                languageIndex.icon = path.join(langDir.path, languageIndex.icon);
-            }
-
-            languageIndex.name = langDir.path.split(path.sep).reverse()[0];
-
-            scriptingLanguages[languageIndex.ext] = languageIndex;
-            console.log('Loaded language', languageIndex.ext, languageIndex);
-        }
-        catch(e) {
-            console.error('Error loading scripting language', langDir);
-        }
+        // try {
+        //     var languageIndex = require(path.join(
+        //         langDir.path,
+        //         'index.js'
+        //     ));
+        //
+        //     if(languageIndex.logo) {
+        //         languageIndex.logo = path.join(langDir.path, languageIndex.logo);
+        //     }
+        //
+        //     if(languageIndex.icon) {
+        //         languageIndex.icon = path.join(langDir.path, languageIndex.icon);
+        //     }
+        //
+        //     languageIndex.name = langDir.path.split(path.sep).reverse()[0];
+        //
+        //     scriptingLanguages[languageIndex.ext] = languageIndex;
+        //     console.log('Loaded language', languageIndex.ext, languageIndex);
+        // }
+        // catch(e) {
+        //     console.error('Error loading scripting language', langDir);
+        // }
     });
-}
-
-function applicationBroadcastEvent(eventName, eventData) {
-    Window.Broadcast(eventName, eventData);
-
-    // Run any function that plugins have registered to this event
-    if(app.pluginSystem.listeners[eventName]) {
-        app.pluginSystem.listeners[eventName].forEach((listeningFn) => {
-            listeningFn(eventName, eventData);
-        })
-    }
 }
 
 function OpenProjectWindow() {
@@ -100,7 +95,7 @@ function LoadProject(projectPath) {
     }
 }
 
-var appMenuTemplate = [
+var appMenuTemplate: Electron.MenuItemConstructorOptions[] = [
   {
     label: 'File',
     submenu: [
@@ -109,7 +104,7 @@ var appMenuTemplate = [
         sublabel: 'Create a new project',
         role: 'new',
         click () {
-            Window.Open('newProject');
+            ViewMgr.GetViewByName('newProject').Open();
         }
       },
       {
@@ -172,7 +167,7 @@ var appMenuTemplate = [
           {
               label: 'Map Properties',
               click() {
-                  Window.Open('mapProperties', mapObj.info);
+                  ViewMgr.GetViewByName('mapProperties').Open(mapObj.info);
               }
           }
       ]
@@ -184,14 +179,14 @@ var appMenuTemplate = [
               label: 'Trigger Editor',
               sublabel: '',
               click() {
-                  Window.Open('triggerEditor');
+                  ViewMgr.GetViewByName('triggerEditor').Open();
               }
           },
           {
               label: 'Object Editor',
               sublabel: '',
               click() {
-                  Window.Open('objectEditor');
+                  ViewMgr.GetViewByName('objectEditor').Open();
               }
           },
           { type: 'separator' },
@@ -199,7 +194,7 @@ var appMenuTemplate = [
               label: 'Import Manager',
               sublabel: '',
               click() {
-                  Window.Open('importManager');
+                  ViewMgr.GetViewByName('importManager').Open();
               }
           }
       ]
@@ -224,7 +219,7 @@ var appMenuTemplate = [
               label: 'Extension Manager',
               sublabel: 'Install, update, and remove extensions',
               click() {
-                  Window.Open('extensionManager');
+                  ViewMgr.GetViewByName('extensionManager').Open();
               }
           }
       ]
@@ -255,11 +250,11 @@ var appMenuTemplate = [
       {
         label: 'About',
         click () {
-            Window.Open('about', {
+            ViewMgr.GetViewByName('about').Open({
                 appName: app.getName(),
                 appVersion: app.getVersion(),
-                appDataPath: global.globals.AppDataPath,
-                pluginPath: global.globals.PluginPath
+                appDataPath: globals.AppDataPath,
+                pluginPath: globals.ExtensionsPath
             });
         }
       }
@@ -267,18 +262,18 @@ var appMenuTemplate = [
   }
 ];
 
-Settings.Load(global.globals.AppDataPath);
-if(Settings.GetGlobal('recentMaps')) {
-    Settings.GetGlobal('recentMaps').forEach((recentMap) => {
+Settings.Load(globals.SettingsJson);
+if(Settings.Get('recentMaps')) {
+    Settings.Get('recentMaps').forEach((recentMap) => {
         var mapName = recentMap.split('\\').reverse()[0];
 
-        appMenuTemplate[0].submenu.push({
-            label: mapName,
-            sublabel: recentMap,
-            click(entry) {
-                EventHandlers.loadProject(null, entry.sublabel);
-            }
-        });
+        // appMenuTemplate[0].submenu.push({
+        //     label: mapName,
+        //     sublabel: recentMap,
+        //     click(entry) {
+        //         EventHandlers.loadProject(null, entry.sublabel);
+        //     }
+        // });
     })
 }
 
@@ -308,7 +303,7 @@ function getListOfProjects() {
         if(filePathParts.length === 3) return true;
         return false;
     };
-    return klawSync(global.globals.ProjectsPath, { nofile: true, filter: iceProjectFilterFn }).map((entry) => {
+    return klawSync(globals.ProjectsPath, { nofile: true, filter: iceProjectFilterFn }).map((entry) => {
         return {
             name: entry.path.split('\\').reverse()[0],
             path: entry.path.replace(/\\/g, "\\\\")
@@ -318,39 +313,10 @@ function getListOfProjects() {
 
 const EventHandlers = {
     /*
-     * Application
-     */
-    getInstalledExtensions: function(event, data) {
-        event.sender.webContents.send('installedExtensions', PluginManager.loadedPlugins);
-    },
-
-    installExtension: function(event, data) {
-        PluginManager.Install(data.name, data.version, function(err, result) {
-            if(err) {
-                console.error(err);
-            }
-            else {
-                applicationBroadcastEvent('extensionInstalled', result);
-            }
-        });
-    },
-    uninstallExtension: function(event, data) {
-        PluginManager.Uninstall(data.name, function(err, result) {
-            if(err) {
-                console.error(err);
-            }
-            else {
-                console.log('uninstalled', data.name);
-                applicationBroadcastEvent('extensionUninstalled', result);
-            }
-        })
-    },
-
-    /*
      * Project
      */
     newProject: function(event, data) {
-        const newProjectPath = path.join(global.globals.ProjectsPath, data.name);
+        const newProjectPath = path.join(globals.ProjectsPath, data.name);
 
         mapObj = Map.Create(newProjectPath, data.name);
 
@@ -359,22 +325,22 @@ const EventHandlers = {
         Map.Save(mapObj);
         EventHandlers.loadProject(null, newProjectPath);
 
-        applicationBroadcastEvent('projectCreated', mapObj);
-        Window.Close('welcome'); // In case this window is still open, close it
+        EventMgr.Emit(EventType.ProjectCreated, mapObj);
+        ViewMgr.GetViewByName('welcome').Close(); // In case this window is still open, close it
 
         // Add new project to 'Recent projects' list
-        var recentMaps = Settings.GetGlobal('recentMaps');
+        var recentMaps = Settings.Get('recentMaps');
 
         recentMaps.push(newProjectPath);
-        Settings.SetGlobal('recentMaps', recentMaps);
+        Settings.Set('recentMaps', recentMaps);
         Settings.Save();
     },
     loadProject: function(event, path) {
         if(LoadProject(path)) {
-            applicationBroadcastEvent('projectLoaded', mapObj);
+            EventMgr.Emit(EventType.ProjectLoaded, mapObj);
 
             // Store the project in recently-loaded settings
-            var recentMaps = Settings.GetGlobal('recentMaps');
+            var recentMaps = Settings.Get('recentMaps');
 
             // If a new settings.json file exists, this data will be missing
             if(!recentMaps) recentMaps = [];
@@ -382,23 +348,23 @@ const EventHandlers = {
             // When user opens a map not listed in recent maps, add it to the list and save
             if(recentMaps.indexOf(path) === -1) {
                 recentMaps.push(path);
-                Settings.SetGlobal('recentMaps', recentMaps);
+                Settings.Set('recentMaps', recentMaps);
                 Settings.Save();
             }
         }
     },
     saveProject: function() {
         Map.Save(mapObj);
-        applicationBroadcastEvent('projectSaved', mapObj);
+        EventMgr.Emit(EventType.ProjectSaved, mapObj);
     },
     compileProject: function() {
-        Window.Open('compile');
+        ViewMgr.GetViewByName('compile').Open();
 
         setTimeout(() => {
             var result = Map.Compile(mapObj.__Dir, mapObj, scriptingLanguages, false);
             console.log('Map compiled:', result);
 
-            applicationBroadcastEvent('mapCompiled', result);
+            EventMgr.Emit(EventType.ProjectCompiled, result);
         }, 2000)
 
     },
@@ -431,7 +397,7 @@ const EventHandlers = {
         }];
 
         // Send event to all windows
-        applicationBroadcastEvent('newCustomObject', data);
+        EventMgr.Emit(EventType.ObjectCreated, data);
     },
     editObject: function(event, data) {
         // TODO: clean this mess up
@@ -477,7 +443,7 @@ const EventHandlers = {
          // Create a new trigger in the map
         mapObj.triggers.push(newTrigger)
 
-        applicationBroadcastEvent('newTrigger', newTrigger);
+        EventMgr.Emit(EventType.TriggerCreated, newTrigger);
     },
     editTrigger: function(event, data) {
         // Update a specified trigger's contents
@@ -496,20 +462,6 @@ const EventHandlers = {
     requestScriptingLanguages: function(event, data) {
          event.sender.webContents.send('responseScriptingLanguages', scriptingLanguages);
      },
-
-
-    /*
-     * Windows
-     */
-    openWindow: function(event, data) {
-        if(!data || !data.windowName) return false;
-
-        Window.Open(data.windowName, data.template);
-    },
-    registerWindow: function(event, manifest) {
-        // TODO: is the window protected??
-        Window.availableWindows[manifest.name] = manifest;
-    },
 
 
     /*
@@ -539,7 +491,7 @@ const EventHandlers = {
             // This is the only attribute that can be changed
             // since size, name, and type are not modified by user
             if(file.fullPath) importToUpdate.fullPath = file.fullPath;
-            applicationBroadcastEvent('importUpdated', importToUpdate);
+            EventMgr.Emit(EventType.ImportModified, importToUpdate);
         }
     },
 
@@ -551,47 +503,19 @@ const EventHandlers = {
     /*
      * Misc
      */
-    log: function(event, data) {
-        const logRecord = {
-            type: data.type,
-            message: data.message,
-            timestamp: new Date() - 0
-        };
-
-        log.push(logRecord);
-        applicationBroadcastEvent('logAdded', logRecord);
-    },
-    getLog: function(event, data) {
-        applicationBroadcastEvent('responseLog', log);
-    },
-    clearLog: function() {
-        log = [];
-        applicationBroadcastEvent('logCleared', null);
-    },
-
     requestUserInput: function(event, data) {
-        var inputWindowName = 'input' + data.type[0].toUpperCase() + data.type.substr(1); // e.g. inputInt
-
-        if(Window.availableWindows[inputWindowName]) {
-            Window.Open(inputWindowName, data.context);
-        }
-        else {
-            Window.Open('inputUnknown', data.context);
-        }
+        // var inputWindowName = 'input' + data.type[0].toUpperCase() + data.type.substr(1); // e.g. inputInt
+        //
+        // if(WindowA.availableWindows[inputWindowName]) {
+        //     WindowA.Open(inputWindowName, data.context);
+        // }
+        // else {
+        //     WindowA.Open('inputUnknown', data.context);
+        // }
     },
     responseUserInput: function(event, data) {
-        applicationBroadcastEvent('userInputProvided', data);
-    },
-
-    setGlobalSetting: function(event, obj) {
-        Settings.SetGlobal(obj.name, obj.data);
-    },
-    setLocalSetting: function(event, obj) {
-        var pluginSettings = Settings.GetLocal(obj.plugin) || {};
-        pluginSettings[obj.name] = obj.data;
-
-        Settings.SetLocal(obj.plugin, pluginSettings);
-    },
+        // applicationBroadcastEvent('userInputProvided', data);
+    }
 }
 
 // FUTURE:
@@ -599,29 +523,26 @@ const EventHandlers = {
 // for enhanced Taskbar utility. See the `app` documentation for more details
 
 // Auto-Updates
-autoUpdater.on('checking-for-update',   () => { applicationBroadcastEvent('checkingForUpdate'); })
+autoUpdater.on('checking-for-update',   () => { EventMgr.Emit(EventType.UpdateCheckStarted, null); })
 autoUpdater.on('update-available',      (ev, info) => {
     // Open check-for-updates window
-    Window.Open('update');
-
-    applicationBroadcastEvent('updateAvailable', info);
+    ViewMgr.GetViewByName('update').Open();
+    EventMgr.Emit(EventType.UpdateAvailable, info);
 })
-autoUpdater.on('update-not-available',  (ev, info) => { applicationBroadcastEvent('updateNotAvailable', info); })
-autoUpdater.on('error',                 (ev, err) => { applicationBroadcastEvent('updateError', err); })
-autoUpdater.on('download-progress',     (ev, progressObj) => { applicationBroadcastEvent('downloadProgress', progressObj ); })
+autoUpdater.on('update-not-available',  (ev, info) => { EventMgr.Emit(EventType.UpdateNotAvailable, info); })
+autoUpdater.on('error',                 (ev, err) => { EventMgr.Emit(EventType.UpdateErrorOccurred, err); })
+autoUpdater.on('download-progress',     (ev, progressObj) => { EventMgr.Emit(EventType.UpdateDownloadProgress, progressObj ); })
 autoUpdater.on('update-downloaded',     (ev, info) => {
-  applicationBroadcastEvent('updateDownloaded', info);
+    EventMgr.Emit(EventType.UpdateDownloaded, info);
 
-   // Wait 4 seconds, then quit and install
-  setTimeout(function() {
-    autoUpdater.quitAndInstall();
-  }, 4000)
+    // Wait 4 seconds, then quit and install
+    setTimeout(function() {
+        autoUpdater.quitAndInstall();
+    }, 4000)
 })
-
 
 // Expose globals for plugins
-app.Events = EventHandlers;
-app.pluginSystem = { listeners: {} };
+var Events = EventHandlers;
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -639,36 +560,38 @@ app.on('ready', () => {
     }
 
     // Create the main menu from the menu template
-    menu = Menu.buildFromTemplate(appMenuTemplate);
-    Menu.setApplicationMenu(menu);
-
-    console.log('App Path', global.globals.AppDataPath)
-    console.log('Plugin Path', global.globals.PluginPath)
+    appMenu = Menu.buildFromTemplate(appMenuTemplate);
+    Menu.setApplicationMenu(appMenu);
 
     app.setName('Ice Sickle'); // From package.json it's icesickle (since npm init required lowercase, no spaces)
 
-    // Load plugins from /plugins directory
-    PluginManager.LoadPlugins(module, EventHandlers);
-
-    // Add plugins to the extension menu list, if allowed
-    Object.keys(PluginManager.loadedPlugins).forEach((pluginName) => {
-        var pluginObj = PluginManager.loadedPlugins[pluginName];
-
-        if(pluginObj.module.onMenuClick) {
-            menu.items[6].submenu.insert(0, new MenuItem({
-                click: pluginObj.module.onMenuClick,
-                label: pluginObj.manifest.icesickle.title
-            }));
-        }
+    /*
+     * Views
+     */
+    var windowManifests = fs.readdirSync('./views');
+    windowManifests.forEach((viewSubdir) => {
+        if(viewSubdir === 'input') return; // Ignore the input directory for now
+        ViewMgr.LoadView(path.resolve(__dirname, '../views', viewSubdir));
     });
 
-    // Register each custom scripting language
+    /*
+     * Extensions
+     */
+    var extensionDirs = fs.readdirSync(globals.ExtensionsPath);
+    extensionDirs.forEach((extDir) => {
+        let extensionToLoad = ExtensionMgr.RegisterExtension(extDir);
+        extensionToLoad.Load();
+    });
+
+    /*
+     * Scripting Languages
+     */
     loadScriptingLanguages();
 
     // Create main window
-    Window.Open('root', null, {
-        // When the root window closes, close the entire application
+    ViewMgr.GetViewByName('root').Open(null, {
         close: function() {
+            // When the root window closes, close the entire application
             app.quit();
         }
     });
@@ -679,13 +602,13 @@ app.on('ready', () => {
     });
 
     // Open welcome dialog
-    Window.Open('welcome', { recent: getListOfProjects() } );
+    ViewMgr.GetViewByName('welcome').Open({ recent: getListOfProjects() });
 
     // Add the 'exit' menu item to File
-    menu.items[0].submenu.append(new MenuItem({
+    appMenu.items[0].submenu.append(new MenuItem({
         type: 'separator'
     }));
-    menu.items[0].submenu.append(new MenuItem({
+    appMenu.items[0].submenu.append(new MenuItem({
         label: 'Exit',
         sublabel: 'Quits the application',
         role: 'quit'
@@ -695,7 +618,7 @@ app.on('ready', () => {
     // See http://stackoverflow.com/a/41368514 for more details
     protocol.registerBufferProtocol('hbs', function (req, callback) {
         // The JSON context is passed through as uploaded POST data
-        var context = (req.uploadData && req.uploadData[0]) ? JSON.parse(req.uploadData[0].bytes) : {},
+        var context = (req.uploadData && req.uploadData[0]) ? JSON.parse(req.uploadData[0].bytes.toString()) : {},
             pathToFile = req.url.substr(7); // get rid of "hbs:///"
 
         // Sometimes the path is incorrect even now, but the file still exists
@@ -709,7 +632,7 @@ app.on('ready', () => {
 
         // If the file does not exist now then we cannot load it
         if(fs.existsSync(pathToFile)) {
-          if(req.url.endsWith('.html') || req.url.endsWith('.hbs')) {
+          if(req.url.indexOf('.html') !== -1 || req.url.indexOf('.hbs') !== -1) {
             // Use Handlebars to compile the template and render the context
             fs.readFile(pathToFile, 'utf8', function(err, data) {
                 var template = Handlebars.compile(data),
@@ -725,7 +648,7 @@ app.on('ready', () => {
             // Otherwise read the file normally and pass it through
             fs.readFile(pathToFile, 'utf8', function(err, data) {
               callback({
-                  //mimeType: 'text/css',
+                  mimeType: 'text/plain',
                   data: new Buffer(data)
               });
             });
@@ -750,7 +673,9 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (!Window.openWindows.root) {
-        Window.Open('root');
+
+    let rootView = ViewMgr.GetViewByName('root');
+    if (!rootView.IsOpen) {
+        rootView.Open();
     }
 })
