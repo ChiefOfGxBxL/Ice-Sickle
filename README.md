@@ -1,3 +1,10 @@
+## ARCHIVED
+This project is indefinitely archived because since the release of WC3 Reforged, the original World Editor is receiving updates, and also because HiveWE is making awesome progress. [Check out HiveWE](https://github.com/stijnherfst/HiveWE)
+
+I am still interested in certain design features that Ice-Sickle uses that the aforementioned editors do not use, namely the event-driven architecture that supports extensions. I'm working on other WC3 related projects ([WC3MapTranslator](https://github.com/ChiefOfGxBxL/WC3MapTranslator)) and have some other exciting and secret things in the works.
+
+---
+
 <p align='center'>
   <b>Ice Sickle</b><br/>
   Next-generation WC3 world editor built on Electron.<br/><br/>
