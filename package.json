@@ -50,7 +50,7 @@
     "electron-is-dev": "^0.3.0",
     "electron-updater": "^2.21.10",
     "fs-extra": "^2.0.0",
-    "handlebars": "^4.0.11",
+    "handlebars": "^4.3.0",
     "klaw-sync": "^2.1.0",
     "mime": "^1.6.0",
     "mini.css": "^2.3.7",
